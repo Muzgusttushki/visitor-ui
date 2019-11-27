@@ -124,11 +124,11 @@
                 <el-row class="title">
                   <div>{{segment.name}}</div>
                 </el-row>
-                <el-row class="center">
+                <el-row class="center" style="justify-content: space-between;">
                   <el-col :span="4">
                     <font-awesome-icon :icon="['fas', 'users']" class="fa-2x color-green"/>
                   </el-col>
-                  <el-col :span="20">
+                  <el-col :span="13">
                     <el-row class="count">
                       {{ segment.enable ? segment.then.users.segment : 0}} человек
                     </el-row>
