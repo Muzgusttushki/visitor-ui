@@ -1,0 +1,44 @@
+{
+  "name": "visitor-ui",
+  "version": "1.0.0",
+  "description": "My cat&#39;s pajamas Nuxt.js project",
+  "author": "ivan chikishev",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate && node ./publish",
+    "clean": "rm -rf node_modules && npm cache clean --force",
+    "lint": "jest"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.25",
+    "@fortawesome/free-brands-svg-icons": "^5.11.2",
+    "@fortawesome/free-regular-svg-icons": "^5.11.2",
+    "@fortawesome/free-solid-svg-icons": "^5.11.2",
+    "@fortawesome/vue-fontawesome": "^0.1.7",
+    "@nuxt/webpack-edge": "latest",
+    "@nuxtjs/axios": "^5.3.6",
+    "apexcharts": "^3.8.6",
+    "autoprefixer": "^9.7.1",
+    "cookie-universal-nuxt": "^2.0.17",
+    "element-ui": "^2.4.11",
+    "glob": "^7.1.5",
+    "jsoneditor": "^7.2.1",
+    "nuxt-edge": "latest",
+    "nuxt-i18n": "^6.4.0",
+    "postcss-loader": "^3.0.0",
+    "ssh2-sftp-client": "^4.2.2",
+    "vue-apexcharts": "^1.5.0",
+    "vuedraggable": "^2.23.2"
+  },
+  "devDependencies": {
+    "@vue/test-utils": "^1.0.0-beta.27",
+    "babel-jest": "^24.1.0",
+    "jest": "^24.1.0",
+    "vue-jest": "^4.0.0-0",
+    "node-sass": "^4.12.0",
+    "sass-loader": "^8.0.0"
+  }
+}

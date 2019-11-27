@@ -1,0 +1,237 @@
+&.dashboard {
+  $--left-menu-color: #233245;
+
+  .el-picker-panel.el-date-range-picker.el-popper {
+    position: absolute;
+    top: 45px;
+    z-index: 2009;
+  }
+  
+  .left-menu-fixed {
+    position: fixed;
+    height: 100vh;
+    width: 120px;
+    background: #fff;
+    top: 0;
+    background-color: $--left-menu-color;
+
+    @media (max-width: 1200px) {
+      width: 68px;
+
+      a li p {
+        display: none;
+      }
+    }
+  }
+
+  .el-aside.left-menu.background {
+    width: 120px;
+    background-color: $--left-menu-color;
+    z-index: 11;
+
+    li {
+      font-size: 1.5em;
+    }
+
+    @media (max-width: 1200px) {
+      width: 68px;
+
+      a li p {
+        display: none;
+      }
+    }
+  }
+
+  .main-header {
+    height: 80px;
+    background-color: #ffffff;
+    z-index: 12;
+    box-shadow: 0px 1px 0px #e7e8f2;
+    display: flex;
+      
+    &__wrapper {
+      height: 100%;
+      width: 100%;
+      display: flex;
+      flex-flow: row nowrap;
+      align-items: center;
+      justify-content: space-between;
+
+      .logotype {
+        background-repeat: no-repeat;
+        width: 100px;
+        height: 70px;
+        background-image: url(/icon.jpg);
+        background-color: transparent;
+        background-size: 100%;
+        background-position-y: 12px;
+        cursor: pointer;
+        display: inline-block;
+
+        @media (max-width: 1200px) {
+          height: 26px;
+          width: 51px;
+          background-position-y: 0;
+          margin-left: -10px;
+        }
+      }
+
+      .change-source {
+        cursor: pointer;
+        position: relative;
+
+        &__format {
+          font-size: 12px;
+          position: absolute;
+          top: -15px;
+          left: 5px;
+        }
+
+        .el-date-editor {
+          width: 230px;
+
+          .el-range-input {
+            font-size: 14px;
+            line-height: 17px;
+            color: #1B2C3D;
+          }
+        }
+
+        .el-range__close-icon {
+          display: none;
+        }
+
+        .el-input__inner::placeholder {
+          color: #fff;
+        }
+
+
+        .el-tag.el-tag--info {
+          background-color: red;
+          border: hidden;
+
+          .el-select__tags-text {
+            background-color: #1BA9EA;
+          }
+        }
+      }
+    
+
+      .global-search {
+        display: inline-flex;
+        align-items: center;
+
+        .search-icon {
+          margin-left: -25px;
+          position: relative;
+          color: #5C768F;
+        }
+
+        #search-label {
+          border-radius: 25px;
+          background-color: #eeeff7;
+          outline: none;
+          border: none;
+          width: 244px;
+
+          @media (max-width: 1209px) {
+            width: 174px;
+          }
+        }
+      }
+
+      .user-notification {
+
+        .notification {
+          outline: none;
+          cursor: pointer;
+        }
+
+        .new-notification {
+          position: absolute;
+          width: 10px;
+          height: 10px;
+          background: #1BA9EA;
+          border-radius: 50%;
+          border: 2px solid white;
+          margin-left: 14px;
+          cursor: pointer;
+        }
+      }
+
+      .user-card {
+        display: flex;
+
+        .action {
+          outline: none;
+
+          .card-holder {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 45px;
+            cursor: pointer;
+
+            .icon {
+              margin-right: 10px;
+              
+              img {
+                border-radius: 100%;
+                background: grey;
+              }
+            }
+          }
+        }
+      }
+
+      .settings-icon {
+        margin-right: 45px;
+        cursor: pointer;
+
+        @media (max-width:1209px) {
+          margin: 0;
+        }
+      }
+    }
+  }
+
+  .main-container {
+    
+    .left-menu {
+      margin-top: -80px;
+
+      .icon-custom-width {
+        font-size: 22px;
+      }
+
+      ul.navigation {
+        padding: 0;
+        margin: 150px 0 0 0;
+
+        .nuxt-link-exact-active {
+          color: #1ba9ea;
+
+          svg, p {
+            color: white;
+          }
+        }
+
+        a {
+          text-decoration: none;
+          
+          li {
+            margin: 50px 0;
+            color: #ffffff;
+            display: flex;
+            flex-flow: column nowrap;
+            align-items: center;
+
+            svg, p {
+              color: grey;
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,21 @@
+&.sign-in {
+  .sign-in.panel-form {
+    .label {
+      padding: 0px 0 15px 0;
+      font-size: 21px;
+    }
+
+    font-weight: 500;
+    width: 300px;
+    height: 300px;
+    padding: 30px;
+    background-color: #ffffff;
+    left: 50%;
+    top: 50%;
+    position: absolute;
+    margin-left: -150px;
+    margin-top: -200px;
+    border-radius: 5px;
+    box-shadow: 0 0 12px rgba(158, 158, 158, 0.61);
+  }
+}

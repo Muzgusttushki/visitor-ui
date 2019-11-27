@@ -1,0 +1,94 @@
+.wrapper {
+  border-radius: 10px;
+  width: 100%;
+  
+  h3:first-child {
+    border-radius: 10px 10px 0 0;
+    padding-bottom: 15px;
+  }
+
+  .filter:last-child {
+    border-radius: 0 0 10px 10px;
+  }
+
+  h3 {
+    background-color: #fff;
+    margin: 0;
+  }
+}
+
+.checkbox-operation {
+  padding: 5px 0 20px 0;
+}
+
+.el-tag {
+  .el-icon-close {
+    margin-top: 3px;
+  }
+}
+
+.el-select__tags-text {
+  /* Required for text-overflow to do anything */
+  :first-child {
+    background: black;
+  }
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+// slider
+.el-slider {
+  width: 91%;
+  margin: auto;
+}
+
+.filter {
+  padding: 0 0 15px;
+  background-color: #fff;
+
+  .clever-search {
+    margin: 20px 0;
+    position: relative;
+    
+    svg {
+      position: absolute;
+      // margin: 9px 0 0 -35px;
+      color: rgb(189, 189, 189);
+      top: 34%;
+      right: 5%;
+
+      &:hover {
+        color: black;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .title {
+    padding: 0;
+    font-weight: 500;
+    font-size: 13px;
+    color: #333333;
+  }
+
+  .container {
+    width: 100%;
+    padding: 0;
+    margin-top: 15px;
+
+    .el-select {
+      width: 100%;
+      overflow: hidden;
+
+      &__tags {
+        span:first-child {
+          display: flex;
+        }
+
+        span span:nth-child(1) span {
+        width: 100px;
+        }
+      }
+    }
+  }
+}

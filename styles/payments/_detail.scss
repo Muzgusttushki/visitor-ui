@@ -1,0 +1,287 @@
+&.detail {
+  .container {
+    box-sizing: border-box;
+    margin: 35px;
+    height: 100%;
+    width: 100%;
+  }
+
+  .el-tab-pane {
+    .pagination {
+      position: absolute;
+      bottom: 0;
+      padding: 0 0 20px 30px;
+      display: flex;
+      align-items: center;
+      font-weight: normal;
+      font-size: 13px;
+      line-height: 15px;
+
+      .count {
+        margin-left: 20px;
+        color: #C4D2EA;
+      }
+
+      .el-button-group {
+        button:first-child {
+          background: #fff;
+          border: 1px solid #C4D2EA;
+        }
+        button:last-child {
+          background: #C4D2EA;
+          border: 1px solid #C4D2EA;
+          span {
+            color: #fff;
+          }
+          &::before {
+            display: none;
+          }
+        }
+        button {
+          padding: 5px 10px;
+          span {
+            font-weight: normal;
+            font-size: 13px;
+            line-height: 15px;
+            color: #C4D2EA;
+          }
+        }
+      }
+    }
+  }
+
+  .el-tabs {
+    box-sizing: border-box;
+
+    // инпуты выбора в меню
+    &__nav .is-disabled {
+      cursor: pointer;
+
+      .el-select {
+        overflow-y: inherit;
+
+        .el-input__inner {
+          background: #F3F4F8;
+          border: 0;
+          height: 30px;
+          width: 122px;
+          color: #5C768F;
+          font-style: normal;
+          font-weight: normal;
+          font-size: 13px;
+        }
+      }
+    }
+    // ========================
+
+    &__nav-wrap::after {
+      width: 405px;
+    }
+
+    &__header.is-left {
+      padding-bottom: 60px;
+    }
+
+    &__content {
+
+      .wrapper {
+        display: flex;
+        flex-flow: row nowrap;
+        background: #fff;
+        border-radius: 10px;
+        padding-bottom: 20px;
+
+        .step {
+          width: 100%;
+          padding: 30px 50px;
+          position: relative;
+
+          .el-steps {
+            position: relative;
+
+            &::after {
+              content: '';
+              position: absolute;
+              height: 367px;
+              bottom: 0;
+              width: 0;
+              border: 1px dashed #C4D2EA;
+              left: 2px;
+              top: 5px;
+            }
+          }
+
+          &-wrapper {
+            padding: 15px 0 0;
+          }
+
+          .el-step {
+            
+            &.is-vertical {
+              padding: 8px 0;
+            }
+            &.title {
+              .el-step {
+                &__title, &__description {
+                  color: #000;
+                  font-weight: 500;
+                }
+                &__icon {
+                  border: 2px solid rgba(193, 225, 250, 0.5);
+                  background: #5AB6FE;
+                  width: 10px;
+                  height: 10px;
+                  margin-left: -2px;
+                }
+              }
+            }
+
+            &__head.is-wait {
+              border-color: #C4D2EA;
+              margin-top: -6px;
+            }
+
+            &__line {
+              display: none;
+            }
+
+            &__icon {
+              
+              &.is-text {
+                height: 7px;
+                width: 7px;
+                background: #C4D2EA;
+              }
+              &-inner {
+                display: none;
+              }
+            }
+
+
+            &__main {
+              display: flex;
+              flex-flow: row nowrap;
+            }
+
+            &__description {
+              min-width: 50%;
+              line-height: 0;
+              margin: 0;
+              color: #333;
+            }
+          
+            &__title {
+              font-size: 13px;
+              line-height: 0;
+              padding: 0 8px 0 0;
+              color: #5C768F;
+            }
+          }
+        }
+      }
+
+      .el-tabs {
+
+        &__header {
+          width: 50%;
+          background: #fff;
+          padding: 20px 0 50px;
+          border-radius: 10px;
+        }
+
+        &__content, &__header {
+          background: #fff;
+          border-radius: 10px;
+          min-height: 100%;
+        }
+
+        &__active-bar.is-left {
+          display: none;
+        }
+        &__nav-wrap::after {
+          content: none;
+        }
+
+        &__item {
+          width: 100%;
+          display: flex;
+          justify-content: space-around;
+          font-weight: normal;
+          font-size: 13px;
+          font-style: normal;
+          color: rgba(92, 118, 143, 0.5);
+
+          &.is-active {
+            border-left: 5px solid #C4D2EA;
+            
+            .info {
+              margin-left: -5px;
+              margin-right: 3px;
+            }
+          }
+
+          &:not(:last-child) {
+            border-bottom: 1px solid #F3F4F8;
+          }
+
+          .info {
+            color: #333;
+            font-weight: 500;
+            font-size: 13px;
+            width: 50%;
+            text-align: left;
+
+            .out {
+              padding-left: 17px;
+              color: rgba(115, 211, 160, 0.5);
+            }
+
+            .in {
+              padding-right: 17px;
+              color: rgba(90, 182, 254, 0.5);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &.dropdown {
+    max-height: 200px;
+    min-width: 150px;
+    color: #333333;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+
+    li {
+      &:first-child {
+        font-weight: 500;
+      }
+      &:not(:last-child) {
+        border-bottom: 1px solid rgba(196, 210, 234, 0.2);
+      }
+    }
+  }
+  // Две верхние кнопки
+  .button-group {
+    margin-bottom: 20px;
+    .el-button {
+      font-weight: 500;
+      font-size: 13px;
+      line-height: 15px;
+      padding: 12px 25px;
+      &--info {
+        color: rgba(92, 118, 143, 0.5);
+        border: 1px solid rgba(92, 118, 143, 0.5);
+        background: #F3F4F8;
+      }
+      &--primary {
+        color: #fff;
+        background: #5AB6FE;
+        border: 1px solid #5AB6FE;
+      }
+    }
+  }
+  //===========================
+}
