@@ -527,25 +527,32 @@
               <el-tab-pane label="Все действия">
                 <div v-if="!tabAsyncManager.loading && tabAsyncManager.detailsData.length" class="table-list">
                   <el-tabs tab-position="left" @tab-click="detailUserOperationEvent">
-                    <el-tab-pane v-for="(val, valID) in tabAsyncManager.detailsData.operations" :name="val._id"
-                                 :key="valID">
+                    <el-tab-pane 
+                      v-for="(val, valID) in tabAsyncManager.detailsData.operations" 
+                      :name="val._id"
+                      :key="valID">
                       <template slot="label">
                         <div class="info">
                           <font-awesome-icon :icon="['fas', 'sign-out-alt']" class="fa-lg in"/>
                           {{tabAsyncManager.statuses[val.status]}}
                         </div>
-                        <div class="date">21.10.2019</div>
-                        <div class="time">14:00</div>
+                        <div class="date">
+                          {{handleDate(val.date, "{Y}.{MM}.{D}")}}
+                        </div>
+                        <div class="time">
+                          {{handleDate(val.date, "{H}:{M}")}}
+                        </div>
                       </template>
 
                       <div class="wrapper">
                         <div class="step">
+                          <div></div>
                           <div>
-                            <div><span class="title">Сведения по операции </span><span class="description">Баннер</span></div>
+                            <div><span class="title">Сведения по операции</span><span class="description">"{{tabAsyncManager.statuses[val.status]}}"</span></div>
                             <div class="step-wrapper">
                               <div class="inner"><span class="title">ID: </span><span class="description">{{tabAsyncManager.viewer._id|| '-'}}</span></div>
                               <div class="inner"><span class="title">ФИО: </span><span class="description">{{tabAsyncManager.viewer.name|| '-'}}</span></div>
-                              <div class="inner"><span class="title">Дата визита: </span><span class="description">{{tabAsyncManager.viewer.date|| '-'}}</span></div>
+                              <div class="inner"><span class="title">Дата визита: </span><span class="description">{{handleDate(tabAsyncManager.viewer.date, "{Y}.{MM}.{D} {H}:{M}") || '-'}}</span></div>
                               <div class="inner"><span class="title">Email: </span><span class="description">{{tabAsyncManager.viewer.email|| '-'}}</span></div>
                               <div class="inner"><span class="title">Телефон: </span><span class="description">{{tabAsyncManager.viewer.phone|| '-'}}</span></div>
                             </div>
@@ -554,7 +561,7 @@
                                 v-for="(utmKey, utmID) in Object.keys(tabAsyncManager.viewer.utm.tags)"
                                 :key="utmID"
                                 class="inner"
-                              ><span class="title">{{utmKey}}</span><span class="description">{{tabAsyncManager.viewer.utm.tags[utmKey]}}</span>
+                              ><span class="title">{{utmKey}}: </span><span class="description">{{tabAsyncManager.viewer.utm.tags[utmKey]}}</span>
                               </div>
                             </div>
                             <div class="step-wrapper">
@@ -570,55 +577,17 @@
                           </div>
                         </div>
                       </div>
-                      <!-- <div class="wrapper">
-                        <div class="step">
-                          <el-steps direction="vertical">
-                            <el-step title="Сведения по операции" description="Баннер" class="title"></el-step>
-                            <div class="step-wrapper">
-                              <el-step title="ID: " :description="tabAsyncManager.viewer._id|| '-'"></el-step>
-                              <el-step title="ФИО: " :description="tabAsyncManager.viewer.name|| '-'"></el-step>
-                              <el-step title="Дата визита: " :description="tabAsyncManager.viewer.date|| '-'"></el-step>
-                              <el-step title="Email: " :description="tabAsyncManager.viewer.email|| '-'"></el-step>
-                              <el-step title="Телефон: " :description="tabAsyncManager.viewer.phone|| '-'"></el-step>
-                            </div>
-                            <div class="step-wrapper" v-if="tabAsyncManager.viewer.utm.tags">
-                              <el-step
-                                v-for="(utmKey, utmID) in Object.keys(tabAsyncManager.viewer.utm.tags)"
-                                :key="utmID"
-                                :title="`${utmKey}: `"
-                                :description="tabAsyncManager.viewer.utm.tags[utmKey]"
-                              >
-                              </el-step>
-                            </div>
-                            <div class="step-wrapper">
-                              <el-step title="Yandex: "
-                                       :description="tabAsyncManager.viewer.analytics.yandex || '-'"></el-step>
-                              <el-step title="Google: "
-                                       :description="tabAsyncManager.viewer.analytics.google || '-'"></el-step>
-                              <el-step title="Facebook: "
-                                       :description="tabAsyncManager.viewer.analytics.facebook|| '-'"></el-step>
-                            </div>
-                            <div class="step-wrapper">
-                              <el-step title="Браузер: "
-                                       :description="tabAsyncManager.viewer.browser.name|| '-'"></el-step>
-                              <el-step title="Версия: "
-                                       :description="tabAsyncManager.viewer.browser.version|| '-'"></el-step>
-                              <el-step title="ОС: " :description="tabAsyncManager.viewer.os.name|| '-'"></el-step>
-                            </div>
-                          </el-steps>
-                        </div>
-                      </div> -->
                     </el-tab-pane>
                   </el-tabs>
-
+                  
                   <div class="pagination">
                     <el-dropdown split-button type="primary" @command="handleCommand">
                       {{views}}
                       <el-dropdown-menu slot="dropdown">
-                        <el-dropdown-item command="10">10</el-dropdown-item>
-                        <el-dropdown-item command="20">20</el-dropdown-item>
-                        <el-dropdown-item command="30">30</el-dropdown-item>
-                        <el-dropdown-item command="40">40</el-dropdown-item>
+                        <el-dropdown-item command="10"><span style="padding: 0 5px">10</span></el-dropdown-item>
+                        <el-dropdown-item command="20"><span style="padding: 0 5px">20</span></el-dropdown-item>
+                        <el-dropdown-item command="30"><span style="padding: 0 5px">30</span></el-dropdown-item>
+                        <el-dropdown-item command="40"><span style="padding: 0 5px">40</span></el-dropdown-item>
                       </el-dropdown-menu>
                     </el-dropdown>
                     <el-pagination
@@ -631,7 +600,7 @@
                   </div>
                 </div>
                 <div v-else>
-                  <div v-loading="true" style="height: 200px;">
+                  <div v-loading="true" style="height: 470px;">
                   </div>
                 </div>
               </el-tab-pane>
@@ -694,7 +663,7 @@
             return {userDetails, userId}
         },
         data() {
-            return {
+            return {  
                 current: 1,
                 userId: null,
                 dialogData: {
@@ -871,6 +840,9 @@
               this.views = command
               console.log(this.views)
             },
+            handleDate(time, format) {
+              return this.$times({ time: String(time), format: String(format) })
+            },
             routPoints() {
                 this.$router.push(`${this.userId}/points/`)
             },
@@ -894,7 +866,6 @@
                 }).then(resolve => {
                     const {data} = resolve;
                     if (data.error) {
-
                         return;
                     }
 
