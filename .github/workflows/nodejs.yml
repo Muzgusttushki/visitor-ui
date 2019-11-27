@@ -7,11 +7,11 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-18.04
+    runs-on: macOS-latest
 
     strategy:
       matrix:
-        node-version: [13.1.0]
+        node-version: [12.x]
 
     steps:
     - uses: actions/checkout@v1
@@ -21,6 +21,5 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - name: npm install, build, and publish
       run: |
-        npm install --production
-        npm audit fix
+        npm install
         npm run generate
