@@ -222,7 +222,7 @@
               <loading-square />
               <loading-square />
               <loading-square />
-            </div>
+            </div> 
           </div>
         </div>
       </div>
