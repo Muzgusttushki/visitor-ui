@@ -169,8 +169,8 @@
                     <p>Сумма покупок</p>
                   </el-col>
                   <el-col :span="12" class="text-right">
-                    <p v-if="userDetails">{{ userDetails.userTransactions["earnings"] }}₽</p>
-                    <loading-square v-else/>
+                    <!-- <p v-if="userDetails.userTransactions['earnings']">{{ userDetails.userTransactions["earnings"] }}₽</p> -->
+                    <!-- <loading-square v-else/> -->
                   </el-col>
                 </el-row>
                 <el-row class="activity-row row-bg">
@@ -313,7 +313,7 @@
                     <el-dropdown-menu slot="dropdown" class="container">
                       <div class="id payments tools-container">
                         <h3>Параметры</h3>
-                        <div class="test">
+                        <div class="test" v-if="userDetails.details">
                           <el-tag
                             v-for="(column, columnID) in columns"
                             :key="columnID"
@@ -330,7 +330,7 @@
               </div>
               <div class="specification__content">
                 <!-- -----таблица----- -->
-                <el-table v-if="userDetails" :data="userDetails.details" @row-click="dialogHandler">
+                <el-table v-if="userDetails.details" :data="userDetails.details" @row-click="dialogHandler">
                   <el-table-column
                     v-for="(column, columnID) in columns.filter(
                       resolve => resolve.visible
@@ -550,7 +550,7 @@
                           <div>
                             <div><span class="title">Сведения по операции</span><span class="description">"{{tabAsyncManager.statuses[val.status]}}"</span></div>
                             <div class="step-wrapper">
-                              <div class="inner"><span class="title">URL: </span><span class="description">{{tabAsyncManager.viewer.url|| '-'}}</span></div>
+                              <div class="inner"><div class="title">URL: </div><div class="description">{{String(tabAsyncManager.viewer.url).slice(0, 40) || '-'}}{{String(tabAsyncManager.viewer.url)[40] ? '...' : ''}}</div></div>
                             </div>
                             <div class="step-wrapper">
                               <div class="inner"><span class="title">ID: </span><span class="description">{{tabAsyncManager.viewer._id|| '-'}}</span></div>
@@ -887,9 +887,10 @@
                     }
 
                     this.tabAsyncManager.detailsData = data.then;
-                    this.detailUserOperationEvent({name: this.tabAsyncManager.detailsData.operations[0]['_id']})
-                    this.active = this.tabAsyncManager.detailsData.operations[0]['_id']
 
+                    const id = this.tabAsyncManager.detailsData.operations[0]['_id']
+                    this.detailUserOperationEvent({name: id})
+                    this.active = id
                 }).catch(error => {
                     console.error(error);
                 }).finally(() => {
