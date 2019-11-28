@@ -47,20 +47,20 @@ sftp.connect(config)
     })
     .then(async data => {
         const files = glob.sync('dist/**')
-        files.shift()
+        files.shift();
 
         for (let key in files) {
-            const resolve = files[key].replace('dist/', '')
-            const lstat = fs.lstatSync(`dist/${resolve}`)
+            const resolve = files[key].replace('dist/', '');
+            const lstat = fs.lstatSync(`dist/${resolve}`);
 
             if (lstat.isDirectory()) {
                 await sftp.mkdir(`/var/www/html/${resolve}`).then(() => {
                     console.log('create dir', resolve)
-                })
+                });
                 continue
             }
 
-            await sftp.fastPut(files[key], `/var/www/html/${resolve}`).catch(console.error).then(() => {
+            sftp.fastPut(files[key], `/var/www/html/${resolve}`).catch(console.error).then(() => {
                 console.log('upload file', resolve)
             })
         }

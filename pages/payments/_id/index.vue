@@ -133,7 +133,7 @@
               </el-row>
               <el-row class="activity-row">
                 <el-col :span="18">
-                  <p>Открытие писем</p>
+                  <p>Взаимодействие с виджетом</p>
                 </el-col>
                 <el-col :span="6" class="text-right">
                   <p>0</p>
@@ -141,7 +141,7 @@
               </el-row>
               <el-row class="activity-row row-bg">
                 <el-col :span="18">
-                  <p>Взаимодействия с APP</p>
+                  <p>Открытие писем</p>
                 </el-col>
                 <el-col :span="6" class="text-right">
                   <p>0</p>
@@ -518,7 +518,7 @@
       </el-tab-pane>
       <el-tab-pane name="details">
         <template slot="label">
-          <div class="header-title right">Детализация</div>
+          <div class="header-title right" @click="preDownload">Детализация</div>
         </template>
         <el-container class="detail payments">
           <div class="container">
@@ -526,7 +526,7 @@
               <!-- ------------------------------------ВСЕ ДЕЙСТВИЯ----------------------------------------- -->
               <el-tab-pane label="Все действия">
                 <div v-if="!tabAsyncManager.loading && tabAsyncManager.detailsData.length" class="table-list">
-                  <el-tabs tab-position="left" @tab-click="detailUserOperationEvent">
+                  <el-tabs tab-position="left" v-model="active" @tab-click="detailUserOperationEvent">
                     <el-tab-pane 
                       v-for="(val, valID) in tabAsyncManager.detailsData.operations" 
                       :name="val._id"
@@ -549,6 +549,9 @@
                           <div></div>
                           <div>
                             <div><span class="title">Сведения по операции</span><span class="description">"{{tabAsyncManager.statuses[val.status]}}"</span></div>
+                            <div class="step-wrapper">
+                              <div class="inner"><span class="title">URL: </span><span class="description">{{tabAsyncManager.viewer.url|| '-'}}</span></div>
+                            </div>
                             <div class="step-wrapper">
                               <div class="inner"><span class="title">ID: </span><span class="description">{{tabAsyncManager.viewer._id|| '-'}}</span></div>
                               <div class="inner"><span class="title">ФИО: </span><span class="description">{{tabAsyncManager.viewer.name|| '-'}}</span></div>
@@ -667,6 +670,7 @@
             return {  
                 current: 1,
                 userId: null,
+                active: null,
                 dialogData: {
                     browser: {},
                     os: {},
@@ -822,16 +826,18 @@
           }
         },
         methods: {
+          async preDownload() {
+            console.log('name')
+          },
           handleClose() {
             this.dialogVisible = false
             this.dialogData = {
-                    browser: {},
-                    os: {},
-                    cookies: {},
-                    utm: {tags: {}},
-                    analytics: {}
-                }
-            console.log('123')
+              browser: {},
+              os: {},
+              cookies: {},
+              utm: { tags: {} },
+              analytics: {}
+            }
           },
             async dialogHandler(val) {
                 const request = await this.$axios.post(
@@ -850,7 +856,6 @@
             },
             handleCommand(command) {
               this.views = command
-              console.log(this.views)
             },
             handleDate(time, format) {
               return this.$times({ time: String(time), format: String(format) })
@@ -882,6 +887,9 @@
                     }
 
                     this.tabAsyncManager.detailsData = data.then;
+                    this.detailUserOperationEvent({name: this.tabAsyncManager.detailsData.operations[0]['_id']})
+                    this.active = this.tabAsyncManager.detailsData.operations[0]['_id']
+
                 }).catch(error => {
                     console.error(error);
                 }).finally(() => {
@@ -890,6 +898,7 @@
             },
 
             detailUserOperationEvent({name}) {
+                console.log(name)
                 this.$axios.post(`${process.env.address}/v1/reports/getDetailsUserInformation.info`, {
                     address: name
                 }).then(resolve => {
