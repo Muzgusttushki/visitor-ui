@@ -7,7 +7,7 @@
         <div class="logotype" />
         <!-- -------------------------------DATEPICKER----------------------------------------- -->
         <div :class="hideDatePicker()">
-          <div class="change-source__format">
+          <div class="change-source__format" style="display: none;">
             <span @click="editDateType('daterange')">Дни</span>
             <span @click="editDateType('monthrange')">Месяцы</span>
           </div>
