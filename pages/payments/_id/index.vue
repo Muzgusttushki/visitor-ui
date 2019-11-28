@@ -641,7 +641,7 @@
     </el-tabs>
     <!-- -----------------------------------------ИНФОРМАЦИЯ О ТРАНЗАКЦИИ------------------------------ -->
     <div>
-      <dialogs :visible.sync="dialogVisible" :data="dialogData" v-if="dialogData"></dialogs>
+      <dialogs :visible.sync="dialogVisible" @closeDialog="handleClose" :data="dialogData" v-if="dialogData"></dialogs>
     </div>
   </el-main>
 </template>
@@ -821,6 +821,15 @@
           }
         },
         methods: {
+          handleClose() {
+            return this.dialogData = {
+              browser: {},
+              os: {},
+              cookies: {},
+              utm: { tags: {} },
+              analytics: {}
+            }
+          },
             async dialogHandler(val) {
                 const request = await this.$axios.post(
                     `${process.env.address}/v1/reports/payments.details`,

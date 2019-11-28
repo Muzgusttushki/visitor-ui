@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :visible.sync="visible" title="Карточка транзакции">
+  <el-dialog :visible.sync="visbl" title="Карточка транзакции">
     <div class="wrapper">
       <div class="dialogInfo user">
         <div class="dialogInfo__title">Пользователь</div>
@@ -157,13 +157,19 @@
 
 <script>
 export default {
-  props: ['data', 'visible'],
-  data() {
-    return {
-      utm: this.data.utm.tags || null
+        props: ['data', 'visible'],
+        data() {
+            return {
+                visbl: this.visible,
+                utm: {...this.data.utm.tags} || null
+            }
+        },
+        watch: {
+            visbl() {
+                this.$emit('closeDialog')
+            }
+        }
     }
-  }
-}
 </script>
 
 <style lang="scss">
