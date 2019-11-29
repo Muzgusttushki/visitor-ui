@@ -738,6 +738,7 @@ $lg-width: 1200px;
 
   .table-list {
     background-color: #fff;
+    border-radius: 10px;
   }
 
   .container {
@@ -819,8 +820,13 @@ $lg-width: 1200px;
     }
     // ========================
 
-    &__nav-wrap::after {
-      width: 405px;
+    // &__nav-wrap::after {
+    //   width: 405px;
+    //   background-color: black;
+    // }
+    &__nav-wrap.is-left {
+      max-height: 400px;
+      overflow: auto;
     }
 
     &__header.is-left {
@@ -828,11 +834,9 @@ $lg-width: 1200px;
     }
 
     &__content {
+      position: relative;
 
       .wrapper {
-        // display: flex;
-        // flex-flow: row nowrap;
-        background: #fff;
         border-radius: 10px;
         padding-bottom: 20px;
 
