@@ -825,7 +825,8 @@ $lg-width: 1200px;
     //   background-color: black;
     // }
     &__nav-wrap.is-left {
-      max-height: 400px;
+      // max-height: 400px;
+      padding-bottom: 10px;
       overflow: auto;
     }
 
