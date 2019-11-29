@@ -7,6 +7,10 @@ $lg-width: 1200px;
   .el-tabs__nav-wrap::after {
     display: none;
   }
+
+  .main-wrapper {
+    width: 100%;
+  }
   
 
   .el-tabs__item.is-top{
@@ -826,8 +830,8 @@ $lg-width: 1200px;
     &__content {
 
       .wrapper {
-        display: flex;
-        flex-flow: row nowrap;
+        // display: flex;
+        // flex-flow: row nowrap;
         background: #fff;
         border-radius: 10px;
         padding-bottom: 20px;
@@ -841,19 +845,22 @@ $lg-width: 1200px;
 
         .inner {
           padding-bottom: 5px;
+          display: flex;
         }
   
         .description {
           font-weight: normal;
           font-size: 13px;
           color: #333;
-          width: 100%;
+          // width: 100%;
+          word-break: break-all;
         }
 
         .step {
           width: 100%;
           padding: 30px 50px;
           position: relative;
+          box-sizing: border-box;
 
           .el-steps {
             position: relative;

@@ -1,6 +1,6 @@
 <template>
   <el-main class="payments id">
-    <el-tabs @tab-click="openTabEvent">
+    <el-tabs @tab-click="openTabEvent" class="main-wrapper">
       <el-tab-pane>
         <template slot="label">
           <div class="header-title left">Общая сводка</div>
@@ -178,8 +178,10 @@
                     <p>Сумма покупок</p>
                   </el-col>
                   <el-col :span="12" class="text-right">
-                    <p v-if="userDetails.userTransactions['earnings']">{{ userDetails.userTransactions["earnings"] }}₽</p>
-                    <loading-square v-else/>
+                    <p
+                      v-if="userDetails.userTransactions['earnings']"
+                    >{{ userDetails.userTransactions["earnings"] }}₽</p>
+                    <loading-square v-else />
                   </el-col>
                 </el-row>
                 <el-row class="activity-row row-bg">
@@ -565,7 +567,7 @@
                                 <div class="title">URL:</div>
                                 <div
                                   class="description"
-                                >{{String(tabAsyncManager.viewer.url).slice(0, 40) || '-'}}</div>
+                                >{{tabAsyncManager.viewer.url || '-'}}</div>
                               </div>
                             </div>
                             <div class="step-wrapper">
@@ -733,16 +735,17 @@ export default {
   layout: "dashboard",
   middleware: "roles/user",
   components: { dialogs },
-  async asyncData({ store, params }) {
+  async asyncData({ store, params, $axios }) {
     const userId = params.id;
 
-    const userDetails = await store.dispatch(
-      "payment/getUserDetails",
-      userId
+    const userDetails = await store.dispatch("payment/getUserDetails", userId);
+
+    const request = await $axios.get(
+      `${process.env.address}/v1/reports/buyers/userActivity/${userId}`
     );
+    const userActivity = request.data.then;
 
-
-    return { userDetails, userId };
+    return { userDetails, userId, userActivity };
   },
 
   data() {
@@ -921,10 +924,7 @@ export default {
     this.getUserActivity();
   },
   methods: {
-    async getUserActivity() {
-      const request = await this.$axios.get(`${process.env.address}/v1/reports/buyers/userActivity/${this.userId}`)
-      this.userActivity = request.data.then
-    },
+    async getUserActivity() {},
     handleClose() {
       this.dialogVisible = false;
       this.dialogData = {
