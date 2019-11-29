@@ -959,6 +959,9 @@ export default {
     handleDate(time, format) {
       return this.$times({ time: String(time), format: String(format) });
     },
+    routSegment(id) {
+      this.$router.push(`/segments/${id}`)
+    },
     routPoints() {
       this.$router.push(`${this.userId}/points/`);
     },
