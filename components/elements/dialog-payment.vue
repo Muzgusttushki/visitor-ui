@@ -15,8 +15,8 @@
           <div class="item">
             <span class="item__name">Дата визита:</span>
             {{this.$times({
-              time: String(data['date']),
-              format: '{Y}.{MM}.{D} {H}:{M}'
+            time: String(data['date']),
+            format: '{Y}.{MM}.{D} {H}:{M}'
             }) || '-'}}
           </div>
           <div class="item">
@@ -117,8 +117,8 @@
             <span class="item__name">Дата события:</span>
             <span v-if="data['dataEvent']">
               {{this.$times({
-                time: data['dataEvent'],
-                format: '{Y}.{MM}.{D} {H}:{M}'
+              time: data['dataEvent'],
+              format: '{Y}.{MM}.{D} {H}:{M}'
               })}}
             </span>
             <span v-else>-</span>
@@ -157,24 +157,23 @@
 
 <script>
 export default {
-        props: ['data', 'visible'],
-        data() {
-            return {
-                visbl: this.visible,
-                utm: {...this.data.utm.tags} || null
-            }
-        },
-        watch: {
-            visbl() {
-                this.$emit('closeDialog')
-            }
-        }
+  props: ["data", "visible"],
+  data() {
+    return {
+      visbl: this.visible,
+      utm: { ...this.data.utm.tags } || null
+    };
+  },
+  watch: {
+    visbl() {
+      this.$emit("closeDialog");
     }
+  }
+};
 </script>
 
 <style lang="scss">
 .el-dialog__wrapper {
-
   .el-dialog {
     width: 570px;
     border-radius: 10px;
@@ -198,7 +197,8 @@ export default {
       display: flex;
       flex-flow: row wrap;
 
-      .user, .cook {
+      .user,
+      .cook {
         width: 60%;
 
         .dialogInfo__title {
@@ -206,7 +206,8 @@ export default {
         }
       }
 
-      .geo, .browser {
+      .geo,
+      .browser {
         width: 40%;
 
         .dialogInfo__title {
@@ -223,7 +224,6 @@ export default {
       }
 
       .dialogInfo {
-
         &__title {
           background: rgba(196, 210, 234, 0.2);
           font-weight: 500;
@@ -239,8 +239,8 @@ export default {
           .separator {
             // height: 1px;
             width: 80%;
-            margin:7px 0 7px 10px;
-            border: 1px solid #F3F6FB;
+            margin: 7px 0 7px 10px;
+            border: 1px solid #f3f6fb;
           }
 
           .item {
@@ -248,7 +248,7 @@ export default {
             padding: 7px 0 7px 10px;
 
             &__name {
-              color: #5C768F;
+              color: #5c768f;
             }
           }
         }

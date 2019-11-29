@@ -17,7 +17,7 @@
             :type="dateType.type"
             align="right"
             format="dd.MM.yyyy"
-            range-separator='-'
+            range-separator="-"
             :unlink-panels="true"
             :default-value="defaultGlobalTimeRange"
             start-placeholder="Дата начала"
@@ -39,18 +39,10 @@
               <font-awesome-icon :icon="['fas', 'bell']" class="fa-2x notification" />
             </span>
             <el-dropdown-menu slot="dropdown" style="padding: 10px;">
-              <el-dropdown-item style="padding: 5px; border-radius: 10px;">
-                Новое действие +1
-              </el-dropdown-item>
-              <el-dropdown-item style="padding: 5px; border-radius: 10px;">
-                Новое действие +2
-              </el-dropdown-item>
-              <el-dropdown-item style="padding: 5px; border-radius: 10px;">
-                Новое действие +3
-              </el-dropdown-item>
-              <el-dropdown-item style="padding: 5px; border-radius: 10px;">
-                Новое действие +4
-              </el-dropdown-item>
+              <el-dropdown-item style="padding: 5px; border-radius: 10px;">Новое действие +1</el-dropdown-item>
+              <el-dropdown-item style="padding: 5px; border-radius: 10px;">Новое действие +2</el-dropdown-item>
+              <el-dropdown-item style="padding: 5px; border-radius: 10px;">Новое действие +3</el-dropdown-item>
+              <el-dropdown-item style="padding: 5px; border-radius: 10px;">Новое действие +4</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
         </div>
@@ -60,26 +52,27 @@
             <div class="el-dropdown-link action">
               <div class="card-holder">
                 <div class="icon">
-                  <div v-if="false"><img src="" alt="" width="50px" height="50px"></div>
-                  <div v-else><font-awesome-icon :icon="['fas', 'user']" class='fa-2x' /></div>
+                  <div v-if="false">
+                    <img src alt width="50px" height="50px" />
+                  </div>
+                  <div v-else>
+                    <font-awesome-icon :icon="['fas', 'user']" class="fa-2x" />
+                  </div>
                 </div>
-                <div class="name" v-if="session.username">{{ session.username }}</div> <!-- {{ session.username }} -->
+                <div class="name" v-if="session.username">{{ session.username }}</div>
+                <!-- {{ session.username }} -->
                 <div class="name" v-else>N/A</div>
               </div>
             </div>
             <el-dropdown-menu slot="dropdown">
               <nuxt-link to="/account/profile">
-                <el-dropdown-item>
-                  Личный кабинет
-                </el-dropdown-item>
+                <el-dropdown-item>Личный кабинет</el-dropdown-item>
               </nuxt-link>
               <el-dropdown-item>Настройки</el-dropdown-item>
               <el-dropdown-item>Мои компании</el-dropdown-item>
               <el-dropdown-item>Платежи</el-dropdown-item>
               <nuxt-link to="/account/logout">
-                <el-dropdown-item>
-                  Выход
-                </el-dropdown-item>
+                <el-dropdown-item>Выход</el-dropdown-item>
               </nuxt-link>
             </el-dropdown-menu>
           </el-dropdown>
@@ -107,25 +100,25 @@
         <ul class="navigation">
           <nuxt-link to="/dashboard/">
             <li>
-              <font-awesome-icon :icon="['fas', 'th']" class="fa-2x"/>
+              <font-awesome-icon :icon="['fas', 'th']" class="fa-2x" />
               <p>Дашборд</p>
             </li>
           </nuxt-link>
           <nuxt-link to="/payments">
             <li>
-              <font-awesome-icon :icon="['fas', 'users']" class="fa-2x"/>
+              <font-awesome-icon :icon="['fas', 'users']" class="fa-2x" />
               <p>Покупатели</p>
             </li>
           </nuxt-link>
           <nuxt-link to="/operations">
             <li>
-              <font-awesome-icon :icon="['fas', 'credit-card']" class="fa-2x"/>
+              <font-awesome-icon :icon="['fas', 'credit-card']" class="fa-2x" />
               <p>Операции</p>
             </li>
           </nuxt-link>
           <nuxt-link to="/segments">
             <li>
-              <font-awesome-icon :icon="['fas', 'draw-polygon']" class="fa-2x"/>
+              <font-awesome-icon :icon="['fas', 'draw-polygon']" class="fa-2x" />
               <p>Сегменты</p>
             </li>
           </nuxt-link>
@@ -139,62 +132,63 @@
 </template>
 <script>
 export default {
-  data () {
+  data() {
     return {
-      dateType: {show: true, type: 'daterange'},
-      session: this.$store.getters['account/getSession'],
-      globalTimeRange: Object.values(this.$store.getters['dashboard/globalFilters'].timeInterval),
+      dateType: { show: true, type: "daterange" },
+      session: this.$store.getters["account/getSession"],
+      globalTimeRange: Object.values(
+        this.$store.getters["dashboard/globalFilters"].timeInterval
+      ),
       defaultGlobalTimeRange: []
-    }
+    };
   },
   computed: {
-    getGlobalFilterTimeInterval () {
-      return this.$store.getters['dashboard/globalFilters'].timeInterval
+    getGlobalFilterTimeInterval() {
+      return this.$store.getters["dashboard/globalFilters"].timeInterval;
     }
   },
 
   watch: {
-    getGlobalFilterTimeInterval (source) {
-      this.globalTimeRange = source
-        ? Object.values(source) : []
+    getGlobalFilterTimeInterval(source) {
+      this.globalTimeRange = source ? Object.values(source) : [];
     }
   },
 
   methods: {
     editDateType(val) {
-      this.dateType.type = val
+      this.dateType.type = val;
     },
 
-    changeGlobalTimeRange (resolve) {
-      console.log(resolve, 'resolve')
+    changeGlobalTimeRange(resolve) {
+      console.log(resolve, "resolve");
 
       if (resolve == null || resolve.length !== 2) {
-        const previewInstanceDate = new Date()
-        previewInstanceDate.setDate(previewInstanceDate.getDate() - 64)
+        const previewInstanceDate = new Date();
+        previewInstanceDate.setDate(previewInstanceDate.getDate() - 64);
 
-        resolve = [previewInstanceDate, new Date()]
+        resolve = [previewInstanceDate, new Date()];
       }
 
-      this.$store.commit('dashboard/setGlobalFilters', {
-        key: 'timeInterval',
+      this.$store.commit("dashboard/setGlobalFilters", {
+        key: "timeInterval",
         value: {
           start: resolve[0],
           end: resolve[1]
         }
-      })
+      });
     },
     hideDatePicker() {
-      const path = this.$route.path
-      if (path.includes('segments')) {
-        return 'change-source hidden'
+      const path = this.$route.path;
+      if (path.includes("segments")) {
+        return "change-source hidden";
       }
-      return 'change-source'
+      return "change-source";
     }
   }
-}
+};
 </script>
 <style scoped>
 .hidden {
-  transform: scale(0)
+  transform: scale(0);
 }
 </style>
