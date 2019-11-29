@@ -583,7 +583,7 @@
                                 <span class="title">Дата визита:</span>
                                 <span
                                   class="description"
-                                >{{handleDate(tabAsyncManager.viewer.date, "{Y}.{MM}.{D} {H}:{M}") || '-'}}</span>
+                                >{{handleDate(tabAsyncManager.viewer.date, "{D}.{MM}.{Y} {H}:{M}") || '-'}}</span>
                               </div>
                               <div class="inner">
                                 <span class="title">Email:</span>
