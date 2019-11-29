@@ -670,7 +670,7 @@
                       background
                       layout="prev, pager, next"
                       :total="this.tabAsyncManager.detailsData.length"
-                      :page-size="10"
+                      :page-size="this.views"
                       :current-page.sync="current"
                     ></el-pagination>
                   </div>
@@ -742,6 +742,7 @@ export default {
       `${process.env.address}/v1/reports/buyers/userActivity/${userId}`
     );
     const userActivity = request.data.then;
+    console.log(userDetails)
 
     return { userDetails, userId, userActivity };
   },
@@ -820,7 +821,7 @@ export default {
         { label: "Город", source: "city", visible: true, width: 100 }
       ],
 
-      views: 10,
+      views: 20,
       dropdown: {
         input: "",
         output: "",
