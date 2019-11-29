@@ -13,12 +13,14 @@
                 <el-row>
                   <el-col :span="3" class="user-image">
                     <div v-if="false">
-                      <img src alt width="50px" height="50px"/>
+                      <img src alt width="50px" height="50px" />
                     </div>
                     <div v-else>
                       <div :class="'user-image'">
-                        <span>{{userDetails.aboutUser["username"].split(' ')[0][0]}}
-                        {{userDetails.aboutUser["username"].split(' ')[1][0]}}</span>
+                        <span>
+                          {{userDetails.aboutUser["username"].split(' ')[0][0]}}
+                          {{userDetails.aboutUser["username"].split(' ')[1][0]}}
+                        </span>
                       </div>
                     </div>
                   </el-col>
@@ -39,11 +41,11 @@
                     <el-button @click="routPoints" type="success" class="button-points">0 баллов</el-button>
                   </el-col>
                   <el-col :span="13" class="btn-group">
-                    <font-awesome-icon :icon="['fab', 'facebook-f']" class="fa-border"/>
-                    <font-awesome-icon :icon="['fab', 'twitter']" class="fa-border"/>
-                    <font-awesome-icon :icon="['fab', 'google-plus-g']" class="fa-border"/>
-                    <font-awesome-icon :icon="['fab', 'vk']" class="fa-border"/>
-                    <font-awesome-icon :icon="['fab', 'odnoklassniki']" class="fa-border"/>
+                    <font-awesome-icon :icon="['fab', 'facebook-f']" class="fa-border" />
+                    <font-awesome-icon :icon="['fab', 'twitter']" class="fa-border" />
+                    <font-awesome-icon :icon="['fab', 'google-plus-g']" class="fa-border" />
+                    <font-awesome-icon :icon="['fab', 'vk']" class="fa-border" />
+                    <font-awesome-icon :icon="['fab', 'odnoklassniki']" class="fa-border" />
                   </el-col>
                 </el-row>
                 <el-row>
@@ -76,12 +78,14 @@
                       <p class="text-grey">Зарегестрирован:</p>
                     </el-row>
                     <el-row class="time">
-                      <div>{{ this.$times({
+                      <div>
+                        {{ this.$times({
                         time: userDetails.aboutUser["firstActive"],
                         format: '{D}.{MM}.{Y}'
                         })}}
                       </div>
-                      <div>{{ this.$times({
+                      <div>
+                        {{ this.$times({
                         time: userDetails.aboutUser["firstActive"],
                         format: '{H}:{M}:{S}'
                         })}}
@@ -93,12 +97,14 @@
                       <p class="text-grey">Последний визит:</p>
                     </el-row>
                     <el-row class="time">
-                      <div>{{ this.$times({
+                      <div>
+                        {{ this.$times({
                         time: userDetails.aboutUser["lastActive"],
                         format: '{D}.{MM}.{Y}'
                         })}}
                       </div>
-                      <div>{{ this.$times({
+                      <div>
+                        {{ this.$times({
                         time: userDetails.aboutUser["lastActive"],
                         format: '{H}:{M}:{S}'
                         })}}
@@ -120,7 +126,8 @@
                   <p>Кол-во активных действий</p>
                 </el-col>
                 <el-col :span="6" class="text-right">
-                  <p>0</p>
+                  <p v-if="userActivity">{{userActivity['totalActions']}}</p>
+                  <p v-else>N/A</p>
                 </el-col>
               </el-row>
               <el-row class="activity-row row-bg">
@@ -128,7 +135,8 @@
                   <p>Заходы на сайт</p>
                 </el-col>
                 <el-col :span="6" class="text-right">
-                  <p>0</p>
+                  <p v-if="userActivity">{{userActivity['sheetActions']}}</p>
+                  <p v-else>N/A</p>
                 </el-col>
               </el-row>
               <el-row class="activity-row">
@@ -136,7 +144,8 @@
                   <p>Взаимодействие с виджетом</p>
                 </el-col>
                 <el-col :span="6" class="text-right">
-                  <p>0</p>
+                  <p v-if="userActivity">{{userActivity['widgetActions']}}</p>
+                  <p v-else>N/A</p>
                 </el-col>
               </el-row>
               <el-row class="activity-row row-bg">
@@ -169,8 +178,8 @@
                     <p>Сумма покупок</p>
                   </el-col>
                   <el-col :span="12" class="text-right">
-                    <!-- <p v-if="userDetails.userTransactions['earnings']">{{ userDetails.userTransactions["earnings"] }}₽</p> -->
-                    <!-- <loading-square v-else/> -->
+                    <p v-if="userDetails.userTransactions['earnings']">{{ userDetails.userTransactions["earnings"] }}₽</p>
+                    <loading-square v-else/>
                   </el-col>
                 </el-row>
                 <el-row class="activity-row row-bg">
@@ -179,7 +188,7 @@
                   </el-col>
                   <el-col :span="12" class="text-right">
                     <p v-if="userDetails">{{ userDetails.userTransactions["sales"] }}</p>
-                    <loading-square v-else/>
+                    <loading-square v-else />
                   </el-col>
                 </el-row>
                 <el-row class="activity-row">
@@ -188,7 +197,7 @@
                   </el-col>
                   <el-col :span="12" class="text-right">
                     <p v-if="userDetails">{{ userDetails.userTransactions["tickets"] }}</p>
-                    <loading-square v-else/>
+                    <loading-square v-else />
                   </el-col>
                 </el-row>
                 <el-row class="activity-row row-bg">
@@ -197,7 +206,7 @@
                   </el-col>
                   <el-col :span="12" class="text-right">
                     <p v-if="userDetails">{{ userDetails.userTransactions["averageTickets"] }}</p>
-                    <loading-square v-else/>
+                    <loading-square v-else />
                   </el-col>
                 </el-row>
                 <el-row class="activity-row">
@@ -206,7 +215,7 @@
                   </el-col>
                   <el-col :span="12" class="text-right">
                     <p v-if="userDetails">{{ userDetails.userTransactions["averageEarnings"] }}₽</p>
-                    <loading-square v-else/>
+                    <loading-square v-else />
                   </el-col>
                 </el-row>
               </div>
@@ -307,7 +316,7 @@
                 <div class="specification__head-button">
                   <el-dropdown trigger="click">
                     <el-button type="warning" class="custom-cog">
-                      <font-awesome-icon :icon="['fas', 'cog']" class="fa-lg"/>
+                      <font-awesome-icon :icon="['fas', 'cog']" class="fa-lg" />
                     </el-button>
                     <!-- -----фильтр----- -->
                     <el-dropdown-menu slot="dropdown" class="container">
@@ -320,8 +329,7 @@
                             :type="column.visible ? 'warning' : 'info'"
                             effect="dark"
                             @click="column.visible = !column.visible"
-                          >{{ column.label }}
-                          </el-tag>
+                          >{{ column.label }}</el-tag>
                         </div>
                       </div>
                     </el-dropdown-menu>
@@ -330,7 +338,11 @@
               </div>
               <div class="specification__content">
                 <!-- -----таблица----- -->
-                <el-table v-if="userDetails.details" :data="userDetails.details" @row-click="dialogHandler">
+                <el-table
+                  v-if="userDetails.details"
+                  :data="userDetails.details"
+                  @row-click="dialogHandler"
+                >
                   <el-table-column
                     v-for="(column, columnID) in columns.filter(
                       resolve => resolve.visible
@@ -345,7 +357,9 @@
                     </template>
                     <template slot-scope="scope">
                       <span>
-                        <span v-if="column.source == 'date'">{{`${scope.row[column.source].substr(8, 2)}.${scope.row[column.source].substr(5, 2)}.${scope.row[column.source].substr(0,4)}`}}</span>
+                        <span
+                          v-if="column.source == 'date'"
+                        >{{`${scope.row[column.source].substr(8, 2)}.${scope.row[column.source].substr(5, 2)}.${scope.row[column.source].substr(0,4)}`}}</span>
                         <span v-else>{{scope.row[column.source]}}</span>
                       </span>
                     </template>
@@ -374,8 +388,8 @@
                           name: 'Компьютер'
                         }]"
                         :options="devicesOptions"
-                        type=bar
-                        height=130
+                        type="bar"
+                        height="130"
                       />
                     </el-row>
                     <el-row :gutter="20" class="list">
@@ -409,8 +423,7 @@
                         :key="id"
                         class="tag-name"
                         @click="routSegment(item.address)"
-                      >{{ item.name }}
-                      </div>
+                      >{{ item.name }}</div>
                     </div>
                     <div class="create-similar">
                       <div class="title">
@@ -420,7 +433,7 @@
                         <!-- <div class="tag-name">По дате регистрации</div>
                         <div class="tag-name">Похожи по чеку</div>
                         <div class="tag-name">Покупали те же билеты</div>
-                        <div class="tag-name">С похожими баллами</div> -->
+                        <div class="tag-name">С похожими баллами</div>-->
                       </div>
                     </div>
                   </el-tab-pane>
@@ -441,7 +454,7 @@
                 <el-row class="comments__wrapper">
                   <el-row class="comments__wrapper_username">
                     <el-col :span="6">
-                      <img src alt width="45px" height="45px"/>
+                      <img src alt width="45px" height="45px" />
                     </el-col>
                     <el-col :span="19" class="container">
                       <div class="name">Иван Дмитриев</div>
@@ -458,7 +471,7 @@
                 <el-row class="comments__wrapper">
                   <el-row class="comments__wrapper_username">
                     <el-col :span="6">
-                      <img src alt width="45px" height="45px"/>
+                      <img src alt width="45px" height="45px" />
                     </el-col>
                     <el-col :span="19" class="container">
                       <div class="name">Иван Дмитриев</div>
@@ -485,28 +498,19 @@
                 <el-row>
                   <el-col :span="8">
                     <div>
-                      <apexchart
-                        :options="probality_action"
-                        :series="[60]"
-                      />
+                      <apexchart :options="probality_action" :series="[60]" />
                       <p>Вероятность открыть e-mail</p>
                     </div>
                   </el-col>
                   <el-col :span="8">
                     <div>
-                      <apexchart
-                        :options="probality_nextbuy"
-                        :series="[90]"
-                      />
+                      <apexchart :options="probality_nextbuy" :series="[90]" />
                       <p>Вероятность открыть e-mail</p>
                     </div>
                   </el-col>
                   <el-col :span="8">
                     <div>
-                      <apexchart
-                        :options="probality_failure"
-                        :series="[90]"
-                      />
+                      <apexchart :options="probality_failure" :series="[90]" />
                       <p>Вероятность открыть e-mail</p>
                     </div>
                   </el-col>
@@ -518,79 +522,148 @@
       </el-tab-pane>
       <el-tab-pane name="details">
         <template slot="label">
-          <div class="header-title right" @click="preDownload">Детализация</div>
+          <div class="header-title right">Детализация</div>
         </template>
         <el-container class="detail payments">
           <div class="container">
             <el-tabs>
               <!-- ------------------------------------ВСЕ ДЕЙСТВИЯ----------------------------------------- -->
               <el-tab-pane label="Все действия">
-                <div v-if="!tabAsyncManager.loading && tabAsyncManager.detailsData.length" class="table-list">
-                  <el-tabs tab-position="left" v-model="active" @tab-click="detailUserOperationEvent">
-                    <el-tab-pane 
-                      v-for="(val, valID) in tabAsyncManager.detailsData.operations" 
+                <div
+                  v-if="!tabAsyncManager.loading && tabAsyncManager.detailsData.length"
+                  class="table-list"
+                >
+                  <el-tabs
+                    tab-position="left"
+                    v-model="active"
+                    @tab-click="detailUserOperationEvent"
+                  >
+                    <el-tab-pane
+                      v-for="(val, valID) in tabAsyncManager.detailsData.operations"
                       :name="val._id"
-                      :key="valID">
+                      :key="valID"
+                    >
                       <template slot="label">
                         <div class="info">
-                          <font-awesome-icon :icon="['fas', 'sign-out-alt']" class="fa-lg in"/>
+                          <font-awesome-icon :icon="['fas', 'sign-out-alt']" class="fa-lg in" />
                           {{tabAsyncManager.statuses[val.status]}}
                         </div>
-                        <div class="date">
-                          {{handleDate(val.date, "{Y}.{MM}.{D}")}}
-                        </div>
-                        <div class="time">
-                          {{handleDate(val.date, "{H}:{M}")}}
-                        </div>
+                        <div class="date">{{handleDate(val.date, "{Y}.{MM}.{D}")}}</div>
+                        <div class="time">{{handleDate(val.date, "{H}:{M}")}}</div>
                       </template>
 
                       <div class="wrapper">
                         <div class="step">
                           <div></div>
                           <div>
-                            <div><span class="title">Сведения по операции</span><span class="description">"{{tabAsyncManager.statuses[val.status]}}"</span></div>
-                            <div class="step-wrapper">
-                              <div class="inner"><div class="title">URL: </div><div class="description">{{String(tabAsyncManager.viewer.url).slice(0, 40) || '-'}}{{String(tabAsyncManager.viewer.url)[40] ? '...' : ''}}</div></div>
+                            <div>
+                              <span class="title">Сведения по операции</span>
+                              <span class="description">"{{tabAsyncManager.statuses[val.status]}}"</span>
                             </div>
                             <div class="step-wrapper">
-                              <div class="inner"><span class="title">ID: </span><span class="description">{{tabAsyncManager.viewer._id|| '-'}}</span></div>
-                              <div class="inner"><span class="title">ФИО: </span><span class="description">{{tabAsyncManager.viewer.name|| '-'}}</span></div>
-                              <div class="inner"><span class="title">Дата визита: </span><span class="description">{{handleDate(tabAsyncManager.viewer.date, "{Y}.{MM}.{D} {H}:{M}") || '-'}}</span></div>
-                              <div class="inner"><span class="title">Email: </span><span class="description">{{tabAsyncManager.viewer.email|| '-'}}</span></div>
-                              <div class="inner"><span class="title">Телефон: </span><span class="description">{{tabAsyncManager.viewer.phone|| '-'}}</span></div>
+                              <div class="inner">
+                                <div class="title">URL:</div>
+                                <div
+                                  class="description"
+                                >{{String(tabAsyncManager.viewer.url).slice(0, 40) || '-'}}</div>
+                              </div>
+                            </div>
+                            <div class="step-wrapper">
+                              <div class="inner">
+                                <span class="title">ID:</span>
+                                <span class="description">{{tabAsyncManager.viewer._id|| '-'}}</span>
+                              </div>
+                              <div class="inner">
+                                <span class="title">ФИО:</span>
+                                <span class="description">{{tabAsyncManager.viewer.name|| '-'}}</span>
+                              </div>
+                              <div class="inner">
+                                <span class="title">Дата визита:</span>
+                                <span
+                                  class="description"
+                                >{{handleDate(tabAsyncManager.viewer.date, "{Y}.{MM}.{D} {H}:{M}") || '-'}}</span>
+                              </div>
+                              <div class="inner">
+                                <span class="title">Email:</span>
+                                <span class="description">{{tabAsyncManager.viewer.email|| '-'}}</span>
+                              </div>
+                              <div class="inner">
+                                <span class="title">Телефон:</span>
+                                <span class="description">{{tabAsyncManager.viewer.phone|| '-'}}</span>
+                              </div>
                             </div>
                             <div class="step-wrapper" v-if="tabAsyncManager.viewer.utm.tags">
                               <div
                                 v-for="(utmKey, utmID) in Object.keys(tabAsyncManager.viewer.utm.tags)"
                                 :key="utmID"
                                 class="inner"
-                              ><span class="title">{{utmKey}}: </span><span class="description">{{tabAsyncManager.viewer.utm.tags[utmKey]}}</span>
+                              >
+                                <span class="title">{{utmKey}}:</span>
+                                <span
+                                  class="description"
+                                >{{tabAsyncManager.viewer.utm.tags[utmKey]}}</span>
                               </div>
                             </div>
                             <div class="step-wrapper">
-                              <div class="inner"><span class="title">Yandex: </span><span class="description">{{tabAsyncManager.viewer.analytics.yandex || '-'}}</span></div>
-                              <div class="inner"><span class="title">Google: </span><span class="description">{{tabAsyncManager.viewer.analytics.google || '-'}}</span></div>
-                              <div class="inner"><span class="title">Facebook: </span><span class="description">{{tabAsyncManager.viewer.analytics.facebook|| '-'}}</span></div>
+                              <div class="inner">
+                                <span class="title">Yandex:</span>
+                                <span
+                                  class="description"
+                                >{{tabAsyncManager.viewer.analytics.yandex || '-'}}</span>
+                              </div>
+                              <div class="inner">
+                                <span class="title">Google:</span>
+                                <span
+                                  class="description"
+                                >{{tabAsyncManager.viewer.analytics.google || '-'}}</span>
+                              </div>
+                              <div class="inner">
+                                <span class="title">Facebook:</span>
+                                <span
+                                  class="description"
+                                >{{tabAsyncManager.viewer.analytics.facebook|| '-'}}</span>
+                              </div>
                             </div>
                             <div class="step-wrapper">
-                              <div class="inner"><span class="title">Браузер: </span><span class="description">{{tabAsyncManager.viewer.browser.name|| '-'}}</span></div>
-                              <div class="inner"><span class="title">Версия: </span><span class="description">{{tabAsyncManager.viewer.browser.version|| '-'}}</span></div>
-                              <div class="inner"><span class="title">ОС: </span><span class="description">{{tabAsyncManager.viewer.os.name|| '-'}}</span></div>
+                              <div class="inner">
+                                <span class="title">Браузер:</span>
+                                <span
+                                  class="description"
+                                >{{tabAsyncManager.viewer.browser.name|| '-'}}</span>
+                              </div>
+                              <div class="inner">
+                                <span class="title">Версия:</span>
+                                <span
+                                  class="description"
+                                >{{tabAsyncManager.viewer.browser.version|| '-'}}</span>
+                              </div>
+                              <div class="inner">
+                                <span class="title">ОС:</span>
+                                <span class="description">{{tabAsyncManager.viewer.os.name|| '-'}}</span>
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
                     </el-tab-pane>
                   </el-tabs>
-                  
+
                   <div class="pagination">
                     <el-dropdown split-button type="primary" @command="handleCommand">
                       {{views}}
                       <el-dropdown-menu slot="dropdown">
-                        <el-dropdown-item command="10"><span style="padding: 0 5px">10</span></el-dropdown-item>
-                        <el-dropdown-item command="20"><span style="padding: 0 5px">20</span></el-dropdown-item>
-                        <el-dropdown-item command="30"><span style="padding: 0 5px">30</span></el-dropdown-item>
-                        <el-dropdown-item command="40"><span style="padding: 0 5px">40</span></el-dropdown-item>
+                        <el-dropdown-item command="10">
+                          <span style="padding: 0 5px">10</span>
+                        </el-dropdown-item>
+                        <el-dropdown-item command="20">
+                          <span style="padding: 0 5px">20</span>
+                        </el-dropdown-item>
+                        <el-dropdown-item command="30">
+                          <span style="padding: 0 5px">30</span>
+                        </el-dropdown-item>
+                        <el-dropdown-item command="40">
+                          <span style="padding: 0 5px">40</span>
+                        </el-dropdown-item>
                       </el-dropdown-menu>
                     </el-dropdown>
                     <el-pagination
@@ -598,19 +671,18 @@
                       layout="prev, pager, next"
                       :total="this.tabAsyncManager.detailsData.length"
                       :page-size="10"
-                      :current-page.sync="current">
-                    </el-pagination>
+                      :current-page.sync="current"
+                    ></el-pagination>
                   </div>
                 </div>
                 <div v-else>
-                  <div v-loading="true" style="height: 470px;">
-                  </div>
+                  <div v-loading="true" style="height: 470px;"></div>
                 </div>
               </el-tab-pane>
               <!-- -----------------------------------ИСХОДЯЩИЕ--------------------------------------------- -->
               <el-tab-pane disabled>
                 <template slot="label">
-                  <el-select value='Исходящие'>
+                  <el-select value="Исходящие">
                     <div class="payments detail dropdown">
                       <el-option
                         v-for="(item, id) in dropdown.options"
@@ -644,274 +716,306 @@
     </el-tabs>
     <!-- -----------------------------------------ИНФОРМАЦИЯ О ТРАНЗАКЦИИ------------------------------ -->
     <div>
-      <dialogs :visible.sync="dialogVisible" @closeDialog="handleClose" :data="dialogData" v-if="dialogData.loading"></dialogs>
+      <dialogs
+        :visible.sync="dialogVisible"
+        @closeDialog="handleClose"
+        :data="dialogData"
+        v-if="dialogData.loading"
+      ></dialogs>
     </div>
   </el-main>
 </template>
 <script>
-    import dialogs from '@/components/elements/dialog-payment.vue'
-    import settings from '@/components/graphics-settings/payments-id.vue'
+import dialogs from "@/components/elements/dialog-payment.vue";
+import settings from "@/components/graphics-settings/payments-id.vue";
 
-    export default {
-        layout: "dashboard",
-        middleware: "roles/user",
-        components: {dialogs},
-        async asyncData({store, params}) {
-            const userDetails = await store.dispatch(
-                "payment/getUserDetails",
-                params.id
-            )
-            const userId = params.id
+export default {
+  layout: "dashboard",
+  middleware: "roles/user",
+  components: { dialogs },
+  async asyncData({ store, params }) {
+    const userId = params.id;
 
-            return {userDetails, userId}
-        },
-        
-        data() {
-            return {  
-                current: 1,
-                userId: null,
-                active: null,
-                dialogData: {
-                    browser: {},
-                    os: {},
-                    cookies: {},
-                    utm: {tags: {}},
-                    analytics: {}
-                },
+    const userDetails = await store.dispatch(
+      "payment/getUserDetails",
+      userId
+    );
 
-                devicesOptions: {
-                    xaxis: {
-                        categories: ['Компьютер', 'Смартфон'],
-                        labels: {
-                            show: false
-                        },
-                        axisBorder: {
-                            show: false
-                        },
-                        axisTicks: {
-                            show: false
-                        }
-                    },
-                    grid: {
-                        borderColor: '#ffffff'
-                    },
-                    plotOptions: {
-                        bar: {
-                            horizontal: true,
-                            distributed: true,
-                            columnWidth: '100%',
-                            barHeight: '90%'
-                        }
-                    },
-                    chart: {
-                        toolbar: {
-                            show: false
-                        },
-                        width: '100%'
-                    },
-                    legend: {
-                        show: false
-                    },
-                    dataLabels: {
-                        formatter(val) {
-                            return val + '%'
-                        }
-                    },
-                    tooltip: {
-                        enabled: false
-                    }
-                },
 
-                columns: [
-                    {label: "Дата", source: "date", visible: true, width: 100},
-                    {label: "Событие", source: "event", visible: true, width: 300},
-                    {label: "Чек", source: "earnings", visible: true, width: 100},
-                    {label: "Купил билетов", source: "tickets", visible: true, width: 150},
-                    {label: "Источник", source: "source", visible: true, width: 130},
-                    {label: "Город", source: "city", visible: true, width: 100}
-                ],
+    return { userDetails, userId };
+  },
 
-                views: 10,
-                dropdown: {
-                    input: '',
-                    output: '',
-                    options: [{
-                        value: 'all',
-                        label: 'Все'
-                    }, {
-                        value: 'email',
-                        label: 'Email'
-                    }, {
-                        value: 'sms',
-                        label: 'SMS'
-                    }, {
-                        value: 'banner',
-                        label: 'Баннер'
-                    }, {
-                        value: 'sms1',
-                        label: 'SMS'
-                    }, {
-                        value: 'push1',
-                        label: 'Push'
-                    }]
-                },
+  data() {
+    return {
+      userActivity: null,
+      current: 1,
+      userId: null,
+      active: null,
+      dialogData: {
+        browser: {},
+        os: {},
+        cookies: {},
+        utm: { tags: {} },
+        analytics: {}
+      },
 
-                dialogVisible: false,
-                graphic_activity: settings.graphic_activity,
-                graphic_transitions: settings.graphic_transitions,
-                probality_action: settings.probality_action,
-                probality_nextbuy: settings.probality_nextbuy,
-                probality_failure: settings.probality_failure,
-
-                tabAsyncManager: {
-                    statuses: {
-                        'WIDGET_OPEN': 'Открыл виджет',
-                        'WIDGET_LAZY': 'Виджет загружен',
-                        'WIDGET_SEAT': 'Выбирает места',
-                        'WIDGET_UNSEAT': 'Удаляет места',
-                        'WIDGET_ORDER': 'Оформление',
-                        'WIDGET_SUCCESS': 'Оплата',
-                        'WIDGET_PAYMENT': 'Оплачен',
-                        'VISIT': 'Заход на сайт'
-                    },
-
-                    lastChangeTab: null,
-                    data: null,
-                    detailsData: {
-                        length: 0,
-                        operations: null,
-                    },
-                    offset: 1,
-                    loading: false,
-
-                    viewer: {
-                        _id: null,
-                        name: null,
-                        date: null,
-                        email: null,
-                        phone: null,
-
-                        utm: {
-                            source: null,
-                            tags: null
-                        },
-
-                        os: {
-                            name: null,
-                            arch: null,
-                        },
-
-                        browser: {
-                            name: null,
-                            version: null
-                        },
-
-                        analytics: {
-                            google: null,
-                            facebook: null,
-                            yandex: null
-                        }
-                    }
-                }
-            }
-        },
-        watch: {
-          current() {
-            this.tabAsyncManager.lastChangeTab = null
-            this.openTabEvent({name: 'details'})
+      devicesOptions: {
+        xaxis: {
+          categories: ["Компьютер", "Смартфон"],
+          labels: {
+            show: false
           },
-          views() {
-            this.tabAsyncManager.lastChangeTab = null
-            this.openTabEvent({name: 'details'})
+          axisBorder: {
+            show: false
+          },
+          axisTicks: {
+            show: false
           }
         },
-        methods: {
-          async preDownload() {
-            console.log('name')
+        grid: {
+          borderColor: "#ffffff"
+        },
+        plotOptions: {
+          bar: {
+            horizontal: true,
+            distributed: true,
+            columnWidth: "100%",
+            barHeight: "90%"
+          }
+        },
+        chart: {
+          toolbar: {
+            show: false
           },
-          handleClose() {
-            this.dialogVisible = false
-            this.dialogData = {
-              browser: {},
-              os: {},
-              cookies: {},
-              utm: { tags: {} },
-              analytics: {}
-            }
-          },
-            async dialogHandler(val) {
-                const request = await this.$axios.post(
-                    `${process.env.address}/v1/reports/payments.details`,
-                    {
-                        offset: val.offset,
-                        ...this.$store.getters["dashboard/globalFilters"]
-                    }
-                )
-                console.log(request.data.seats[0][0], 'request')
-
-                this.dialogData = {...request.data, loading: true};
-                this.dialogVisible = true;
-
-                console.log(window)
-            },
-            handleCommand(command) {
-              this.views = command
-            },
-            handleDate(time, format) {
-              return this.$times({ time: String(time), format: String(format) })
-            },
-            routPoints() {
-                this.$router.push(`${this.userId}/points/`)
-            },
-            routSegment(val) {
-                this.$router.push(`/segments/${val}`)
-            },
-            openTabEvent({name}) {
-                console.log(name, typeof name, this.tabAsyncManager.lastChangeTab)
-                if (name !== 'details' || this.tabAsyncManager.lastChangeTab === name) {
-                    this.tabAsyncManager.lastChangeTab = name;
-                    return;
-                }
-
-                this.tabAsyncManager.lastChangeTab = name;
-                this.tabAsyncManager.loading = true;
-
-                this.$axios.post(`${process.env.address}/v1/reports/getDetailsUserInformation.steps`, {
-                    views: Number(this.views),
-                    phone: this.userId,
-                    offset: this.current
-                }).then(resolve => {
-                    const {data} = resolve;
-                    if (data.error) {
-                        return;
-                    }
-
-                    this.tabAsyncManager.detailsData = data.then;
-
-                    const id = this.tabAsyncManager.detailsData.operations[0]['_id']
-                    this.detailUserOperationEvent({name: id})
-                    this.active = id
-                }).catch(error => {
-                    console.error(error);
-                }).finally(() => {
-                    this.tabAsyncManager.loading = false;
-                })
-            },
-
-            detailUserOperationEvent({name}) {
-                console.log(name)
-                this.$axios.post(`${process.env.address}/v1/reports/getDetailsUserInformation.info`, {
-                    address: name
-                }).then(resolve => {
-                    const {data} = resolve;
-
-                    if(data.error) {
-                        return;
-                    }
-
-                    this.tabAsyncManager.viewer = data.then;
-                })
-            }
+          width: "100%"
+        },
+        legend: {
+          show: false
+        },
+        dataLabels: {
+          formatter(val) {
+            return val + "%";
+          }
+        },
+        tooltip: {
+          enabled: false
         }
+      },
+
+      columns: [
+        { label: "Дата", source: "date", visible: true, width: 100 },
+        { label: "Событие", source: "event", visible: true, width: 300 },
+        { label: "Чек", source: "earnings", visible: true, width: 100 },
+        {
+          label: "Купил билетов",
+          source: "tickets",
+          visible: true,
+          width: 150
+        },
+        { label: "Источник", source: "source", visible: true, width: 130 },
+        { label: "Город", source: "city", visible: true, width: 100 }
+      ],
+
+      views: 10,
+      dropdown: {
+        input: "",
+        output: "",
+        options: [
+          {
+            value: "all",
+            label: "Все"
+          },
+          {
+            value: "email",
+            label: "Email"
+          },
+          {
+            value: "sms",
+            label: "SMS"
+          },
+          {
+            value: "banner",
+            label: "Баннер"
+          },
+          {
+            value: "sms1",
+            label: "SMS"
+          },
+          {
+            value: "push1",
+            label: "Push"
+          }
+        ]
+      },
+
+      dialogVisible: false,
+      graphic_activity: settings.graphic_activity,
+      graphic_transitions: settings.graphic_transitions,
+      probality_action: settings.probality_action,
+      probality_nextbuy: settings.probality_nextbuy,
+      probality_failure: settings.probality_failure,
+
+      tabAsyncManager: {
+        statuses: {
+          WIDGET_OPEN: "Открыл виджет",
+          WIDGET_LAZY: "Виджет загружен",
+          WIDGET_SEAT: "Выбирает места",
+          WIDGET_UNSEAT: "Удаляет места",
+          WIDGET_ORDER: "Оформление",
+          WIDGET_SUCCESS: "Оплата",
+          WIDGET_PAYMENT: "Оплачен",
+          VISIT: "Заход на сайт"
+        },
+
+        lastChangeTab: null,
+        data: null,
+        detailsData: {
+          length: 0,
+          operations: null
+        },
+        offset: 1,
+        loading: false,
+
+        viewer: {
+          _id: null,
+          name: null,
+          date: null,
+          email: null,
+          phone: null,
+
+          utm: {
+            source: null,
+            tags: null
+          },
+
+          os: {
+            name: null,
+            arch: null
+          },
+
+          browser: {
+            name: null,
+            version: null
+          },
+
+          analytics: {
+            google: null,
+            facebook: null,
+            yandex: null
+          }
+        }
+      }
+    };
+  },
+  watch: {
+    current() {
+      this.tabAsyncManager.lastChangeTab = null;
+      this.openTabEvent({ name: "details" });
+    },
+    views() {
+      this.tabAsyncManager.lastChangeTab = null;
+      this.openTabEvent({ name: "details" });
     }
+  },
+  mounted() {
+    this.getUserActivity();
+  },
+  methods: {
+    async getUserActivity() {
+      const request = await this.$axios.get(`${process.env.address}/v1/reports/buyers/userActivity/${this.userId}`)
+      this.userActivity = request.data.then
+    },
+    handleClose() {
+      this.dialogVisible = false;
+      this.dialogData = {
+        browser: {},
+        os: {},
+        cookies: {},
+        utm: { tags: {} },
+        analytics: {},
+        loading: false
+      };
+    },
+    async dialogHandler(val) {
+      const request = await this.$axios.post(
+        `${process.env.address}/v1/reports/payments.details`,
+        {
+          offset: val.offset,
+          ...this.$store.getters["dashboard/globalFilters"]
+        }
+      );
+      console.log(request.data.seats[0][0], "request");
+
+      this.dialogData = { ...request.data, loading: true };
+      this.dialogVisible = true;
+
+      console.log(window);
+    },
+    handleCommand(command) {
+      this.views = command;
+    },
+    handleDate(time, format) {
+      return this.$times({ time: String(time), format: String(format) });
+    },
+    routPoints() {
+      this.$router.push(`${this.userId}/points/`);
+    },
+    openTabEvent({ name }) {
+      if (name !== "details" || this.tabAsyncManager.lastChangeTab === name) {
+        this.tabAsyncManager.lastChangeTab = name;
+        return;
+      }
+
+      this.tabAsyncManager.lastChangeTab = name;
+      this.tabAsyncManager.loading = true;
+
+      this.$axios
+        .post(
+          `${process.env.address}/v1/reports/getDetailsUserInformation.steps`,
+          {
+            views: Number(this.views),
+            phone: this.userId,
+            offset: this.current
+          }
+        )
+        .then(resolve => {
+          const { data } = resolve;
+          if (data.error) {
+            return;
+          }
+
+          this.tabAsyncManager.detailsData = data.then;
+
+          const id = this.tabAsyncManager.detailsData.operations[0]["_id"];
+          this.detailUserOperationEvent({ name: id });
+          this.active = id;
+        })
+        .catch(error => {
+          console.error(error);
+        })
+        .finally(() => {
+          this.tabAsyncManager.loading = false;
+        });
+    },
+
+    detailUserOperationEvent({ name }) {
+      this.$axios
+        .post(
+          `${process.env.address}/v1/reports/getDetailsUserInformation.info`,
+          {
+            address: name
+          }
+        )
+        .then(resolve => {
+          const { data } = resolve;
+
+          if (data.error) {
+            return;
+          }
+
+          this.tabAsyncManager.viewer = data.then;
+        });
+    }
+  }
+};
 </script>

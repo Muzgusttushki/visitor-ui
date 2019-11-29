@@ -19,7 +19,8 @@
             <!-- ---------------------------UTM------------------------------------ -->
             <div v-if="this.utm">
               <div class="item" v-for="(id, item) in this.utm" :key="id">
-                <span class="item__name">{{item}}: </span><span>{{id}}</span>
+                <span class="item__name">{{item}}:</span>
+                <span>{{id}}</span>
               </div>
             </div>
           </div>
@@ -129,97 +130,97 @@
 </template>
 
 <script>
-    export default {
-        props: ['data', 'visible'],
-        data() {
-            return {
-                visbl: this.visible,
-                utm: {...this.data.utm.tags} || null
-            }
-        },
-        watch: {
-            visbl() {
-                this.$emit('closeDialog')
-            }
-        }
+export default {
+  props: ["data", "visible"],
+  data() {
+    return {
+      visbl: this.visible,
+      utm: { ...this.data.utm.tags } || null
+    };
+  },
+  watch: {
+    visbl() {
+      this.$emit("closeDialog");
     }
+  }
+};
 </script>
 
 <style lang="scss">
-  .el-dialog__wrapper {
+.el-dialog__wrapper {
+  .el-dialog {
+    width: 570px;
+    border-radius: 10px;
 
-    .el-dialog {
-      width: 570px;
-      border-radius: 10px;
+    &__header {
+      padding-bottom: 16px;
+    }
 
-      &__header {
-        padding-bottom: 16px;
+    &__title {
+      color: #333333;
+      font-weight: bold;
+      font-size: 16px;
+      font-style: normal;
+    }
+
+    &__body {
+      padding: 0 20px 30px;
+    }
+
+    .wrapper {
+      display: flex;
+      flex-flow: row wrap;
+
+      .main,
+      .cook {
+        width: 60%;
+
+        .dialogInfo__title {
+          border-radius: 4px 0 0 4px;
+        }
       }
 
-      &__title {
-        color: #333333;
-        font-weight: bold;
-        font-size: 16px;
-        font-style: normal;
+      .geo,
+      .browser {
+        width: 40%;
+
+        .dialogInfo__title {
+          border-radius: 0 4px 4px 0;
+        }
       }
 
-      &__body {
-        padding: 0 20px 30px;
+      .event {
+        width: 100%;
+
+        .dialogInfo__title {
+          border-radius: 4px;
+        }
       }
 
-      .wrapper {
-        display: flex;
-        flex-flow: row wrap;
-
-        .main, .cook {
-          width: 60%;
-
-          .dialogInfo__title {
-            border-radius: 4px 0 0 4px;
-          }
+      .dialogInfo {
+        &__title {
+          background: rgba(196, 210, 234, 0.2);
+          font-weight: 500;
+          font-size: 13px;
+          color: #333333;
+          padding: 10px;
         }
 
-        .geo, .browser {
-          width: 40%;
+        &__container {
+          margin: 10px 0;
+          font-size: 13px;
 
-          .dialogInfo__title {
-            border-radius: 0 4px 4px 0;
-          }
-        }
-
-        .event {
-          width: 100%;
-
-          .dialogInfo__title {
-            border-radius: 4px;
-          }
-        }
-
-        .dialogInfo {
-
-          &__title {
-            background: rgba(196, 210, 234, 0.2);
-            font-weight: 500;
-            font-size: 13px;
+          .item {
             color: #333333;
-            padding: 10px;
-          }
+            padding: 7px 0 7px 10px;
 
-          &__container {
-            margin: 10px 0;
-            font-size: 13px;
-
-            .item {
-              color: #333333;
-              padding: 7px 0 7px 10px;
-
-              &__name {
-                color: #5C768F;
-              }
+            &__name {
+              color: #5c768f;
             }
           }
         }
       }
     }
   }
+}
 </style>

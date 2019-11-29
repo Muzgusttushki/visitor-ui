@@ -634,9 +634,12 @@ $lg-width: 1200px;
 
       &__content {
         padding: 0 15px;
+        // max-width: 1000px;
+        // @import '../templates/table';
+        
 
         .el-table {
-          // overflow: visible;
+          overflow: visible;
 
           &__header-wrapper {
             thead {
