@@ -1015,18 +1015,16 @@ export default {
           }
 
           this.tabAsyncManager.viewer = data.then;
-        })
-        .then(() => {
           this.$nextTick(() => {
-            this.calculateStyleTabs()
+            this.calculateStyleTabs(name)
           })
         })
     },
-    async calculateStyleTabs() {
-      this.customTabsHeadStyle = await document.querySelector(".el-tabs__nav-wrap.is-left");
-      this.customTabsBodyStyle = await document.querySelector(".wrapper .step");
-      console.log(this.customTabsHeadStyle, this.customTabsBodyStyle)
-      this.customTabsHeadStyle.style.maxHeight = this.customTabsBodyStyle.offsetHeight + 'px'
+    async calculateStyleTabs(id) {
+      const head = await document.querySelector(".el-tabs__nav-wrap.is-left");
+      const body = await document.getElementById(`pane-${id}`).querySelector('.wrapper .step');
+      console.log(head, body, head.style.maxHeight, body.clientHeight)
+      head.style.maxHeight = body.clientHeight + 'px'
     }
   }
 };
