@@ -565,9 +565,7 @@
                             <div class="step-wrapper">
                               <div class="inner">
                                 <div class="title">URL:</div>
-                                <div
-                                  class="description"
-                                >{{tabAsyncManager.viewer.url || '-'}}</div>
+                                <div class="description">{{tabAsyncManager.viewer.url || '-'}}</div>
                               </div>
                             </div>
                             <div class="step-wrapper">
@@ -761,6 +759,9 @@ export default {
         utm: { tags: {} },
         analytics: {}
       },
+
+      customTabsHeadStyle: null,
+      customTabsBodyStyle: null,
 
       devicesOptions: {
         xaxis: {
@@ -1014,7 +1015,18 @@ export default {
           }
 
           this.tabAsyncManager.viewer = data.then;
-        });
+        })
+        .then(() => {
+          this.$nextTick(() => {
+            this.calculateStyleTabs()
+          })
+        })
+    },
+    async calculateStyleTabs() {
+      this.customTabsHeadStyle = await document.querySelector(".el-tabs__nav-wrap.is-left");
+      this.customTabsBodyStyle = await document.querySelector(".wrapper .step");
+      console.log(this.customTabsHeadStyle, this.customTabsBodyStyle)
+      this.customTabsHeadStyle.style.maxHeight = this.customTabsBodyStyle.offsetHeight + 'px'
     }
   }
 };
