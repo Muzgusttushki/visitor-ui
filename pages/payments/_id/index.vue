@@ -623,6 +623,12 @@
                                   class="description"
                                 >{{tabAsyncManager.viewer.analytics.facebook|| '-'}}</span>
                               </div>
+                              <div class="inner">
+                                <span class="title">Facebook:</span>
+                                <span
+                                  class="description"
+                                >{{tabAsyncManager.viewer.analytics.vis|| '-'}}</span>
+                              </div>
                             </div>
                             <div class="step-wrapper">
                               <div class="inner">
@@ -906,7 +912,8 @@ export default {
           analytics: {
             google: null,
             facebook: null,
-            yandex: null
+            yandex: null,
+              vis: null,
           }
         }
       }
