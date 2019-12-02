@@ -976,7 +976,7 @@
 
                 return name;
             },
-            
+
             handleDate(time, format) {
                 return this.$times({time: String(time), format: String(format)});
             },
