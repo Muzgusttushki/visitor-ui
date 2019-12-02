@@ -13,13 +13,12 @@
                 <el-row>
                   <el-col :span="3" class="user-image">
                     <div v-if="false">
-                      <img src alt width="50px" height="50px" />
+                      <img src alt width="50px" height="50px"/>
                     </div>
                     <div v-else>
                       <div :class="'user-image'">
                         <span>
-                          {{userDetails.aboutUser["username"].split(' ')[0][0]}}
-                          {{userDetails.aboutUser["username"].split(' ')[1][0]}}
+                          {{getUserAbbreviationCallback(userDetails.aboutUser["username"])}}
                         </span>
                       </div>
                     </div>
@@ -41,11 +40,11 @@
                     <el-button @click="routPoints" type="success" class="button-points">0 баллов</el-button>
                   </el-col>
                   <el-col :span="13" class="btn-group">
-                    <font-awesome-icon :icon="['fab', 'facebook-f']" class="fa-border" />
-                    <font-awesome-icon :icon="['fab', 'twitter']" class="fa-border" />
-                    <font-awesome-icon :icon="['fab', 'google-plus-g']" class="fa-border" />
-                    <font-awesome-icon :icon="['fab', 'vk']" class="fa-border" />
-                    <font-awesome-icon :icon="['fab', 'odnoklassniki']" class="fa-border" />
+                    <font-awesome-icon :icon="['fab', 'facebook-f']" class="fa-border"/>
+                    <font-awesome-icon :icon="['fab', 'twitter']" class="fa-border"/>
+                    <font-awesome-icon :icon="['fab', 'google-plus-g']" class="fa-border"/>
+                    <font-awesome-icon :icon="['fab', 'vk']" class="fa-border"/>
+                    <font-awesome-icon :icon="['fab', 'odnoklassniki']" class="fa-border"/>
                   </el-col>
                 </el-row>
                 <el-row>
@@ -181,7 +180,7 @@
                     <p
                       v-if="userDetails.userTransactions['earnings']"
                     >{{ userDetails.userTransactions["earnings"] }}₽</p>
-                    <loading-square v-else />
+                    <loading-square v-else/>
                   </el-col>
                 </el-row>
                 <el-row class="activity-row row-bg">
@@ -190,7 +189,7 @@
                   </el-col>
                   <el-col :span="12" class="text-right">
                     <p v-if="userDetails">{{ userDetails.userTransactions["sales"] }}</p>
-                    <loading-square v-else />
+                    <loading-square v-else/>
                   </el-col>
                 </el-row>
                 <el-row class="activity-row">
@@ -199,7 +198,7 @@
                   </el-col>
                   <el-col :span="12" class="text-right">
                     <p v-if="userDetails">{{ userDetails.userTransactions["tickets"] }}</p>
-                    <loading-square v-else />
+                    <loading-square v-else/>
                   </el-col>
                 </el-row>
                 <el-row class="activity-row row-bg">
@@ -208,7 +207,7 @@
                   </el-col>
                   <el-col :span="12" class="text-right">
                     <p v-if="userDetails">{{ userDetails.userTransactions["averageTickets"] }}</p>
-                    <loading-square v-else />
+                    <loading-square v-else/>
                   </el-col>
                 </el-row>
                 <el-row class="activity-row">
@@ -217,7 +216,7 @@
                   </el-col>
                   <el-col :span="12" class="text-right">
                     <p v-if="userDetails">{{ userDetails.userTransactions["averageEarnings"] }}₽</p>
-                    <loading-square v-else />
+                    <loading-square v-else/>
                   </el-col>
                 </el-row>
               </div>
@@ -318,7 +317,7 @@
                 <div class="specification__head-button">
                   <el-dropdown trigger="click">
                     <el-button type="warning" class="custom-cog">
-                      <font-awesome-icon :icon="['fas', 'cog']" class="fa-lg" />
+                      <font-awesome-icon :icon="['fas', 'cog']" class="fa-lg"/>
                     </el-button>
                     <!-- -----фильтр----- -->
                     <el-dropdown-menu slot="dropdown" class="container">
@@ -331,7 +330,8 @@
                             :type="column.visible ? 'warning' : 'info'"
                             effect="dark"
                             @click="column.visible = !column.visible"
-                          >{{ column.label }}</el-tag>
+                          >{{ column.label }}
+                          </el-tag>
                         </div>
                       </div>
                     </el-dropdown-menu>
@@ -425,7 +425,8 @@
                         :key="id"
                         class="tag-name"
                         @click="routSegment(item.address)"
-                      >{{ item.name }}</div>
+                      >{{ item.name }}
+                      </div>
                     </div>
                     <div class="create-similar">
                       <div class="title">
@@ -456,7 +457,7 @@
                 <el-row class="comments__wrapper">
                   <el-row class="comments__wrapper_username">
                     <el-col :span="6">
-                      <img src alt width="45px" height="45px" />
+                      <img src alt width="45px" height="45px"/>
                     </el-col>
                     <el-col :span="19" class="container">
                       <div class="name">Иван Дмитриев</div>
@@ -473,7 +474,7 @@
                 <el-row class="comments__wrapper">
                   <el-row class="comments__wrapper_username">
                     <el-col :span="6">
-                      <img src alt width="45px" height="45px" />
+                      <img src alt width="45px" height="45px"/>
                     </el-col>
                     <el-col :span="19" class="container">
                       <div class="name">Иван Дмитриев</div>
@@ -500,19 +501,19 @@
                 <el-row>
                   <el-col :span="8">
                     <div>
-                      <apexchart :options="probality_action" :series="[60]" />
+                      <apexchart :options="probality_action" :series="[60]"/>
                       <p>Вероятность открыть e-mail</p>
                     </div>
                   </el-col>
                   <el-col :span="8">
                     <div>
-                      <apexchart :options="probality_nextbuy" :series="[90]" />
+                      <apexchart :options="probality_nextbuy" :series="[90]"/>
                       <p>Вероятность открыть e-mail</p>
                     </div>
                   </el-col>
                   <el-col :span="8">
                     <div>
-                      <apexchart :options="probality_failure" :series="[90]" />
+                      <apexchart :options="probality_failure" :series="[90]"/>
                       <p>Вероятность открыть e-mail</p>
                     </div>
                   </el-col>
@@ -547,7 +548,7 @@
                     >
                       <template slot="label">
                         <div class="info">
-                          <font-awesome-icon :icon="['fas', 'sign-out-alt']" class="fa-lg in" />
+                          <font-awesome-icon :icon="['fas', 'sign-out-alt']" class="fa-lg in"/>
                           {{tabAsyncManager.statuses[val.status]}}
                         </div>
                         <div class="date">{{handleDate(val.date, "{Y}.{MM}.{D}")}}</div>
@@ -624,7 +625,7 @@
                                 >{{tabAsyncManager.viewer.analytics.facebook|| '-'}}</span>
                               </div>
                               <div class="inner">
-                                <span class="title">Facebook:</span>
+                                <span class="title">Visitor:</span>
                                 <span
                                   class="description"
                                 >{{tabAsyncManager.viewer.analytics.vis|| '-'}}</span>
@@ -732,311 +733,323 @@
   </el-main>
 </template>
 <script>
-import dialogs from "@/components/elements/dialog-payment.vue";
-import settings from "@/components/graphics-settings/payments-id.vue";
+    import dialogs from "@/components/elements/dialog-payment.vue";
+    import settings from "@/components/graphics-settings/payments-id.vue";
 
-export default {
-  layout: "dashboard",
-  middleware: "roles/user",
-  components: { dialogs },
-  async asyncData({ store, params, $axios }) {
-    const userId = params.id;
+    export default {
+        layout: "dashboard",
+        middleware: "roles/user",
+        components: {dialogs},
+        async asyncData({store, params, $axios}) {
+            const userId = params.id;
 
-    const userDetails = await store.dispatch("payment/getUserDetails", userId);
+            const userDetails = await store.dispatch("payment/getUserDetails", userId);
 
-    const request = await $axios.get(
-      `${process.env.address}/v1/reports/buyers/userActivity/${userId}`
-    );
-    const userActivity = request.data.then;
-    console.log(userDetails)
+            const request = await $axios.get(
+                `${process.env.address}/v1/reports/buyers/userActivity/${userId}`
+            );
+            const userActivity = request.data.then;
+            console.log(userDetails)
 
-    return { userDetails, userId, userActivity };
-  },
-
-  data() {
-    return {
-      userActivity: null,
-      current: 1,
-      userId: null,
-      active: null,
-      dialogData: {
-        browser: {},
-        os: {},
-        cookies: {},
-        utm: { tags: {} },
-        analytics: {}
-      },
-
-      customTabsHeadStyle: null,
-      customTabsBodyStyle: null,
-
-      devicesOptions: {
-        xaxis: {
-          categories: ["Компьютер", "Смартфон"],
-          labels: {
-            show: false
-          },
-          axisBorder: {
-            show: false
-          },
-          axisTicks: {
-            show: false
-          }
+            return {userDetails, userId, userActivity};
         },
-        grid: {
-          borderColor: "#ffffff"
+
+        data() {
+            return {
+                userActivity: null,
+                current: 1,
+                userId: null,
+                active: null,
+                dialogData: {
+                    browser: {},
+                    os: {},
+                    cookies: {},
+                    utm: {tags: {}},
+                    analytics: {}
+                },
+
+                customTabsHeadStyle: null,
+                customTabsBodyStyle: null,
+
+                devicesOptions: {
+                    xaxis: {
+                        categories: ["Компьютер", "Смартфон"],
+                        labels: {
+                            show: false
+                        },
+                        axisBorder: {
+                            show: false
+                        },
+                        axisTicks: {
+                            show: false
+                        }
+                    },
+                    grid: {
+                        borderColor: "#ffffff"
+                    },
+                    plotOptions: {
+                        bar: {
+                            horizontal: true,
+                            distributed: true,
+                            columnWidth: "100%",
+                            barHeight: "90%"
+                        }
+                    },
+                    chart: {
+                        toolbar: {
+                            show: false
+                        },
+                        width: "100%"
+                    },
+                    legend: {
+                        show: false
+                    },
+                    dataLabels: {
+                        formatter(val) {
+                            return val + "%";
+                        }
+                    },
+                    tooltip: {
+                        enabled: false
+                    }
+                },
+
+                columns: [
+                    {label: "Дата", source: "date", visible: true, width: 100},
+                    {label: "Событие", source: "event", visible: true, width: 300},
+                    {label: "Чек", source: "earnings", visible: true, width: 100},
+                    {
+                        label: "Купил билетов",
+                        source: "tickets",
+                        visible: true,
+                        width: 150
+                    },
+                    {label: "Источник", source: "source", visible: true, width: 130},
+                    {label: "Город", source: "city", visible: true, width: 100}
+                ],
+
+                views: 20,
+                dropdown: {
+                    input: "",
+                    output: "",
+                    options: [
+                        {
+                            value: "all",
+                            label: "Все"
+                        },
+                        {
+                            value: "email",
+                            label: "Email"
+                        },
+                        {
+                            value: "sms",
+                            label: "SMS"
+                        },
+                        {
+                            value: "banner",
+                            label: "Баннер"
+                        },
+                        {
+                            value: "sms1",
+                            label: "SMS"
+                        },
+                        {
+                            value: "push1",
+                            label: "Push"
+                        }
+                    ]
+                },
+
+                dialogVisible: false,
+                graphic_activity: settings.graphic_activity,
+                graphic_transitions: settings.graphic_transitions,
+                probality_action: settings.probality_action,
+                probality_nextbuy: settings.probality_nextbuy,
+                probality_failure: settings.probality_failure,
+
+                tabAsyncManager: {
+                    statuses: {
+                        WIDGET_OPEN: "Открыл виджет",
+                        WIDGET_LAZY: "Виджет загружен",
+                        WIDGET_SEAT: "Выбирает места",
+                        WIDGET_UNSEAT: "Удаляет места",
+                        WIDGET_ORDER: "Оформление",
+                        WIDGET_SUCCESS: "Оплата",
+                        WIDGET_PAYMENT: "Оплачен",
+                        VISIT: "Заход на сайт"
+                    },
+
+                    lastChangeTab: null,
+                    data: null,
+                    detailsData: {
+                        length: 0,
+                        operations: null
+                    },
+                    offset: 1,
+                    loading: false,
+
+                    viewer: {
+                        _id: null,
+                        name: null,
+                        date: null,
+                        email: null,
+                        phone: null,
+
+                        utm: {
+                            source: null,
+                            tags: null
+                        },
+
+                        os: {
+                            name: null,
+                            arch: null
+                        },
+
+                        browser: {
+                            name: null,
+                            version: null
+                        },
+
+                        analytics: {
+                            google: null,
+                            facebook: null,
+                            yandex: null,
+                            vis: null,
+                        }
+                    }
+                }
+            };
         },
-        plotOptions: {
-          bar: {
-            horizontal: true,
-            distributed: true,
-            columnWidth: "100%",
-            barHeight: "90%"
-          }
+        watch: {
+            current() {
+                this.tabAsyncManager.lastChangeTab = null;
+                this.openTabEvent({name: "details"});
+            },
+            views() {
+                this.tabAsyncManager.lastChangeTab = null;
+                this.openTabEvent({name: "details"});
+            }
         },
-        chart: {
-          toolbar: {
-            show: false
-          },
-          width: "100%"
+        mounted() {
+            this.getUserActivity();
         },
-        legend: {
-          show: false
-        },
-        dataLabels: {
-          formatter(val) {
-            return val + "%";
-          }
-        },
-        tooltip: {
-          enabled: false
+        methods: {
+            async getUserActivity() {
+            },
+            handleClose() {
+                this.dialogVisible = false;
+                this.dialogData = {
+                    browser: {},
+                    os: {},
+                    cookies: {},
+                    utm: {tags: {}},
+                    analytics: {},
+                    loading: false
+                };
+            },
+            async dialogHandler(val) {
+                const request = await this.$axios.post(
+                    `${process.env.address}/v1/reports/payments.details`,
+                    {
+                        offset: val.offset,
+                        ...this.$store.getters["dashboard/globalFilters"]
+                    }
+                );
+                console.log(request.data.seats[0][0], "request");
+
+                this.dialogData = {...request.data, loading: true};
+                this.dialogVisible = true;
+
+                console.log(window);
+            },
+            handleCommand(command) {
+                this.views = command;
+            },
+
+            getUserAbbreviationCallback(name) {
+                const sliceName = name.split(' ');
+                name = sliceName[0][0];
+
+                if (sliceName[1])
+                    name
+                        .concat(sliceName[1][0]);
+
+                return name;
+            },
+            handleDate(time, format) {
+                return this.$times({time: String(time), format: String(format)});
+            },
+            routSegment(id) {
+                this.$router.push(`/segments/${id}`)
+            },
+            routPoints() {
+                this.$router.push(`${this.userId}/points/`);
+            },
+            openTabEvent({name}) {
+                if (name !== "details" || this.tabAsyncManager.lastChangeTab === name) {
+                    this.tabAsyncManager.lastChangeTab = name;
+                    return;
+                }
+
+                this.tabAsyncManager.lastChangeTab = name;
+                this.tabAsyncManager.loading = true;
+
+                this.$axios
+                    .post(
+                        `${process.env.address}/v1/reports/getDetailsUserInformation.steps`,
+                        {
+                            views: Number(this.views),
+                            phone: this.userId,
+                            offset: this.current
+                        }
+                    )
+                    .then(resolve => {
+                        const {data} = resolve;
+                        if (data.error) {
+                            return;
+                        }
+
+                        this.tabAsyncManager.detailsData = data.then;
+
+                        const id = this.tabAsyncManager.detailsData.operations[0]["_id"];
+                        this.detailUserOperationEvent({name: id});
+                        this.active = id;
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    })
+                    .finally(() => {
+                        this.tabAsyncManager.loading = false;
+                    });
+            },
+
+            detailUserOperationEvent({name}) {
+                this.$axios
+                    .post(
+                        `${process.env.address}/v1/reports/getDetailsUserInformation.info`,
+                        {
+                            address: name
+                        }
+                    )
+                    .then(resolve => {
+                        const {data} = resolve;
+
+                        if (data.error) {
+                            return;
+                        }
+
+                        this.tabAsyncManager.viewer = data.then;
+                        this.$nextTick(() => {
+                            this.calculateStyleTabs(name)
+                        })
+                    })
+            },
+            async calculateStyleTabs(id) {
+                const head = await document.querySelector(".el-tabs__nav-wrap.is-left");
+                const body = await document.getElementById(`pane-${id}`).querySelector('.wrapper .step');
+                console.log(head, body, head.style.maxHeight, body.clientHeight)
+                head.style.maxHeight = body.clientHeight + 'px'
+            }
         }
-      },
-
-      columns: [
-        { label: "Дата", source: "date", visible: true, width: 100 },
-        { label: "Событие", source: "event", visible: true, width: 300 },
-        { label: "Чек", source: "earnings", visible: true, width: 100 },
-        {
-          label: "Купил билетов",
-          source: "tickets",
-          visible: true,
-          width: 150
-        },
-        { label: "Источник", source: "source", visible: true, width: 130 },
-        { label: "Город", source: "city", visible: true, width: 100 }
-      ],
-
-      views: 20,
-      dropdown: {
-        input: "",
-        output: "",
-        options: [
-          {
-            value: "all",
-            label: "Все"
-          },
-          {
-            value: "email",
-            label: "Email"
-          },
-          {
-            value: "sms",
-            label: "SMS"
-          },
-          {
-            value: "banner",
-            label: "Баннер"
-          },
-          {
-            value: "sms1",
-            label: "SMS"
-          },
-          {
-            value: "push1",
-            label: "Push"
-          }
-        ]
-      },
-
-      dialogVisible: false,
-      graphic_activity: settings.graphic_activity,
-      graphic_transitions: settings.graphic_transitions,
-      probality_action: settings.probality_action,
-      probality_nextbuy: settings.probality_nextbuy,
-      probality_failure: settings.probality_failure,
-
-      tabAsyncManager: {
-        statuses: {
-          WIDGET_OPEN: "Открыл виджет",
-          WIDGET_LAZY: "Виджет загружен",
-          WIDGET_SEAT: "Выбирает места",
-          WIDGET_UNSEAT: "Удаляет места",
-          WIDGET_ORDER: "Оформление",
-          WIDGET_SUCCESS: "Оплата",
-          WIDGET_PAYMENT: "Оплачен",
-          VISIT: "Заход на сайт"
-        },
-
-        lastChangeTab: null,
-        data: null,
-        detailsData: {
-          length: 0,
-          operations: null
-        },
-        offset: 1,
-        loading: false,
-
-        viewer: {
-          _id: null,
-          name: null,
-          date: null,
-          email: null,
-          phone: null,
-
-          utm: {
-            source: null,
-            tags: null
-          },
-
-          os: {
-            name: null,
-            arch: null
-          },
-
-          browser: {
-            name: null,
-            version: null
-          },
-
-          analytics: {
-            google: null,
-            facebook: null,
-            yandex: null,
-              vis: null,
-          }
-        }
-      }
     };
-  },
-  watch: {
-    current() {
-      this.tabAsyncManager.lastChangeTab = null;
-      this.openTabEvent({ name: "details" });
-    },
-    views() {
-      this.tabAsyncManager.lastChangeTab = null;
-      this.openTabEvent({ name: "details" });
-    }
-  },
-  mounted() {
-    this.getUserActivity();
-  },
-  methods: {
-    async getUserActivity() {},
-    handleClose() {
-      this.dialogVisible = false;
-      this.dialogData = {
-        browser: {},
-        os: {},
-        cookies: {},
-        utm: { tags: {} },
-        analytics: {},
-        loading: false
-      };
-    },
-    async dialogHandler(val) {
-      const request = await this.$axios.post(
-        `${process.env.address}/v1/reports/payments.details`,
-        {
-          offset: val.offset,
-          ...this.$store.getters["dashboard/globalFilters"]
-        }
-      );
-      console.log(request.data.seats[0][0], "request");
-
-      this.dialogData = { ...request.data, loading: true };
-      this.dialogVisible = true;
-
-      console.log(window);
-    },
-    handleCommand(command) {
-      this.views = command;
-    },
-    handleDate(time, format) {
-      return this.$times({ time: String(time), format: String(format) });
-    },
-    routSegment(id) {
-      this.$router.push(`/segments/${id}`)
-    },
-    routPoints() {
-      this.$router.push(`${this.userId}/points/`);
-    },
-    openTabEvent({ name }) {
-      if (name !== "details" || this.tabAsyncManager.lastChangeTab === name) {
-        this.tabAsyncManager.lastChangeTab = name;
-        return;
-      }
-
-      this.tabAsyncManager.lastChangeTab = name;
-      this.tabAsyncManager.loading = true;
-
-      this.$axios
-        .post(
-          `${process.env.address}/v1/reports/getDetailsUserInformation.steps`,
-          {
-            views: Number(this.views),
-            phone: this.userId,
-            offset: this.current
-          }
-        )
-        .then(resolve => {
-          const { data } = resolve;
-          if (data.error) {
-            return;
-          }
-
-          this.tabAsyncManager.detailsData = data.then;
-
-          const id = this.tabAsyncManager.detailsData.operations[0]["_id"];
-          this.detailUserOperationEvent({ name: id });
-          this.active = id;
-        })
-        .catch(error => {
-          console.error(error);
-        })
-        .finally(() => {
-          this.tabAsyncManager.loading = false;
-        });
-    },
-
-    detailUserOperationEvent({ name }) {
-      this.$axios
-        .post(
-          `${process.env.address}/v1/reports/getDetailsUserInformation.info`,
-          {
-            address: name
-          }
-        )
-        .then(resolve => {
-          const { data } = resolve;
-
-          if (data.error) {
-            return;
-          }
-
-          this.tabAsyncManager.viewer = data.then;
-          this.$nextTick(() => {
-            this.calculateStyleTabs(name)
-          })
-        })
-    },
-    async calculateStyleTabs(id) {
-      const head = await document.querySelector(".el-tabs__nav-wrap.is-left");
-      const body = await document.getElementById(`pane-${id}`).querySelector('.wrapper .step');
-      console.log(head, body, head.style.maxHeight, body.clientHeight)
-      head.style.maxHeight = body.clientHeight + 'px'
-    }
-  }
-};
 </script>
