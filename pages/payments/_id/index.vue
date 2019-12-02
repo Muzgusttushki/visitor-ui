@@ -624,7 +624,7 @@
                                 >{{tabAsyncManager.viewer.analytics.facebook|| '-'}}</span>
                               </div>
                               <div class="inner">
-                                <span class="title">Facebook:</span>
+                                <span class="title">Visitor:</span>
                                 <span
                                   class="description"
                                 >{{tabAsyncManager.viewer.analytics.vis|| '-'}}</span>
