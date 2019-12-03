@@ -45,6 +45,12 @@
 
     .template-table {
       @import '../templates/table';
+
+      .el-table__row {
+        &-events {
+          max-width: 50px;
+        }
+      }
     }
 
     .tools {
