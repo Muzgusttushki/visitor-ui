@@ -230,8 +230,8 @@
                 <el-tabs>
                   <el-tab-pane label="Год">
                     <apexchart
-                      height="220"
                       type="area"
+                      height='550px'
                       :options="{
                         ...graphic_activity.common,
                         xaxis: { 
@@ -248,7 +248,7 @@
                   </el-tab-pane>
                   <el-tab-pane label="Месяц">
                     <apexchart
-                      height="220"
+                      width="100%"
                       type="area"
                       :options="{
                         ...graphic_activity.common,
@@ -266,7 +266,7 @@
                   </el-tab-pane>
                   <el-tab-pane label="Неделя">
                     <apexchart
-                      height="220"
+                      width="100%"
                       type="area"
                       :options="{
                         ...graphic_activity.common,
@@ -289,14 +289,14 @@
           <el-col :span="7" class="col-container graphic-transitions">
             <!-- -----------------------------------ИСТОЧНИКИ ПЕРЕХОДОВ------------------------------------ -->
             <div class="component-container">
-              <div class="graphic-transitions1">
-                <el-row>
+              <div>
+                <el-row class="title">
                   <h2 class="component-title">Источники переходов</h2>
                 </el-row>
-                <el-tabs>
+                <el-tabs class="content">
                   <div v-if="userSourceAnalyse && filteredUserSource">
                     <apexchart
-                      height="240"
+                      width="100%"
                       type="donut"
                       :options="{labels: this.filteredUserSource.type, ...this.graphic_transitions}"
                       :series="this.filteredUserSource.value"
@@ -313,13 +313,13 @@
             <!-- ---------------------------------------ИСТОЧНИКИ КОНВЕРСИЙ-------------------------------- -->
             <div class="component-container">
               <div>
-                <el-row>
+                <el-row  class="content">
                   <h2 class="component-title">Источники конверсий</h2>
                 </el-row>
-                <el-tabs>
+                <el-tabs class="content">
                   <div>
                     <apexchart
-                      height="240"
+                      width="100%"
                       type="donut"
                       :options="graphic_transitions"
                       :series="[42, 50, 91]"

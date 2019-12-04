@@ -9,7 +9,22 @@ export default {
       stroke: { curve: "smooth" },
       tooltip: {
         fixed: { enabled: false }
-      }
+      },
+      responsive: [{
+        breakpoint: 2000,
+        options: {
+          chart: {
+            height: 240
+          }
+        }
+      },{
+        breakpoint: 10000,
+        options: {
+          chart: {
+            height: 240
+          }
+        }
+      }]
     }
   },
 
@@ -21,7 +36,7 @@ export default {
     plotOptions: {
       pie: {
         donut: {
-          size: "57%",
+          size: "65%",
           labels: {
             show: true
           }

@@ -1,6 +1,17 @@
 $lg-width: 1200px;
 
 &.id {
+  .el-col {
+    @media(min-width: 1600px) {
+      &-7 {
+        width: 20%;
+      }
+      &-10 {
+        width: 60%;
+      }
+    }
+  }
+
   display: flex;
   flex-flow: column wrap;
   .el-tabs__active-bar.is-top,
@@ -175,6 +186,8 @@ $lg-width: 1200px;
         }
       }
 
+      .title, .content { height: auto; }
+
       .component-title {
         font-weight: bold;
         font-size: 16px;
@@ -209,13 +222,6 @@ $lg-width: 1200px;
         border-top: 0;
         border-left: 0;
         border-right: 0;
-      }
-    }
-
-    .graphic-transitions,
-    .graphic-conversions {
-      .el-tabs.el-tabs--top {
-        margin-top: 30px;
       }
     }
 
@@ -694,7 +700,7 @@ $lg-width: 1200px;
 
     .graphic-activity {
       .el-tabs.el-tabs--top {
-        margin: 20px 20px 0;
+        margin: 0 20px;
       }
       
       .loading {
