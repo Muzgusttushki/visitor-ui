@@ -294,13 +294,16 @@
                   <h2 class="component-title">Источники переходов</h2>
                 </el-row>
                 <el-tabs>
-                  <div>
+                  <div v-if="userSourceAnalyse.complete">
                     <apexchart
                       height="240"
                       type="donut"
-                      :options="graphic_transitions"
-                      :series="[12, 32, 91]"
+                      :options="{labels: [...this.userSourceAnalyse.type.map(item => item.slice(0, 1).toUpperCase() + item.slice(1))], ...this.graphic_transitions}"
+                      :series="[...this.userSourceAnalyse.data]"
                     />
+                  </div>
+                  <div v-else>
+                    <loading-circle />
                   </div>
                 </el-tabs>
               </div>
@@ -762,6 +765,7 @@ export default {
   data() {
     return {
       userActivity: null,
+      userSourceAnalyse: {data: [], type: [], complete: false},
       current: 1,
       userId: null,
       active: null,
@@ -970,9 +974,14 @@ export default {
       })
     },
     async getUserSourceAnalyse() {
+      this.userSourceAnalyse.complete = false
       const request = await this.$axios.get(`${process.env.address}/v1/reports/buyers/userSourceAnalyse/${this.userId}`)
-      console.log(this.userId, 'phone')
-      console.log(request)
+      const sources = request.data
+      for (let i = 0; i < sources.length; i++) {
+        this.userSourceAnalyse.data.push(sources[i]['quantity'])
+        this.userSourceAnalyse.type.push(sources[i]['type'])
+      }
+      this.userSourceAnalyse.complete = true
     },
     handleClose() {
       this.dialogVisible = false;

@@ -23,11 +23,10 @@ export default {
         donut: {
           size: "60%",
           labels: {
-            show: true,
-            value: { show: false }
+            show: true
           }
         },
-        dataLabels: { offset: 33 }
+        // dataLabels: { offset: 33 }
       }
     },
     responsive: [
@@ -36,13 +35,12 @@ export default {
         options: {
           plotOptions: {
             pie: {
-              dataLabels: { offset: 40 }
+              // dataLabels: { offset: 40 }
             }
           }
         }
       }
     ],
-    labels: ["Social", "Direct", "App", "Search"],
     dataLabels: {
       style: { fontSize: "16px" },
       dropShadow: { enabled: false },

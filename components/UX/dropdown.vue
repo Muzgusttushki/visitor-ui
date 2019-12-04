@@ -110,6 +110,10 @@
       position: absolute;
       box-shadow: 0px 5px 60px rgba(92, 118, 143, 0.32);
 
+      &.__trigger_element_hide_0190 {
+        z-index: 2;
+      }
+
       .closable {
         float: right;
         cursor: pointer;
