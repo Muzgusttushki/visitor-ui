@@ -68,7 +68,7 @@ export default {
                 distributed: true
               }
             },
-            labels: ['1', '2', '3', '4', '<5'],
+            labels: ['1', '2', '3', '4', '5+'],
             xaxis: {
               labels: {
                 show: true
