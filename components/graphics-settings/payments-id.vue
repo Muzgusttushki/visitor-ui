@@ -21,7 +21,7 @@ export default {
     plotOptions: {
       pie: {
         donut: {
-          size: "60%",
+          size: "57%",
           labels: {
             show: true
           }
