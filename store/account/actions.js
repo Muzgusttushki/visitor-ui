@@ -24,7 +24,6 @@ export async function signIn ({ commit }, { username, password, access }) {
     });
 
     await this.dispatch('account/accessEnchant')
-
     this.$router.replace('/')
     return { type: 'success', message: 'Успешно.' }
   } catch (e) {
@@ -39,6 +38,7 @@ export function accessEnchant ({ commit }, skip) {
       return null
     }
 
+    console.log('call');
     this.$axios.defaults.headers.common = { 'Authorization': `Bearer ${vst}` };
 
     if (skip) { return vst }
