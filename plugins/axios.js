@@ -1,5 +1,5 @@
 export default async function ({ $axios, store }) {
-  const webToken = await store.dispatch('account/accessEnchant', true)
+  const webToken = await store.dispatch('account/accessEnchant', true);
 
   $axios.onRequest((config) => {
     if (webToken) {
