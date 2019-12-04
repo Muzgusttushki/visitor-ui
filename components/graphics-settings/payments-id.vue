@@ -1,7 +1,7 @@
 <script>
 export default {
   graphic_activity: {
-    year: {
+    common: {
       chart: {
         toolbar: { show: false }
       },
@@ -9,35 +9,6 @@ export default {
       stroke: { curve: "smooth" },
       tooltip: {
         fixed: { enabled: false }
-      },
-      xaxis: {
-        categories: [],
-        labels: { show: false },
-        tooltip: { enabled: false }
-      }
-    },
-    month: {
-      chart: {
-        toolbar: { show: false }
-      },
-      dataLabels: {enabled: false},
-      stroke: {curve: "smooth"},
-      tooltip: { fixed: {enabled: false} },
-      xaxis: {
-        categories: [],
-        labels: {show: false},
-        tooltip: {enabled: false}
-      }
-    },
-    week: {
-      chart: { toolbar: {show: false} },
-      dataLabels: {enabled: false},
-      stroke: {curve: "smooth"},
-      tooltip: { fixed: {enabled: false} },
-      xaxis: {
-        categories: [],
-        labels: {show: false},
-        tooltip: {enabled: false}
       }
     }
   },
