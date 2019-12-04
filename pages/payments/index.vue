@@ -204,7 +204,8 @@
               :key="columnID"
               :prop="column.source"
               :label="column.label"
-              :width="column.width"
+              :min-width="column.width"
+              :max-width="column.width + 100"
             >
               <template slot-scope="scope">
                 <!-- <span v-if="column.source == 'events'">{{ (scope.row[column.source])[0] }}</span> -->
