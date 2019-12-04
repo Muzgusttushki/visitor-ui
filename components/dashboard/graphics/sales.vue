@@ -59,23 +59,33 @@ export default {
 
   methods: {
     async getGraphicsRemote () {
+
+      /* 
+      check  : determines the days interval
+      format : various format for 2 days (check == 2), 1 day (check == 1) and more
+      */
+
       this.graphics = null
       this.loading = true 
       
       const request = await this.$store.dispatch('dashboard/getSalesGraphics')
       const remoteGraphics = request.data.then
-      let dates = remoteGraphics.meta.dates
-      const check = dates[23][1].substr(8, 2) - dates[0][0].substr(8, 2)
-      let format = null
       
-      if (check == 2) {
-        format = '{D}.{MM} {H}:{M}'
-      } else if (check == 1) {
-        format = '{H}:{M}'
-      } else {
-        format = '{D}.{MM}.{Y}'
-      }
-      
+      const dates = remoteGraphics.meta.dates
+      const check = Math.floor( ( 
+        // get last and first request date
+        new Date(dates[23][1]) - new Date(dates[0][0]) 
+        // and get days count
+      ) / 1000 / 60 / 60 / 24 )
+    
+      const format = 
+        check == 2 ? 
+          '{D}.{MM} {H}:{M}' 
+        : check == 1 ? 
+          '{H}:{M}' 
+        : 
+          '{D}.{MM}.{Y}'
+          
       const remoteBuyers = await this.$store.dispatch('dashboard/getBuyersStats')
       if (remoteGraphics && remoteBuyers) {
         this.graphics = {
