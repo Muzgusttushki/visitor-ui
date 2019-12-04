@@ -531,10 +531,7 @@ $lg-width: 1200px;
       &__container {
         padding: 5px 30px;
         height: 235px;
-
-        @media (max-width: $lg-width) {
-          overflow: scroll;
-        }
+        overflow: auto;
       }
 
       .component-title {

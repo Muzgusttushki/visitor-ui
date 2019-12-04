@@ -221,7 +221,7 @@
             </div>
           </el-col>
           <el-col :span="10" class="col-container graphic-activity">
-            <!-- ------------------------------------ГРАФИК АКТИВНОСТИ------------------------------------ -->
+            <!-- ------------------------------------ACTIVITY GRAPH------------------------------------ -->
             <div class="component-container">
               <div>
                 <el-row>
@@ -232,7 +232,14 @@
                     <apexchart
                       height="220"
                       type="area"
-                      :options="graphic_activity.year"
+                      :options="{
+                        ...graphic_activity.common,
+                        xaxis: { 
+                          categories: [...editActivityDates(userDetails.activity[0].year.dates)],
+                          labels: {show: false},
+                          tooltip: {enabled: false}
+                        }
+                      }"
                       :series="[
                         { name: 'Операции', data: userDetails.activity[0].year.operations },
                         { name: 'Транзакции', data: userDetails.activity[0].year.transactions }
@@ -243,7 +250,14 @@
                     <apexchart
                       height="220"
                       type="area"
-                      :options="graphic_activity.month"
+                      :options="{
+                        ...graphic_activity.common,
+                        xaxis: { 
+                          categories: [...editActivityDates(userDetails.activity[0].month.dates)],
+                          labels: {show: false},
+                          tooltip: {enabled: false}
+                        }
+                      }"
                       :series="[
                         { name: 'Операции', data: userDetails.activity[0].month.operations },
                         { name: 'Транзакции', data: userDetails.activity[0].month.transactions }
@@ -254,7 +268,14 @@
                     <apexchart
                       height="220"
                       type="area"
-                      :options="graphic_activity.week"
+                      :options="{
+                        ...graphic_activity.common,
+                        xaxis: { 
+                          categories: [...editActivityDates(userDetails.activity[0].week.dates)],
+                          labels: {show: false},
+                          tooltip: {enabled: false}
+                        }
+                      }"
                       :series="[
                         { name: 'Операции', data: userDetails.activity[0].week.operations },
                         { name: 'Транзакции', data: userDetails.activity[0].week.transactions }
@@ -273,13 +294,16 @@
                   <h2 class="component-title">Источники переходов</h2>
                 </el-row>
                 <el-tabs>
-                  <div>
+                  <div v-if="userSourceAnalyse.complete">
                     <apexchart
                       height="240"
                       type="donut"
-                      :options="graphic_transitions"
-                      :series="[12, 32, 91]"
+                      :options="{labels: [...this.userSourceAnalyse.type.map(item => item.slice(0, 1).toUpperCase() + item.slice(1))], ...this.graphic_transitions}"
+                      :series="[...this.userSourceAnalyse.data]"
                     />
+                  </div>
+                  <div v-else>
+                    <loading-circle />
                   </div>
                 </el-tabs>
               </div>
@@ -717,6 +741,7 @@
         </el-container>
       </el-tab-pane>
     </el-tabs>
+
     <!-- -----------------------------------------ИНФОРМАЦИЯ О ТРАНЗАКЦИИ------------------------------ -->
     <div>
       <dialogs
@@ -726,6 +751,7 @@
         v-if="dialogData.loading"
       ></dialogs>
     </div>
+    <!-- ----------------------------------------------------------------------------------------------- -->
   </el-main>
 </template>
 <script>
@@ -736,23 +762,10 @@ export default {
   layout: "dashboard",
   middleware: "roles/user",
   components: { dialogs },
-  async asyncData({ store, params, $axios }) {
-    const userId = params.id;
-
-    const userDetails = await store.dispatch("payment/getUserDetails", userId);
-
-    const request = await $axios.get(
-      `${process.env.address}/v1/reports/buyers/userActivity/${userId}`
-    );
-    const userActivity = request.data.then;
-    console.log(userDetails);
-
-    return { userDetails, userId, userActivity };
-  },
-
   data() {
     return {
       userActivity: null,
+      userSourceAnalyse: {data: [], type: [], complete: false},
       current: 1,
       userId: null,
       active: null,
@@ -916,6 +929,22 @@ export default {
       }
     };
   },
+  async asyncData({ store, params, $axios }) {
+    const userId = params.id;
+
+    const userDetails = await store.dispatch("payment/getUserDetails", userId);
+
+    const request = await $axios.get(
+      `${process.env.address}/v1/reports/buyers/userActivity/${userId}`
+    );
+    const userActivity = request.data.then;
+    console.log(userDetails);
+
+    return { userDetails, userId, userActivity };
+  },
+  mounted() {
+    this.getUserSourceAnalyse()
+  },
   watch: {
     current() {
       this.tabAsyncManager.lastChangeTab = null;
@@ -926,11 +955,34 @@ export default {
       this.openTabEvent({ name: "details" });
     }
   },
-  mounted() {
-    this.getUserActivity();
-  },
   methods: {
-    async getUserActivity() {},
+    editActivityDates(dates) {
+      const format = "{D}.{MM}.{Y}";
+      
+      return dates.map(item => {
+        return (
+          this.$times({
+            time: item.current,
+            format
+          }) 
+          + " - " +
+          this.$times({
+            time: item.countdown,
+            format
+          })
+        );
+      })
+    },
+    async getUserSourceAnalyse() {
+      this.userSourceAnalyse.complete = false
+      const request = await this.$axios.get(`${process.env.address}/v1/reports/buyers/userSourceAnalyse/${this.userId}`)
+      const sources = request.data
+      for (let i = 0; i < sources.length; i++) {
+        this.userSourceAnalyse.data.push(sources[i]['quantity'])
+        this.userSourceAnalyse.type.push(sources[i]['type'])
+      }
+      this.userSourceAnalyse.complete = true
+    },
     handleClose() {
       this.dialogVisible = false;
       this.dialogData = {
@@ -963,11 +1015,10 @@ export default {
 
     getUserAbbreviationCallback(name) {
       const sliceName = name.split(" ");
-      name = sliceName[0][0];
+      name = [sliceName[0][0]];
+      if (sliceName[1]) name.push(sliceName[1][0]);
 
-      if (sliceName[1]) name.concat(sliceName[1][0]);
-
-      return name;
+      return name.join('');
     },
 
     handleDate(time, format) {
