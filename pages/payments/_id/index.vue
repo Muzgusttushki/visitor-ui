@@ -294,12 +294,12 @@
                   <h2 class="component-title">Источники переходов</h2>
                 </el-row>
                 <el-tabs>
-                  <div v-if="userSourceAnalyse.complete">
+                  <div v-if="userSourceAnalyse && filteredUserSource">
                     <apexchart
-                      height="240"
+                      width="100%"
                       type="donut"
-                      :options="{labels: [...this.userSourceAnalyse.type.map(item => item.slice(0, 1).toUpperCase() + item.slice(1))], ...this.graphic_transitions}"
-                      :series="[...this.userSourceAnalyse.data]"
+                      :options="{labels: this.filteredUserSource.type, ...this.graphic_transitions}"
+                      :series="this.filteredUserSource.value"
                     />
                   </div>
                   <div v-else>
@@ -765,7 +765,7 @@ export default {
   data() {
     return {
       userActivity: null,
-      userSourceAnalyse: {data: [], type: [], complete: false},
+      userSourceAnalyse: null,
       current: 1,
       userId: null,
       active: null,
@@ -955,6 +955,32 @@ export default {
       this.openTabEvent({ name: "details" });
     }
   },
+  computed: {
+    filteredUserSource() {
+      const data = this.userSourceAnalyse
+      
+      if (data.length == 1) {
+        return {type: data.type, value: data.quantity}
+      }
+
+      const names = []
+      const values = []
+
+      for (let i = 0; i < data.length; i++) {
+
+        const index = names.indexOf(data[i].type)
+
+        if (index >= 0) {
+          values[index] += data[i].quantity
+        } else {
+          values.push(data[i].quantity)
+          names.push(data[i].type)
+        }
+      }
+
+      return {type: names, value: values}
+    }
+  },
   methods: {
     editActivityDates(dates) {
       const format = "{D}.{MM}.{Y}";
@@ -974,14 +1000,30 @@ export default {
       })
     },
     async getUserSourceAnalyse() {
-      this.userSourceAnalyse.complete = false
       const request = await this.$axios.get(`${process.env.address}/v1/reports/buyers/userSourceAnalyse/${this.userId}`)
-      const sources = request.data
-      for (let i = 0; i < sources.length; i++) {
-        this.userSourceAnalyse.data.push(sources[i]['quantity'])
-        this.userSourceAnalyse.type.push(sources[i]['type'])
+      this.userSourceAnalyse = request.data
+      /*
+      const cash = {type: [], value: []}
+
+      if (sources.length <= 1) {
+        return this.userSourceAnalyse = {type: [sources[0].type], value: [sources[0].quantity]}
       }
-      this.userSourceAnalyse.complete = true
+      for (let i = 0; i < sources.length; i++) {
+
+        const item = sources[i].type;
+        const count = sources[i].quantity;
+        const index = cash.type.indexOf(item);
+        
+        if (index >= 0) {
+          cash.value[index] += count
+        } else {
+          cash.type.push(item)
+          cash.value.push(count)
+        }
+      }
+      
+      this.userSourceAnalyse = cash
+      */
     },
     handleClose() {
       this.dialogVisible = false;
