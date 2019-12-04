@@ -958,10 +958,6 @@ export default {
   computed: {
     filteredUserSource() {
       const data = this.userSourceAnalyse
-      
-      if (data.length == 1) {
-        return {type: data.type, value: data.quantity}
-      }
 
       const names = []
       const values = []
