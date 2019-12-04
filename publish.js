@@ -60,7 +60,7 @@ sftp.connect(config)
                 continue
             }
 
-            sftp.fastPut(files[key], `/var/www/html/${resolve}`).catch(console.error).then(() => {
+            await sftp.fastPut(files[key], `/var/www/html/${resolve}`).catch(console.error).then(() => {
                 console.log('upload file', resolve)
             })
         }
