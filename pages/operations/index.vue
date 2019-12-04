@@ -1,6 +1,6 @@
 <template>
   <el-container class="operations index">
-    <el-main v-loading="loading.pages">
+    <el-main>
       <div class="wallpaper-table">
         <div class="tools">
           <div>
@@ -166,46 +166,49 @@
           </div>
         </div>
         <!-- ----------------------------------------ТАБЛИЦА------------------------------------------- -->
-        <div
-          v-if="this.operations"
-          v-loading="loading.content||!this.operations"
-          class="template-table"
-        >
-          <el-table
-            :data="this.operations.operations"
-            class="payments-list"
-            @row-click="dialogHandler"
+        <div v-if="!loading.pages">
+          <div
+            v-if="this.operations"
+            v-loading="loading.content||!this.operations"
+            class="template-table"
           >
-            <el-table-column
-              v-for="(column, columnID) in columns.filter(
-                resolve => resolve.visible
-              )"
-              :key="columnID"
-              :prop="column.source"
-              :label="column.label"
-              :min-width="column.width"
+            <el-table
+              :data="this.operations.operations"
+              class="payments-list"
+              @row-click="dialogHandler"
             >
-              <template slot-scope="scope">
-                <span v-if="column.source == 'status'">
-                  <span v-if="scope.row['visit']">Просмотр страницы</span>
-                  <span v-else>{{translate[scope.row[column.source]]}}</span>
-                </span>
-                <span
-                  v-else-if="column.source == 'date' && scope.row['date']"
-                >{{ `${scope.row[column.source].substr(8, 2)}.${scope.row[column.source].substr(5, 2)}.${scope.row[column.source].substr(0, 4)}` }}</span>
-                <span v-else>{{scope.row[column.source]}}</span>
-              </template>
-            </el-table-column>
-          </el-table>
-          <el-pagination
-            style="margin-top: 30px;"
-            background
-            layout="prev, pager, next"
-            :total="this.operations.length"
-            :page-size="10"
-            hide-on-single-page
-            :current-page.sync="current"
-          />
+              <el-table-column
+                v-for="(column, columnID) in columns.filter(
+                  resolve => resolve.visible
+                )"
+                :key="columnID"
+                :prop="column.source"
+                :label="column.label"
+                :min-width="column.width"
+              >
+                <template slot-scope="scope">
+                  <span v-if="column.source == 'status'">
+                    <span v-if="scope.row['visit']">Просмотр страницы</span>
+                    <span v-else>{{translate[scope.row[column.source]]}}</span>
+                  </span>
+                  <span
+                    v-else-if="column.source == 'date' && scope.row['date']"
+                  >{{ `${scope.row[column.source].substr(8, 2)}.${scope.row[column.source].substr(5, 2)}.${scope.row[column.source].substr(0, 4)}` }}</span>
+                  <span v-else>{{scope.row[column.source]}}</span>
+                </template>
+              </el-table-column>
+            </el-table>
+            <el-pagination
+              style="margin-top: 30px;"
+              background
+              layout="prev, pager, next"
+              :total="this.operations.length"
+              :page-size="10"
+              hide-on-single-page
+              :current-page.sync="current"
+            />
+          </div>
+          <div v-else style="text-align: center; font-size: 35px; padding-bottom: 25px;"><p>Нет данных</p></div>
         </div>
         <div v-else>
           <div class="on-loading">
@@ -388,6 +391,7 @@ export default {
         if (!operations) {
           this.operations = null;
           this.loading.content = false;
+          this.$notify.error('Ошибка сервера.')
           return null;
         }
 
