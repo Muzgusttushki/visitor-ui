@@ -389,9 +389,9 @@ export default {
         )
 
         if (!operations) {
+          this.$notify.error('Ошибка сервера.')
           this.operations = null;
           this.loading.content = false;
-          this.$notify.error('Ошибка сервера.')
           return null;
         }
 
