@@ -24,7 +24,9 @@
             end-placeholder="Дата окончания"
             :default-time="['00:00:00', '23:59:59']"
             @change="changeGlobalTimeRange"
-          ></el-date-picker>
+          >
+            <template slot="footer">123</template>
+          </el-date-picker>
         </div>
         <!-- ---------------------------------------ПОИСК---------------------------------------- -->
         <div class="global-search">

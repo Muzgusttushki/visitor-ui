@@ -732,6 +732,10 @@ $lg-width: 1200px;
     }
   }
   //===========================
+
+  .template-table {
+    @import '../templates/table';
+  }
 }
 
 &.detail {
@@ -820,13 +824,9 @@ $lg-width: 1200px;
     }
     // ========================
 
-    // &__nav-wrap::after {
-    //   width: 405px;
-    //   background-color: black;
-    // }
     &__nav-wrap.is-left {
-      // max-height: 400px;
-      padding-bottom: 10px;
+      max-height: 500px;
+      margin-bottom: 10px;
       overflow: auto;
     }
 
