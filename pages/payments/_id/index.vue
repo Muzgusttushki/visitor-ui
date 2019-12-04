@@ -296,7 +296,7 @@
                 <el-tabs>
                   <div v-if="userSourceAnalyse && filteredUserSource">
                     <apexchart
-                      width="100%"
+                      height="240"
                       type="donut"
                       :options="{labels: this.filteredUserSource.type, ...this.graphic_transitions}"
                       :series="this.filteredUserSource.value"
@@ -967,9 +967,9 @@ export default {
       const values = []
 
       for (let i = 0; i < data.length; i++) {
-
+        
         const index = names.indexOf(data[i].type)
-
+        
         if (index >= 0) {
           values[index] += data[i].quantity
         } else {
