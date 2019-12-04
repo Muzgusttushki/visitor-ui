@@ -21,7 +21,7 @@ export async function signIn ({ commit }, { username, password, access }) {
     this.$cookies.set('vst', request.data, {
       path: '/',
       expires
-    })
+    });
 
     await this.dispatch('account/accessEnchant')
 
@@ -34,21 +34,20 @@ export async function signIn ({ commit }, { username, password, access }) {
 
 export function accessEnchant ({ commit }, skip) {
   try {
-    const vst = this.$cookies.get('vst')
+    const vst = this.$cookies.get('vst');
     if (!vst) {
       return null
     }
 
+    this.$axios.defaults.headers.common = { 'Authorization': `Bearer ${vst}` };
+
     if (skip) { return vst }
+    const session = JSON.parse(window.atob(vst.split('.')[1]));
 
-    this.$axios.defaults.headers.common = { 'Authorization': `Bearer ${vst}` }
-    const session = JSON.parse(window.atob(vst.split('.')[1]))
-
-    commit('setSession', session)
-
+    commit('setSession', session);
     return session
   } catch {
-    this.$cookies.remove('vst')
+    this.$cookies.remove('vst');
     throw new Error({
       message: 'Ошибка при обработке кука'
     })

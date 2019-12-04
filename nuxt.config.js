@@ -1,3 +1,4 @@
+const DEBUG = true;
 
 export default {
   server: {
@@ -73,9 +74,11 @@ export default {
   axios: {
   },
 
+
   // http://84.201.153.133:3303
   env: {
-    address: 'https://services.weekendagency.ru'
+    address: DEBUG ? 'http://127.0.0.1:3303'
+      : 'https://services.weekendagency.ru'
   },
   /*
   ** Build configuration
