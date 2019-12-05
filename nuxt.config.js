@@ -12,13 +12,13 @@ export default {
   head: {
     title: 'Visitor',
     meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
+      {charset: 'utf-8'},
+      {name: 'viewport', content: 'width=device-width, initial-scale=1'},
+      {hid: 'description', name: 'description', content: process.env.npm_package_description || ''}
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      { rel: 'stylesheet', href: 'https://use.fontawesome.com/31280c935a.css' }
+      {rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'},
+      {rel: 'stylesheet', href: 'https://use.fontawesome.com/31280c935a.css'}
     ],
 
     script: [
@@ -34,12 +34,13 @@ export default {
   ** Customize the progress-bar color
   */
   loading: '@/components/loading',
+
   /*
   ** Global CSS
   */
   css: [
     'element-ui/lib/theme-chalk/index.css',
-    { src: '@/styles/_bootstrap.scss', lang: 'scss' }
+    {src: '@/styles/_bootstrap.scss', lang: 'scss'}
   ],
   /*
   ** Plugins to load before mounting the App
@@ -51,14 +52,13 @@ export default {
     '@/plugins/awesome',
     '@/plugins/loading-animation',
     '@/plugins/times',
-     '@/plugins/requestHandler',
+    '@/plugins/requestHandler',
     '@/plugins/ux-dropdown'
   ],
   /*
   ** Nuxt.js dev-modules
   */
-  buildModules: [
-  ],
+  buildModules: [],
   /*
   ** Nuxt.js modules
   */
@@ -71,8 +71,7 @@ export default {
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options
   */
-  axios: {
-  },
+  axios: {},
 
 
   // http://84.201.153.133:3303

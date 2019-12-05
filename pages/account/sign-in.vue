@@ -33,51 +33,51 @@
   </el-container>
 </template>
 <script>
-export default {
-  middleware: 'roles/none',
-  data () {
-    return {
-      userForms: {
-        username: null,
-        password: null
-      },
+    export default {
+        middleware: 'roles/none',
+        data() {
+            return {
+                userForms: {
+                    username: null,
+                    password: null
+                },
 
-      loading: false
-    }
-  },
-  methods: {
-    async handleSignIn (e) {
-      if (e) {
-        e.preventDefault()
-        this.loading = true
-      }
-
-      const message = await this.$store.dispatch('account/signIn', {
-        access: await new Promise((resolve) => {
-          // eslint-disable-next-line no-undef
-          grecaptcha.ready(function () {
-            // eslint-disable-next-line no-undef
-            grecaptcha
-              .execute('6LeNarYUAAAAAKOEIIh4xnQ7jt1BB7zloMq6CErs', {
-                action: 'account_signup'
-              })
-              .then((offset) => {
-                if (offset) {
-                  return resolve(offset)
+                loading: false
+            }
+        },
+        methods: {
+            async handleSignIn(e) {
+                if (e) {
+                    e.preventDefault();
+                    this.loading = true
                 }
-              })
-          })
-        }),
 
-        ...this.userForms
-      })
+                const message = await this.$store.dispatch('account/signIn', {
+                    access: await new Promise((resolve) => {
+                        // eslint-disable-next-line no-undef
+                        grecaptcha.ready(function () {
+                            // eslint-disable-next-line no-undef
+                            grecaptcha
+                                .execute('6LeNarYUAAAAAKOEIIh4xnQ7jt1BB7zloMq6CErs', {
+                                    action: 'account_signup'
+                                })
+                                .then((offset) => {
+                                    if (offset) {
+                                        return resolve(offset)
+                                    }
+                                })
+                        })
+                    }),
 
-      this.$nextTick(() => {
-        this.loading = false
-      })
+                    ...this.userForms
+                });
 
-      return this.$notify({ ...message })
+                this.$nextTick(() => {
+                    this.loading = false
+                });
+
+                return this.$notify({...message})
+            }
+        }
     }
-  }
-}
 </script>
