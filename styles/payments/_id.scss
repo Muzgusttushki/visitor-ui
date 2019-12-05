@@ -1,14 +1,28 @@
 $lg-width: 1200px;
 
 &.id {
-  .el-col {
-    @media(min-width: 1600px) {
+  @media(min-width: 1600px) {
+    .el-col {
       &-7 {
         width: 20%;
       }
+      
       &-10 {
         width: 60%;
       }
+    }
+
+    .graphic-conversions, 
+    .graphic-transitions,
+    .graphic-activity { 
+      min-height: 300px;
+    }
+    .graphic-conversions, 
+    .graphic-transitions { 
+      width: 20%;
+    }
+    .graphic-activity {
+      width: 60%;
     }
   }
 

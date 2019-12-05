@@ -41,7 +41,7 @@
                       <el-option
                         v-for="(item, key) in validSourceList"
                         :key="key"
-                        :value="item" 
+                        :value="item"
                         :label="item"
                       ></el-option>
                     </el-select>
@@ -63,12 +63,14 @@
       <el-collapse v-model="activeNames">
         <el-collapse-item title="Стандартные сегменты" name="1" v-if="segments">
           <el-col :span="6" class="card" v-for="(segment, localeID) in segments" :key="segment._id">
+
             <!-- ____________________________________SEGMENT SETTINGS_____________________________________ -->
             <el-dropdown :hide-timeout="200" :hide-on-click="false">
               <span class="el-dropdown-link">
                 <font-awesome-icon :icon="['fas', 'ellipsis-h']" />
               </span>
               <el-dropdown-menu slot="dropdown" class="segments index segment-settings">
+
                 <!-- -------------------------------EDIT SEGMENT---------------------------------------- -->
                 <el-dropdown-item>
                   <p class="title">Изменить</p>
@@ -93,13 +95,11 @@
 
                 <!-- -------------------------------UPDATE SEGMENT-------------------------------------- -->
                 <el-dropdown-item>
-                  <p
-                    class="title"
+                  <p 
+                    class="title" 
+                    style="width: 100%; heigth: 100%;"
                     @click="handleSegmentSetting({command: 'segment->update', ...segment})"
-                  >
-                    Обновить
-                    принудительно
-                  </p>
+                  >Обновить принудительно</p>
                 </el-dropdown-item>
                 <!-- ----------------------------------------------------------------------------------- -->
 
@@ -116,6 +116,7 @@
                   </div>
                 </el-dropdown-item>
                 <!-- ---------------------------------------------------------------------------------- -->
+
               </el-dropdown-menu>
             </el-dropdown>
             <!-- ______________________________________________________________________________________ -->
@@ -230,8 +231,8 @@ export default {
   computed: {
     validSourceList() {
       return this.sourceList.filter(item => {
-        return item != 'null'
-      })
+        return item != "null";
+      });
     }
   },
 
@@ -241,10 +242,11 @@ export default {
 
   methods: {
     async getSourceList() {
-      if (this.sourceList) return
-      const request = await this.$axios.get(`${process.env.address}/v1/account/management/sources`)
-      this.sourceList = request.data
-      console.log(this.sourceList)
+      if (this.sourceList) return;
+      const request = await this.$axios.get(
+        `${process.env.address}/v1/account/management/sources`
+      );
+      this.sourceList = request.data;
     },
     cancelSegmentAdd() {
       this.addSegmentData = {
