@@ -876,6 +876,17 @@ export default {
       probality_nextbuy: settings.probality_nextbuy,
       probality_failure: settings.probality_failure,
 
+      translatedSources: {
+        transitions: {
+          direct: 'Прямой',
+          advertising: 'Другая рекламная система',
+          messenger: 'Мессенджер',
+          social: 'Соц. сети',
+          email: 'Почта',
+          advertisement: 'Реклама'
+        }
+      },
+
       tabAsyncManager: {
         statuses: {
           WIDGET_OPEN: "Открыл виджет",
@@ -974,7 +985,10 @@ export default {
         }
       }
 
-      return {type: names, value: values}
+      return {
+        type: names.map(item => this.translatedSources.transitions[item]), 
+        value: values
+      }
     }
   },
   methods: {

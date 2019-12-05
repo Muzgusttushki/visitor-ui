@@ -44,7 +44,6 @@
                         :value="item" 
                         :label="item"
                       ></el-option>
-                      <el-option value="https://topconcerts.ru" label="https://topconcerts.ru"></el-option>
                     </el-select>
                   </el-form-item>
                 </el-form>

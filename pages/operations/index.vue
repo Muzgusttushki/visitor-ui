@@ -396,15 +396,15 @@ export default {
         }
 
         this.columns = [
-          { label: "Дата", source: "date", visible: true, width: 150 },
           { label: "Источник", source: "source", visible: true, width: 150 },
           { label: "Cобытие", source: "event", visible: true, width: 450 },
+          { label: "Браузер", source: "browser", visible: true, width: 200 },
           { label: "Статус", source: "status", visible: true, width: 200 },
           { label: "Город", source: "city", visible: true, width: 80 },
+          { label: "Дата", source: "date", visible: true, width: 150 },
           { label: "Zip", source: "zip", visible: true, width: 100 },
-          { label: "ip", source: "address", visible: true, width: 120 },
           { label: "ОС", source: "os", visible: true, width: 200 },
-          { label: "Браузер", source: "browser", visible: true, width: 200 }
+          { label: "ip", source: "address", visible: true, width: 120 }
         ];
 
         this.operations = operations;
