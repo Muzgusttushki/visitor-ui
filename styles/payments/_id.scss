@@ -28,12 +28,6 @@ $lg-width: 1200px;
         width: 44%;
       }
     }
-
-    .graphic-conversions, 
-    .graphic-transitions,
-    .graphic-activity { 
-      min-height: 300px;
-    }
   }
   @media(min-width: 1800px) {
     .el-col {
@@ -214,6 +208,12 @@ $lg-width: 1200px;
       @media (max-width: $lg-width) {
         padding: 5px;
       }
+    }
+
+    .graphic-conversions, 
+    .graphic-transitions,
+    .graphic-activity { 
+      min-height: 300px;
     }
 
     .component-container {
@@ -751,6 +751,9 @@ $lg-width: 1200px;
     }
 
     .graphic-activity {
+      .el-tabs__header {
+        margin: 0;
+      }
       .el-tabs.el-tabs--top {
         margin: 0 20px;
       }

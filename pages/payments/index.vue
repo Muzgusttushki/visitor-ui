@@ -346,9 +346,6 @@ export default {
 
   methods: {
     paymentDetails(row) {
-      // sessionStorage.LSTableData = JSON.stringify(this.payments.data)
-      // console.log(sessionStorage)
-      // console.log(JSON.parse(sessionStorage.LSTableData))
       this.$router.push(`/payments/${row._id}`);
     },
     handleData(value) {

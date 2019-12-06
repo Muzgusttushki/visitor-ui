@@ -11,10 +11,31 @@ export default {
         fixed: { enabled: false }
       },
       responsive: [{
+        breakpoint: 1200,
+        options: {
+          chart: {
+            height: 270
+          }
+        }
+      },{
+        breakpoint: 1400,
+        options: {
+          chart: {
+            height: 180
+          }
+        }
+      },{
+        breakpoint: 1600,
+        options: {
+          chart: {
+            height: 220
+          }
+        }
+      },{
         breakpoint: 2000,
         options: {
           chart: {
-            height: 240
+            height: 260
           }
         }
       },{
@@ -67,7 +88,7 @@ export default {
     tooltip: { enabled: false }
   },
   
-  probality_action: {
+  probability: {
     chart: { type: 'radialBar' },
     plotOptions: {
       radialBar: {
@@ -78,37 +99,6 @@ export default {
         }
       }
     },
-    colors: ['#4BDCA3'],
-    labels: ['70%']
-  },
-
-  probality_nextbuy: {
-    chart: { type: 'radialBar' },
-    plotOptions: {
-      radialBar: {
-        hollow: { size: '60%' },
-        dataLabels: {
-          value: { show: false },
-          name: { offsetY: 5 }
-        }
-      }
-    },
-    colors: ['#4BDCA3'],
-    labels: ['70%']
-  },
-
-  probality_failure: {
-    chart: { type: 'radialBar' },
-    plotOptions: {
-      radialBar: {
-        hollow: { size: '60%' },
-        dataLabels: {
-          value: { show: false },
-          name: { offsetY: 5 }
-        }
-      }
-    },
-    colors: ['#4BDCA3'],
     labels: ['70%']
   }
 }

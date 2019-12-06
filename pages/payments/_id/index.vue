@@ -223,67 +223,64 @@
           <el-col :span="10" class="col-container graphic-activity">
             <!-- ------------------------------------ACTIVITY GRAPH------------------------------------ -->
             <div class="component-container">
-              <div>
-                <el-row>
-                  <h2 class="component-title">График активности</h2>
-                </el-row>
-                <el-tabs>
-                  <el-tab-pane label="Год">
-                    <apexchart
-                      type="area"
-                      height='550px'
-                      :options="{
-                        ...graphic_activity.common,
-                        xaxis: { 
-                          categories: [...editActivityDates(userDetails.activity[0].year.dates)],
-                          labels: {show: false},
-                          tooltip: {enabled: false}
-                        }
-                      }"
-                      :series="[
-                        { name: 'Операции', data: userDetails.activity[0].year.operations },
-                        { name: 'Транзакции', data: userDetails.activity[0].year.transactions }
-                      ]"
-                    />
-                  </el-tab-pane>
-                  <el-tab-pane label="Месяц">
-                    <apexchart
-                      width="100%"
-                      type="area"
-                      :options="{
-                        ...graphic_activity.common,
-                        xaxis: { 
-                          categories: [...editActivityDates(userDetails.activity[0].month.dates)],
-                          labels: {show: false},
-                          tooltip: {enabled: false}
-                        }
-                      }"
-                      :series="[
-                        { name: 'Операции', data: userDetails.activity[0].month.operations },
-                        { name: 'Транзакции', data: userDetails.activity[0].month.transactions }
-                      ]"
-                    />
-                  </el-tab-pane>
-                  <el-tab-pane label="Неделя">
-                    <apexchart
-                      width="100%"
-                      type="area"
-                      :options="{
-                        ...graphic_activity.common,
-                        xaxis: { 
-                          categories: [...editActivityDates(userDetails.activity[0].week.dates)],
-                          labels: {show: false},
-                          tooltip: {enabled: false}
-                        }
-                      }"
-                      :series="[
-                        { name: 'Операции', data: userDetails.activity[0].week.operations },
-                        { name: 'Транзакции', data: userDetails.activity[0].week.transactions }
-                      ]"
-                    />
-                  </el-tab-pane>
-                </el-tabs>
-              </div>
+              <el-row>
+                <h2 class="component-title">График активности</h2>
+              </el-row>
+              <el-tabs>
+                <el-tab-pane label="Год">
+                  <apexchart
+                    type="area" 
+                    :options="{
+                      ...graphic_activity.common,
+                      xaxis: { 
+                        categories: [...editActivityDates(userDetails.activity[0].year.dates)],
+                        labels: {show: false},
+                        tooltip: {enabled: false}
+                      }
+                    }"
+                    :series="[
+                      { name: 'Операции', data: userDetails.activity[0].year.operations },
+                      { name: 'Транзакции', data: userDetails.activity[0].year.transactions }
+                    ]"
+                  />
+                </el-tab-pane>
+                <el-tab-pane label="Месяц">
+                  <apexchart
+                    width="100%"
+                    type="area"
+                    :options="{
+                      ...graphic_activity.common,
+                      xaxis: { 
+                        categories: [...editActivityDates(userDetails.activity[0].month.dates)],
+                        labels: {show: false},
+                        tooltip: {enabled: false}
+                      }
+                    }"
+                    :series="[
+                      { name: 'Операции', data: userDetails.activity[0].month.operations },
+                      { name: 'Транзакции', data: userDetails.activity[0].month.transactions }
+                    ]"
+                  />
+                </el-tab-pane>
+                <el-tab-pane label="Неделя">
+                  <apexchart
+                    width="100%"
+                    type="area"
+                    :options="{
+                      ...graphic_activity.common,
+                      xaxis: { 
+                        categories: [...editActivityDates(userDetails.activity[0].week.dates)],
+                        labels: {show: false},
+                        tooltip: {enabled: false}
+                      }
+                    }"
+                    :series="[
+                      { name: 'Операции', data: userDetails.activity[0].week.operations },
+                      { name: 'Транзакции', data: userDetails.activity[0].week.transactions }
+                    ]"
+                  />
+                </el-tab-pane>
+              </el-tabs>
             </div>
           </el-col>
           <el-col :span="7" class="col-container graphic-transitions">
@@ -520,19 +517,28 @@
                 <el-row>
                   <el-col :span="8">
                     <div>
-                      <apexchart :options="probality_action" :series="[60]" />
+                      <apexchart 
+                        :options="{...graphic_probability, colors: ['#5AB6FE']}" 
+                        :series="[60]"
+                        height="200" />
                       <p>Вероятность открыть e-mail</p>
                     </div>
                   </el-col>
                   <el-col :span="8">
                     <div>
-                      <apexchart :options="probality_nextbuy" :series="[90]" />
+                      <apexchart 
+                        :options="{...graphic_probability, colors: ['#4BDCA3']}" 
+                        :series="[90]"
+                        height="200" />
                       <p>Вероятность открыть e-mail</p>
                     </div>
                   </el-col>
                   <el-col :span="8">
                     <div>
-                      <apexchart :options="probality_failure" :series="[90]" />
+                      <apexchart 
+                        :options="{...graphic_probability, colors: ['#FFC657']}" 
+                        :series="[90]"
+                        height="200" />
                       <p>Вероятность открыть e-mail</p>
                     </div>
                   </el-col>
@@ -871,9 +877,7 @@ export default {
       dialogVisible: false,
       graphic_activity: settings.graphic_activity,
       graphic_transitions: settings.graphic_transitions,
-      probality_action: settings.probality_action,
-      probality_nextbuy: settings.probality_nextbuy,
-      probality_failure: settings.probality_failure,
+      graphic_probability: settings.probability,
 
       translatedSources: {
         transitions: {
@@ -948,7 +952,6 @@ export default {
       `${process.env.address}/v1/reports/buyers/userActivity/${userId}`
     );
     const userActivity = request.data.then;
-    console.log(userDetails);
 
     return { userDetails, userId, userActivity };
   },
@@ -1011,28 +1014,6 @@ export default {
     async getUserSourceAnalyse() {
       const request = await this.$axios.get(`${process.env.address}/v1/reports/buyers/userSourceAnalyse/${this.userId}`)
       this.userSourceAnalyse = request.data
-      /*
-      const cash = {type: [], value: []}
-
-      if (sources.length <= 1) {
-        return this.userSourceAnalyse = {type: [sources[0].type], value: [sources[0].quantity]}
-      }
-      for (let i = 0; i < sources.length; i++) {
-
-        const item = sources[i].type;
-        const count = sources[i].quantity;
-        const index = cash.type.indexOf(item);
-        
-        if (index >= 0) {
-          cash.value[index] += count
-        } else {
-          cash.type.push(item)
-          cash.value.push(count)
-        }
-      }
-      
-      this.userSourceAnalyse = cash
-      */
     },
     handleClose() {
       this.dialogVisible = false;
@@ -1053,12 +1034,9 @@ export default {
           ...this.$store.getters["dashboard/globalFilters"]
         }
       );
-      console.log(request.data.seats[0][0], "request");
-
+      
       this.dialogData = { ...request.data, loading: true };
       this.dialogVisible = true;
-
-      console.log(window);
     },
     handleCommand(command) {
       this.views = command;
