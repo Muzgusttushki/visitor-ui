@@ -1,10 +1,27 @@
 $lg-width: 1200px;
 
 &.id {
+  @media(min-width: 1200px) {
+    .el-col {
+      &-7 {
+        width: 30%;
+      }
+      &-17 {
+        width: 70%;
+      }
+      
+      &-10 {
+        width: 40%;
+      }
+    }
+  }
   @media(min-width: 1600px) {
     .el-col {
       &-7 {
         width: 28%;
+      }
+      &-17 {
+        width: 72%;
       }
       
       &-10 {
@@ -17,13 +34,34 @@ $lg-width: 1200px;
     .graphic-activity { 
       min-height: 300px;
     }
-    // .graphic-conversions, 
-    // .graphic-transitions { 
-    //   width: 25%;
-    // }
-    // .graphic-activity {
-    //   width: 50%;
-    // }
+  }
+  @media(min-width: 1800px) {
+    .el-col {
+      &-7 {
+        width: 24%;
+      }
+      &-17 {
+        width: 76%;
+      }
+      
+      &-10 {
+        width: 52%;
+      }
+    }
+  }
+  @media(min-width: 2000px) {
+    .el-col {
+      &-7 {
+        width: 22%;
+      }
+      &-17 {
+        width: 78%;
+      }
+      
+      &-10 {
+        width: 56%;
+      }
+    }
   }
 
   display: flex;
