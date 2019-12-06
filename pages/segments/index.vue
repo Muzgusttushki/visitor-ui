@@ -133,10 +133,10 @@
                   <div>{{segment.name}}</div>
                 </el-row>
                 <el-row class="center" style="justify-content: space-between;">
-                  <el-col :span="4">
+                  <div class="icon">
                     <font-awesome-icon :icon="['fas', 'users']" class="fa-2x color-green" />
-                  </el-col>
-                  <el-col :span="13">
+                  </div>
+                  <div>
                     <el-row
                       class="count"
                     >{{ segment.enable ? segment.then.users.segment : 0}} человек</el-row>
@@ -144,7 +144,7 @@
                       {{ segment.enable ? Math.floor(segment.then.users.segment / segment.then.users.database * 100) : 0
                       }}% от общей базы
                     </el-row>
-                  </el-col>
+                  </div>
                 </el-row>
               </div>
               <!-- ______________________________________________________________________________________ -->
