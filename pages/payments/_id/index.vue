@@ -9,7 +9,7 @@
           <el-col :span="10" class="col-container user-chart">
             <div class="component-container">
               <div v-if="userDetails" class="component-container-inner">
-                <!-- ---------------------------------ИНФОРМАЦИЯ О КЛИЕНТЕ---------------------------------- -->
+                <!-- ----------------------------------ИНФОРМАЦИЯ О КЛИЕНТЕ---------------------------------- -->
                 <el-row>
                   <el-col :span="3" class="user-image">
                     <div v-if="false">
@@ -220,7 +220,7 @@
               </div>
             </div>
           </el-col>
-          <el-col :span="8" class="col-container graphic-activity">
+          <el-col :span="10" class="col-container graphic-activity">
             <!-- ------------------------------------ACTIVITY GRAPH------------------------------------ -->
             <div class="component-container">
               <div>
@@ -286,7 +286,7 @@
               </div>
             </div>
           </el-col>
-          <el-col :span="8" class="col-container graphic-transitions">
+          <el-col :span="7" class="col-container graphic-transitions">
             <!-- -----------------------------------ИСТОЧНИКИ ПЕРЕХОДОВ------------------------------------ -->
             <div class="component-container">
               <div>
@@ -308,7 +308,7 @@
               </div>
             </div>
           </el-col>
-          <el-col :span="8" class="col-container graphic-conversions">
+          <el-col :span="7" class="col-container graphic-conversions">
             <!-- ---------------------------------------ИСТОЧНИКИ КОНВЕРСИЙ-------------------------------- -->
             <div class="component-container">
               <div>

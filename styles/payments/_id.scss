@@ -4,11 +4,11 @@ $lg-width: 1200px;
   @media(min-width: 1600px) {
     .el-col {
       &-7 {
-        width: 20%;
+        width: 28%;
       }
       
       &-10 {
-        width: 60%;
+        width: 44%;
       }
     }
 
@@ -17,13 +17,13 @@ $lg-width: 1200px;
     .graphic-activity { 
       min-height: 300px;
     }
-    .graphic-conversions, 
-    .graphic-transitions { 
-      width: 20%;
-    }
-    .graphic-activity {
-      width: 60%;
-    }
+    // .graphic-conversions, 
+    // .graphic-transitions { 
+    //   width: 25%;
+    // }
+    // .graphic-activity {
+    //   width: 50%;
+    // }
   }
 
   display: flex;
