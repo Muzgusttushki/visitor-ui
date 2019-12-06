@@ -1,15 +1,29 @@
 $lg-width: 1200px;
 
 &.id {
-  .el-col {
-    @media(min-width: 1600px) {
+  @media(min-width: 1600px) {
+    .el-col {
       &-7 {
-        width: 20%;
+        width: 28%;
       }
+      
       &-10 {
-        width: 60%;
+        width: 44%;
       }
     }
+
+    .graphic-conversions, 
+    .graphic-transitions,
+    .graphic-activity { 
+      min-height: 300px;
+    }
+    // .graphic-conversions, 
+    // .graphic-transitions { 
+    //   width: 25%;
+    // }
+    // .graphic-activity {
+    //   width: 50%;
+    // }
   }
 
   display: flex;

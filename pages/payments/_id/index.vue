@@ -9,7 +9,7 @@
           <el-col :span="10" class="col-container user-chart">
             <div class="component-container">
               <div v-if="userDetails" class="component-container-inner">
-                <!-- ---------------------------------ИНФОРМАЦИЯ О КЛИЕНТЕ---------------------------------- -->
+                <!-- ----------------------------------ИНФОРМАЦИЯ О КЛИЕНТЕ---------------------------------- -->
                 <el-row>
                   <el-col :span="3" class="user-image">
                     <div v-if="false">
@@ -296,7 +296,6 @@
                 <el-tabs class="content">
                   <div v-if="userSourceAnalyse && filteredUserSource">
                     <apexchart
-                      width="100%"
                       type="donut"
                       :options="{labels: this.filteredUserSource.type, ...this.graphic_transitions}"
                       :series="this.filteredUserSource.value"

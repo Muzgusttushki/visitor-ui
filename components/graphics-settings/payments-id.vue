@@ -63,7 +63,7 @@ export default {
         return value.toFixed(0) + "%";
       }
     },
-    legend: { show: false },
+    // legend: { show: false },
     tooltip: { enabled: false }
   },
   
