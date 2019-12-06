@@ -143,7 +143,7 @@
       
       &_inner {
         background: white;
-        padding: 25px 29px;
+        padding: 20px 25px;
         border-radius: 10px;
         box-shadow: 0px 0px 10px rgba(47, 79, 111, 0.2);
         transition-property: all;
@@ -155,19 +155,15 @@
         justify-content: space-around;
         position: relative;
 
-        // &:hover {
-        //   transform: translateY(-5px);
-        // }
-
         &_header {
 
-
-
           .title {
+            width: 90%;
             font-weight: bold;
             font-size: 1.4em;
             color: #333333;
             overflow: hidden;
+            word-break: break-all;
           }
 
           .center {
@@ -192,6 +188,10 @@
 
             .percent {
               font-size: 1.1em;
+            }
+
+            .icon { 
+              padding-right: 10px;
             }
           }
         }
