@@ -25,9 +25,9 @@
         border-radius: 6px 0 0 6px;
       }
 
-      :nth-last-child(-n+1) {
-        border-radius: 0 6px 6px 0
-      }
+      // :nth-last-child(-n+1) {
+      //   border-radius: 0 6px 6px 0
+      // }
     }
   }
 
@@ -38,6 +38,7 @@
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+      word-break: break-all;
     }
 
     table {
@@ -47,14 +48,14 @@
 
     tr {
       box-shadow: 0px 0px 15px rgba(92, 118, 143, 0.15);
-      border-radius: 6px;
+      // border-radius: 6px;
 
-      :first-child {
-        border-radius: 6px 0 0 6px;
-      }
-      :nth-last-child(-n+1) {
-        border-radius: 0 6px 6px 0
-      }
+      // :first-child {
+      //   border-radius: 6px 0 0 6px;
+      // }
+      // :nth-last-child(-n+1) {
+      //   border-radius: 0 6px 6px 0
+      // }
     }
   }
 

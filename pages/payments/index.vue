@@ -208,7 +208,6 @@
               :max-width="column.width + 100"
             >
               <template slot-scope="scope">
-                <!-- <span v-if="column.source == 'events'">{{ (scope.row[column.source])[0] }}</span> -->
                 <span :class="`el-table__row-${column.source}`">
                   <span
                   v-if="column.source == 'firstActive' || column.source == 'lastActive'"
