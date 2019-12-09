@@ -57,7 +57,7 @@
             </div>
           </div>
         </div>
-        <div class="dialogInfo cook">
+        <div v-if="data['cookies']" class="dialogInfo cook">
           <div class="dialogInfo__title">Cookie</div>
           <div class="dialogInfo__container">
             <div class="item">
@@ -71,6 +71,10 @@
             <div class="item">
               <span class="item__name">Facebook:</span>
               {{data['cookies']['facebook'] || '-'}}
+            </div>
+            <div class="item">
+              <span class="item__name">Visitor:</span>
+              {{data['cookies']['vis'] || '-'}}
             </div>
           </div>
         </div>
