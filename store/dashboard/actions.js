@@ -100,14 +100,39 @@ export async function getPaymentsFilters({ commit }, filters) {
   }
 }
 
-export async function getOperationsFilters({ commit }, filters) {
+export async function getOperationsFilters({ commit }) {
   try {
+    const globalFilters = this.getters['dashboard/globalFilters'].timeInterval;
+
+    const hash = JSON.stringify({
+      start: `${(new Date(globalFilters.start)).getFullYear}:${(new Date(globalFilters.start)).getMonth()}:${(new Date(globalFilters.start)).getDate()}`,
+      end: `${new Date(globalFilters.end).getFullYear}:${new Date(globalFilters.end).getMonth()}:${new Date(globalFilters.end).getDate()}`,
+    }).split('')
+      .reduce((a, b) => (((a << 5) - a) + b
+        .charCodeAt(0)) | 0, 0)
+
+    const state = await new Promise(function (callback) {
+      commit('cacheActionsFilters', {
+        hash,
+        callback
+      });
+    })
+
+    if (state) return state;
+
     const request = await this.$axios.post(`${process.env.address}/v1/operations/filters`, {
       ...this.getters['dashboard/globalFilters']
     })
-    
-    return request.data
+
+    return await new Promise(function (callback) {
+      commit('cacheActionsFilters', {
+        hash,
+        filters: request.data,
+        callback
+      });
+    })
   } catch (e) {
+    console.log(e);
     return null
   }
 }
@@ -118,7 +143,7 @@ export async function getOperations({ commit }, filters) {
       ...this.getters['dashboard/globalFilters'],
       ...filters
     })
-     
+
     return request.data
   } catch (e) {
     return null

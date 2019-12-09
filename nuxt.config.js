@@ -53,7 +53,8 @@ export default {
     '@/plugins/loading-animation',
     '@/plugins/times',
     '@/plugins/requestHandler',
-    '@/plugins/ux-dropdown'
+    '@/plugins/ux-dropdown',
+    '@/plugins/localStorage.js'
   ],
   /*
   ** Nuxt.js dev-modules

@@ -8,6 +8,8 @@ export default () => {
         start: previewInstanceDate,
         end: new Date()
       }
-    }
+    },
+
+    cacheActions: []
   }
 }
