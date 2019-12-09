@@ -49,7 +49,11 @@
                   <div class="wrapper">
                     <h3>Фильтры</h3>
                     <div class="filter">
-                      <el-checkbox label="Отображать посещения" v-model="localFilters.checked" class="checkbox-operation"></el-checkbox>
+                      <el-checkbox
+                        label="Отображать посещения"
+                        v-model="localFilters.sheets"
+                        class="checkbox-operation"
+                      ></el-checkbox>
                       <div class="title">Событие ({{filters.events.length}})</div>
                       <div class="container">
                         <el-select
@@ -173,7 +177,7 @@
             class="template-table"
           >
             <el-table
-              :data="this.operations.operations"
+              :data="this.operations.documents"
               class="payments-list"
               @row-click="dialogHandler"
             >
@@ -187,13 +191,19 @@
                 :min-width="column.width"
               >
                 <template slot-scope="scope">
-                  <span v-if="column.source == 'status'">
-                    <span v-if="scope.row['visit']">Просмотр страницы</span>
-                    <span v-else>{{translate[scope.row[column.source]]}}</span>
-                  </span>
                   <span
-                    v-else-if="column.source == 'date' && scope.row['date']"
+                    v-if="column.source == 'date' && scope.row['date']"
                   >{{ `${scope.row[column.source].substr(8, 2)}.${scope.row[column.source].substr(5, 2)}.${scope.row[column.source].substr(0, 4)}` }}</span>
+                  <span
+                    v-else-if="column.source == 'event' && !scope.row['event']"
+                  >{{scope.row['url']}}</span>
+                  <span v-else-if="column.source == 'status'">
+                    {{translate[scope.row['status']]}}
+                  </span>
+                  <span v-else-if="column.source == 'os' && !scope.row['os']">N/A</span>
+                  <span v-else-if="column.source == 'browser' && !scope.row['browser']">N/A</span>
+                  <span v-else-if="column.source == 'zip' && !scope.row['zip']">N/A</span>
+                   <span v-else-if="column.source == 'city' && !scope.row['city']">N/A</span>
                   <span v-else>{{scope.row[column.source]}}</span>
                 </template>
               </el-table-column>
@@ -203,12 +213,14 @@
               background
               layout="prev, pager, next"
               :total="this.operations.length"
-              :page-size="10"
+              :page-size="20"
               hide-on-single-page
               :current-page.sync="current"
             />
           </div>
-          <div v-else style="text-align: center; font-size: 35px; padding-bottom: 25px;"><p>Нет данных</p></div>
+          <div v-else style="text-align: center; font-size: 35px; padding-bottom: 25px;">
+            <p>Нет данных</p>
+          </div>
         </div>
         <div v-else>
           <div class="on-loading">
@@ -225,13 +237,18 @@
               <loading-square />
               <loading-square />
               <loading-square />
-            </div> 
+            </div>
           </div>
         </div>
       </div>
       <!-- -----------------------------------ДИАЛОГОВОЕ ОКНО------------------------------------------ -->
       <div>
-        <dialogs v-if="dialogData.loading" @closeDialog="handleClose" :visible.sync="dialogVisible" :data="dialogData" />
+        <dialogs
+          v-if="dialogData.loading"
+          @closeDialog="handleClose"
+          :visible.sync="dialogVisible"
+          :data="dialogData"
+        />
       </div>
     </el-main>
     <data-error />
@@ -262,7 +279,8 @@ export default {
         WIDGET_UNSEAT: "Удаление места",
         WIDGET_ORDER: "Оформление",
         WIDGET_SUCCESS: "Ожидает оплаты",
-        WIDGET_PAYMENT: "Оплачен"
+        WIDGET_PAYMENT: "Оплачен",
+        VISITED: "Просмотр страницы"
       },
 
       dialogVisible: false,
@@ -282,14 +300,14 @@ export default {
       operations: null,
       filters: null,
       localFilters: {
-        checked: true,
+        sheets: true,
         sources: null,
         cities: null,
         events: null,
         oses: null,
         browsers: null,
         statuses: null,
-        offset: 0
+        page: 0
       }
     };
   },
@@ -305,8 +323,8 @@ export default {
       this.applyPaymentsFilters();
     },
     current(offset) {
-      this.localFilters.offset = offset - 1
-      this.applyPayments()
+      this.localFilters.page = offset - 1;
+      this.applyPayments();
     }
   },
 
@@ -316,34 +334,38 @@ export default {
 
   methods: {
     handleClose() {
-      return this.dialogData = {
+      return (this.dialogData = {
         browser: {},
         os: {},
         cookies: {},
         utm: { tags: {} },
         analytics: {}
-      }
+      });
     },
     dialogHandler(val) {
       this.$nextTick(async () => {
         const request = await this.$requestHandler(
-          this.$axios.post(`${process.env.address}/v1/operations/${val.visit ? 'details.sheet' : 'details'}`, {
-            ...this.$store.getters["dashboard/globalFilters"],
-            offset: val.offset
-          })
-            
+          this.$axios.post(
+            `${process.env.address}/v1/operations/${
+              val.visit ? "details.sheet" : "details"
+            }`,
+            {
+              ...this.$store.getters["dashboard/globalFilters"],
+              offset: val.offset
+            }
+          )
         );
         if (request) {
-          if(val.visit) {
-              this.dialogData = {
-                  ...request.data.then,
-                  loading: true
-              };
+          if (val.visit) {
+            this.dialogData = {
+              ...request.data.then,
+              loading: true
+            };
           } else {
-              this.dialogData = {
-                  ...request.data,
-                  loading: true
-              };
+            this.dialogData = {
+              ...request.data,
+              loading: true
+            };
           }
         }
       });
@@ -355,7 +377,7 @@ export default {
         this.dialogVisible = true;
         const filters = await this.$requestHandler(
           this.$store.dispatch("dashboard/getOperationsFilters")
-        )
+        );
         if (!filters) {
           this.payments = null;
           this.filters = null;
@@ -376,20 +398,26 @@ export default {
     applyPayments(reset) {
       this.$nextTick(async () => {
         this.loading.content = true;
-        this.dropdownVisible1 = false
-        this.dropdownVisible2 = false
+        this.dropdownVisible1 = false;
+        this.dropdownVisible2 = false;
 
         if (reset) {
-          this.current = 1
+          this.current = 1;
         }
+
+        const filters = { ...this.localFilters };
+
+        Object.keys(filters).forEach(key => {
+          if (!filters[key] || filters[key].length == 0) delete filters[key];
+        });
 
         const operations = await this.$store.dispatch(
           "dashboard/getOperations",
-          this.localFilters
-        )
+          filters
+        );
 
         if (!operations) {
-          this.$notify.error('Ошибка сервера.')
+          this.$notify.error("Ошибка сервера.");
           this.operations = null;
           this.loading.content = false;
           return null;
@@ -408,12 +436,12 @@ export default {
         ];
 
         this.operations = operations;
-        this.loading.content = false; 
+        this.loading.content = false;
       });
     },
 
     changePageOffset(offset) {
-      this.localFilters.offset = offset - 1;
+      this.localFilters.page = offset - 1;
       this.applyPayments();
     }
   }
