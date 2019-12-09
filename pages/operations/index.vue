@@ -197,13 +197,11 @@
                   <span
                     v-else-if="column.source == 'event' && !scope.row['event']"
                   >{{scope.row['url']}}</span>
-                  <span v-else-if="column.source == 'status'">
-                    {{translate[scope.row['status']]}}
-                  </span>
+                  <span v-else-if="column.source == 'status'">{{translate[scope.row['status']]}}</span>
                   <span v-else-if="column.source == 'os' && !scope.row['os']">N/A</span>
                   <span v-else-if="column.source == 'browser' && !scope.row['browser']">N/A</span>
                   <span v-else-if="column.source == 'zip' && !scope.row['zip']">N/A</span>
-                   <span v-else-if="column.source == 'city' && !scope.row['city']">N/A</span>
+                  <span v-else-if="column.source == 'city' && !scope.row['city']">N/A</span>
                   <span v-else>{{scope.row[column.source]}}</span>
                 </template>
               </el-table-column>
@@ -347,16 +345,16 @@ export default {
         const request = await this.$requestHandler(
           this.$axios.post(
             `${process.env.address}/v1/operations/${
-              val.visit ? "details.sheet" : "details"
+              val.isSheet ? "details.sheet" : "details"
             }`,
             {
               ...this.$store.getters["dashboard/globalFilters"],
-              offset: val.offset
+              offset: val._id
             }
           )
         );
         if (request) {
-          if (val.visit) {
+          if (val.isSheet) {
             this.dialogData = {
               ...request.data.then,
               loading: true
