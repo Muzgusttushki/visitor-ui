@@ -69,6 +69,7 @@ export default {
       this.loading = true 
       
       const request = await this.$store.dispatch('dashboard/getSalesGraphics')
+      if (request.data.error) return null
       const remoteGraphics = request.data.then
       
       const dates = remoteGraphics.meta.dates
@@ -80,11 +81,9 @@ export default {
     
       const format = 
         check == 2 ? 
-          '{D}.{MM} {H}:{M}' 
+        '{D}.{MM} {H}:{M}' 
         : check == 1 ? 
-          '{H}:{M}' 
-        : 
-          '{D}.{MM}.{Y}'
+        '{H}:{M}' : '{D}.{MM}.{Y}'
           
       const remoteBuyers = await this.$store.dispatch('dashboard/getBuyersStats')
       if (remoteGraphics && remoteBuyers) {
