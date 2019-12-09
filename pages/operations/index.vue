@@ -135,7 +135,7 @@
                             v-for="(label, labelID) in filters.statuses"
                             :key="labelID"
                             :value="label.name"
-                          >{{label.name}} ({{label.quantity}})</el-option>
+                          >{{translate[label.name]}} ({{label.quantity}})</el-option>
                         </el-select>
                       </div>
                     </div>
@@ -216,7 +216,7 @@
               :current-page.sync="current"
             />
           </div>
-          <div v-else style="text-align: center; font-size: 35px; padding-bottom: 25px;">
+          <div v-else-if="!loading.content||this.operations" style="text-align: center; font-size: 35px; padding-bottom: 25px;">
             <p>Нет данных</p>
           </div>
         </div>

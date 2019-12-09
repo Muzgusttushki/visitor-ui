@@ -5,6 +5,9 @@ export default {
       chart: {
         toolbar: { show: false }
       },
+      legend: {
+        offsetY: -10
+      },
       dataLabels: { enabled: false },
       stroke: { curve: "smooth" },
       tooltip: {
@@ -48,7 +51,17 @@ export default {
       }]
     }
   },
-
+  graphic_devices: {
+    labels: ["Компьютер", "Смартфон"],
+    responsive: [{
+      breakpoint: 10000,
+      options: {
+        chart: {
+          height: 500
+        }
+      }
+    }]
+  },
   graphic_transitions: {
     chart: {
       type: "donut",

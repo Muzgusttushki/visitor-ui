@@ -226,57 +226,29 @@
               <el-row>
                 <h2 class="component-title">График активности</h2>
               </el-row>
-              <el-tabs>
-                <el-tab-pane label="Год">
+              <el-tabs v-if="userDetails.activity">
+                <el-tab-pane
+                  v-for="(item, key) in [
+                  {name: 'Год', var: 'year'},
+                  {name: 'Месяц', var: 'month'},
+                  {name: 'Неделя', var: 'week'}
+                ]"
+                  :key="key"
+                  :label="item.name"
+                >
                   <apexchart
-                    type="area" 
-                    :options="{
-                      ...graphic_activity.common,
-                      xaxis: { 
-                        categories: [...editActivityDates(userDetails.activity[0].year.dates)],
-                        labels: {show: false},
-                        tooltip: {enabled: false}
-                      }
-                    }"
-                    :series="[
-                      { name: 'Операции', data: userDetails.activity[0].year.operations },
-                      { name: 'Транзакции', data: userDetails.activity[0].year.transactions }
-                    ]"
-                  />
-                </el-tab-pane>
-                <el-tab-pane label="Месяц">
-                  <apexchart
-                    width="100%"
                     type="area"
                     :options="{
                       ...graphic_activity.common,
                       xaxis: { 
-                        categories: [...editActivityDates(userDetails.activity[0].month.dates)],
+                        categories: [...editActivityDates(userDetails.activity[0][item.var].dates)],
                         labels: {show: false},
                         tooltip: {enabled: false}
                       }
                     }"
                     :series="[
-                      { name: 'Операции', data: userDetails.activity[0].month.operations },
-                      { name: 'Транзакции', data: userDetails.activity[0].month.transactions }
-                    ]"
-                  />
-                </el-tab-pane>
-                <el-tab-pane label="Неделя">
-                  <apexchart
-                    width="100%"
-                    type="area"
-                    :options="{
-                      ...graphic_activity.common,
-                      xaxis: { 
-                        categories: [...editActivityDates(userDetails.activity[0].week.dates)],
-                        labels: {show: false},
-                        tooltip: {enabled: false}
-                      }
-                    }"
-                    :series="[
-                      { name: 'Операции', data: userDetails.activity[0].week.operations },
-                      { name: 'Транзакции', data: userDetails.activity[0].week.transactions }
+                      { name: 'Операции', data: userDetails.activity[0][item.var].operations },
+                      { name: 'Транзакции', data: userDetails.activity[0][item.var].transactions }
                     ]"
                   />
                 </el-tab-pane>
@@ -309,7 +281,7 @@
             <!-- ---------------------------------------ИСТОЧНИКИ КОНВЕРСИЙ-------------------------------- -->
             <div class="component-container">
               <div>
-                <el-row  class="content">
+                <el-row class="content">
                   <h2 class="component-title">Источники конверсий</h2>
                 </el-row>
                 <el-tabs class="content">
@@ -399,39 +371,38 @@
                   <el-row class="body-wrapper">
                     <el-row class="row-wrapper" v-if="userDetails.devices['devices']">
                       <apexchart
-                        :series="[{
-                          data: [
-                          userDetails.devices['devices']['computer'],
-                          userDetails.devices['devices']['phone']
-                          ],
-                          name: 'Компьютер'
-                        }]"
-                        :options="devicesOptions"
-                        type="bar"
-                        height="130"
+                        :series="[
+                          Number(userDetails.devices['devices']['computer']),
+                          Number(userDetails.devices['devices']['phone'])
+                        ]"
+                        :options="graphic_devices"
+                        type="donut"
+                        height="300"
+                        width="100%"
                       />
                     </el-row>
-                    <el-row :gutter="20" class="list">
-                      <el-col :span="12">
-                        <el-row class="title">Устройства</el-row>
-                        <div>
-                          <el-row class="type">IPhone</el-row>
+                    <div class="list" v-if="filteredDeviceType">
+                      <div>
+                        <el-row class="title">ОС</el-row>
+                        <div v-for="(item, key) in filteredDeviceType.os" :key="key">
+                          <el-row class="type">{{item}}</el-row>
                         </div>
-                      </el-col>
-                      <el-col :span="12" class="right">
+                      </div>
+                      <div class="right">
                         <el-row class="title">Браузер</el-row>
-                        <div>
-                          <el-row class="type">Safari</el-row>
+                        <div v-for="(item, key) in filteredDeviceType.browsers" :key="key">
+                          <el-row class="type">{{item}}</el-row>
                         </div>
-                      </el-col>
-                    </el-row>
+                      </div>
+                    </div>
                   </el-row>
                 </el-main>
               </div>
             </div>
           </el-col>
+
+          <!-- --------------------------------------------СЕГМЕНТЫ------------------------------------- -->
           <el-col :span="17" class="col-container graphic-tags">
-            <!-- --------------------------------------------СЕГМЕНТЫ------------------------------------- -->
             <div class="component-container">
               <el-main>
                 <el-tabs type="card">
@@ -463,8 +434,10 @@
               </el-main>
             </div>
           </el-col>
+          <!-- ------------------------------------------------------------------------------------------ -->
+
+          <!-- -------------------------------------------КОММЕНТАРИИ------------------------------------ -->
           <el-col :span="7" class="col-container comments">
-            <!-- -------------------------------------------КОММЕНТАРИИ------------------------------------ -->
             <div class="component-container">
               <el-row>
                 <h2 class="component-title">Комментарии</h2>
@@ -517,28 +490,31 @@
                 <el-row>
                   <el-col :span="8">
                     <div>
-                      <apexchart 
-                        :options="{...graphic_probability, colors: ['#5AB6FE']}" 
+                      <apexchart
+                        :options="{...graphic_probability, colors: ['#5AB6FE']}"
                         :series="[60]"
-                        height="200" />
+                        height="200"
+                      />
                       <p>Вероятность открыть e-mail</p>
                     </div>
                   </el-col>
                   <el-col :span="8">
                     <div>
-                      <apexchart 
-                        :options="{...graphic_probability, colors: ['#4BDCA3']}" 
+                      <apexchart
+                        :options="{...graphic_probability, colors: ['#4BDCA3']}"
                         :series="[90]"
-                        height="200" />
+                        height="200"
+                      />
                       <p>Вероятность открыть e-mail</p>
                     </div>
                   </el-col>
                   <el-col :span="8">
                     <div>
-                      <apexchart 
-                        :options="{...graphic_probability, colors: ['#FFC657']}" 
+                      <apexchart
+                        :options="{...graphic_probability, colors: ['#FFC657']}"
                         :series="[90]"
-                        height="200" />
+                        height="200"
+                      />
                       <p>Вероятность открыть e-mail</p>
                     </div>
                   </el-col>
@@ -574,7 +550,7 @@
                       <template slot="label">
                         <div class="info">
                           <font-awesome-icon :icon="['fas', 'sign-out-alt']" class="fa-lg in" />
-                          {{tabAsyncManager.statuses[val.status]}}
+                          {{tabAsyncManager.statuses[val.status] || 'Заход на сайт'}}
                         </div>
                         <div class="date">{{handleDate(val.date, "{D}.{MM}.{Y}")}}</div>
                         <div class="time">{{handleDate(val.date, "{H}:{M}")}}</div>
@@ -702,7 +678,7 @@
                       background
                       layout="prev, pager, next"
                       :total="this.tabAsyncManager.detailsData.length"
-                      :page-size="this.views"
+                      :page-size="Number(this.views)"
                       :current-page.sync="current"
                     ></el-pagination>
                   </div>
@@ -785,49 +761,6 @@ export default {
       customTabsHeadStyle: null,
       customTabsBodyStyle: null,
 
-      devicesOptions: {
-        xaxis: {
-          categories: ["Компьютер", "Смартфон"],
-          labels: {
-            show: false
-          },
-          axisBorder: {
-            show: false
-          },
-          axisTicks: {
-            show: false
-          }
-        },
-        grid: {
-          borderColor: "#ffffff"
-        },
-        plotOptions: {
-          bar: {
-            horizontal: true,
-            distributed: true,
-            columnWidth: "100%",
-            barHeight: "90%"
-          }
-        },
-        chart: {
-          toolbar: {
-            show: false
-          },
-          width: "100%"
-        },
-        legend: {
-          show: false
-        },
-        dataLabels: {
-          formatter(val) {
-            return val + "%";
-          }
-        },
-        tooltip: {
-          enabled: false
-        }
-      },
-
       columns: [
         { label: "Дата", source: "date", visible: true, width: 100 },
         { label: "Событие", source: "event", visible: true, width: 300 },
@@ -878,15 +811,16 @@ export default {
       graphic_activity: settings.graphic_activity,
       graphic_transitions: settings.graphic_transitions,
       graphic_probability: settings.probability,
+      graphic_devices: settings.graphic_devices,
 
       translatedSources: {
         transitions: {
-          direct: 'Прямой',
-          advertising: 'Другая рекламная система',
-          messenger: 'Мессенджер',
-          social: 'Соц. сети',
-          email: 'Почта',
-          advertisement: 'Реклама'
+          direct: "Прямой",
+          advertising: "Другая рекламная система",
+          messenger: "Мессенджер",
+          social: "Соц. сети",
+          email: "Почта",
+          advertisement: "Реклама"
         }
       },
 
@@ -947,6 +881,7 @@ export default {
     const userId = params.id;
 
     const userDetails = await store.dispatch("payment/getUserDetails", userId);
+    console.log(userDetails.activity);
 
     const request = await $axios.get(
       `${process.env.address}/v1/reports/buyers/userActivity/${userId}`
@@ -956,7 +891,7 @@ export default {
     return { userDetails, userId, userActivity };
   },
   mounted() {
-    this.getUserSourceAnalyse()
+    this.getUserSourceAnalyse();
   },
   watch: {
     current() {
@@ -969,51 +904,80 @@ export default {
     }
   },
   computed: {
-    filteredUserSource() {
-      const data = this.userSourceAnalyse
+    filteredDeviceType() {
+      const data = this.userDetails.devicesList.list;
 
-      const names = []
-      const values = []
+      if (data.length === 1) {
+        return {
+          os: data[0].os,
+          browser: data[0].browser
+        };
+      }
+      const os = [];
+      const browsers = [];
 
       for (let i = 0; i < data.length; i++) {
-        
-        const index = names.indexOf(data[i].type)
-        
+        const exist =
+          os.includes(data[0].os) && browsers.includes(data[0].browser);
+        if (!exist) {
+          os.push(data[0].os) && browsers.push(data[0].browser);
+        }
+      }
+
+      return { os, browsers };
+    },
+    filteredUserSource() {
+      const data = this.userSourceAnalyse;
+
+      if (data.length === 1) {
+        return {
+          type: [this.translatedSources.transitions[data[0]["type"]]],
+          value: [data[0]["quantity"]]
+        };
+      }
+
+      const names = [];
+      const values = [];
+
+      for (let i = 0; i < data.length; i++) {
+        const index = names.indexOf(data[i].type);
+
         if (index >= 0) {
-          values[index] += data[i].quantity
+          values[index] += data[i].quantity;
         } else {
-          values.push(data[i].quantity)
-          names.push(data[i].type)
+          values.push(data[i].quantity) && names.push(data[i].type);
         }
       }
 
       return {
-        type: names.map(item => this.translatedSources.transitions[item]), 
+        type: names.map(item => this.translatedSources.transitions[item]),
         value: values
-      }
+      };
     }
   },
   methods: {
     editActivityDates(dates) {
       const format = "{D}.{MM}.{Y}";
-      
+
       return dates.map(item => {
         return (
           this.$times({
             time: item.current,
             format
-          }) 
-          + " - " +
+          }) +
+          " - " +
           this.$times({
             time: item.countdown,
             format
           })
         );
-      })
+      });
     },
     async getUserSourceAnalyse() {
-      const request = await this.$axios.get(`${process.env.address}/v1/reports/buyers/userSourceAnalyse/${this.userId}`)
-      this.userSourceAnalyse = request.data
+      const request = await this.$axios.get(
+        `${process.env.address}/v1/reports/buyers/userSourceAnalyse/${this.userId}`
+      );
+      this.userSourceAnalyse = request.data;
     },
     handleClose() {
       this.dialogVisible = false;
@@ -1034,7 +998,7 @@ export default {
           ...this.$store.getters["dashboard/globalFilters"]
         }
       );
-      
+
       this.dialogData = { ...request.data, loading: true };
       this.dialogVisible = true;
     },
@@ -1047,7 +1011,7 @@ export default {
       name = [sliceName[0][0]];
       if (sliceName[1]) name.push(sliceName[1][0]);
 
-      return name.join('');
+      return name.join("");
     },
 
     handleDate(time, format) {

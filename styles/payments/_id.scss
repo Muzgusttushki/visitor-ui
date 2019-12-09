@@ -473,11 +473,9 @@ $lg-width: 1200px;
       }
 
       .list {
-        padding: 0 15px;
-
-        .el-row {
-          padding: 10px 0;
-        }
+        padding: 10px 20px 20px;
+        display: flex;
+        justify-content: space-between;
 
         .right {
           text-align: right;
