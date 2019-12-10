@@ -52,7 +52,23 @@ export default {
     }
   },
   graphic_devices: {
-    labels: ["Компьютер", "Смартфон"],
+    dataLabels: {
+      style: {
+        colors: ['#333333'],
+        fontSize: '17px' 
+      },
+      dropShadow: {
+        opacity: 0.1
+      }
+    },
+    plotOptions: {
+      pie: {
+        customScale: 1.1,
+        dataLabels: {
+          offset: -35
+        }
+      }
+    },
     responsive: [{
       breakpoint: 10000,
       options: {
