@@ -9,7 +9,7 @@
                 {{item.title}}
               </el-col>
             </el-row>
-            <el-row class="center">
+            <el-row class="center" v-if="request">
               <el-tooltip :content="`${item.tooltipNumber}`" placement="top-start" class="left">
                 <div>{{ request[item.current].toFixed() }}</div>
               </el-tooltip>
@@ -18,7 +18,7 @@
               <div class="bottom__container">
                 <el-tooltip :content="`${item.tooltipNumberLast}`" placement="top-start">
                   <div class="left">
-                    {{ request[item.last].toFixed() | moreThanOneThousand }}
+                    <span>{{ request[item.last].toFixed() | moreThanOneThousand }}</span>
                     <div class="left-hidden">
                       {{ request[item.last].toFixed() }}
                     </div>

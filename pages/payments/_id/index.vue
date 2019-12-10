@@ -371,11 +371,11 @@
                   <el-row class="body-wrapper">
                     <el-row class="row-wrapper" v-if="userDetails.devices['devices']">
                       <apexchart
-                        :series="[
-                          Number(userDetails.devices['devices']['computer']),
-                          Number(userDetails.devices['devices']['phone'])
-                        ]"
-                        :options="graphic_devices"
+                        :series="devicesList.values"
+                        :options="{
+                          ...graphic_devices,
+                          labels: devicesList.labels
+                        }"
                         type="donut"
                         height="300"
                         width="100%"
@@ -384,13 +384,13 @@
                     <div class="list" v-if="filteredDeviceType">
                       <div>
                         <el-row class="title">ОС</el-row>
-                        <div v-for="(item, key) in filteredDeviceType.os" :key="key">
+                        <div v-for="(item, key) in filteredDeviceType.os" :key="key" class="line">
                           <el-row class="type">{{item}}</el-row>
                         </div>
                       </div>
                       <div class="right">
                         <el-row class="title">Браузер</el-row>
-                        <div v-for="(item, key) in filteredDeviceType.browsers" :key="key">
+                        <div v-for="(item, key) in filteredDeviceType.browsers" :key="key" class="line">
                           <el-row class="type">{{item}}</el-row>
                         </div>
                       </div>
@@ -904,6 +904,16 @@ export default {
     }
   },
   computed: {
+    devicesList() {
+      const list = { labels: [], values: [] }
+      
+      const devices = this.userDetails.devices['devices']
+
+      devices['computer'] ? list.labels.push('Компьютер') && Number(list.values.push(devices['computer'])) : null
+      devices['phone'] ? list.labels.push('Смартфон') && Number(list.values.push(devices['phone'])) : null
+
+      return list
+    },
     filteredDeviceType() {
       const data = this.userDetails.devicesList.list;
 
@@ -913,14 +923,14 @@ export default {
           browser: data[0].browser
         };
       }
+
       const os = [];
       const browsers = [];
 
       for (let i = 0; i < data.length; i++) {
-        const exist =
-          os.includes(data[0].os) && browsers.includes(data[0].browser);
+        const exist = os.includes(data[i].os) && browsers.includes(data[i].browser);
         if (!exist) {
-          os.push(data[0].os) && browsers.push(data[0].browser);
+          os.push(data[i].os) && browsers.push(data[i].browser);
         }
       }
 
