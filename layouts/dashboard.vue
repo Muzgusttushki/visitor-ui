@@ -152,6 +152,7 @@ export default {
 
   watch: {
     getGlobalFilterTimeInterval(source) {
+      console.log('Iban')
       this.globalTimeRange = source ? Object.values(source) : [];
     }
   },
