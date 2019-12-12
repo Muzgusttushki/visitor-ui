@@ -36,5 +36,7 @@
     "vuedraggable": "^2.23.2",
     "vuex-persistedstate": "^2.7.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "babel-plugin-transform-remove-strict-mode": "0.0.2"
+  }
 }

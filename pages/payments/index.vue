@@ -48,7 +48,7 @@
                   </el-button>
                 </span>
               </template>
-              
+
               <!-- __________________________________FILTER PARAMETERS__________________________________________ -->
               <template>
                 <div class="payments index filter-container">
@@ -182,10 +182,9 @@
 
                     <!-- --------------------------------APPLY BUTTON---------------------- -->
                     <div class="container">
-                      <el-button type="primary" @click="applyPayments(true)">Применить</el-button>
+                      <el-button type="primary" @click="applyPayments(true, true)">Применить</el-button>
                     </div>
                     <!-- ------------------------------------------------------------------ -->
-
                   </div>
                 </div>
               </template>
@@ -210,7 +209,7 @@
               <template slot-scope="scope">
                 <span :class="`el-table__row-${column.source}`">
                   <span
-                  v-if="column.source == 'firstActive' || column.source == 'lastActive'"
+                    v-if="column.source == 'firstActive' || column.source == 'lastActive'"
                   >{{handleData(scope.row[column.source])}}</span>
                   <span v-else>{{String(scope.row[column.source])}}</span>
                 </span>
@@ -229,7 +228,6 @@
             hide-on-single-page
           />
           <!-- ------------------------------------------------------------------------------------------ -->
-
         </div>
         <!-- ____________________________________________________________________________________________ -->
 
@@ -318,7 +316,9 @@ export default {
         city: null,
         event: null,
         offset: 0
-      }
+      },
+
+      force: false
     };
   },
 
@@ -330,12 +330,21 @@ export default {
 
   watch: {
     globalFiltersTimeInterval() {
+      console.log('time')
       this.applyPaymentsFilters(true);
     },
 
     current(offset) {
+      if(!this.force) return;
+      console.log(Function,'caler backtrace')
+      console.log("pagination");
+      throw new Error('error')
       this.localFilters.offset = offset - 1;
-      this.applyPaymentsFilters();
+      this.$store.commit("dashboard/cachePaymentFilterState", {
+        state: { ...this.localFilters },
+        write: true
+      });
+      this.applyPayments();
     }
   },
 
@@ -368,7 +377,16 @@ export default {
         }
         this.filters = filters;
 
-        if (reset) {
+        const _cacheFilters = await new Promise(callback => {
+          this.$store.commit("dashboard/cachePaymentFilterState", {
+            callback
+          });
+        });
+
+        if (_cacheFilters) {
+          this.localFilters = { ..._cacheFilters.state };
+          this.current = new Number(_cacheFilters.state.offset) + 1;
+        } else if (reset) {
           // reset local filters
           this.localFilters = {
             money: [this.filters.minEarnings, this.filters.maxEarnings],
@@ -388,17 +406,19 @@ export default {
             event: [],
             offset: 0
           };
-          this.current = 1;
+          // this.current = 1;
         }
+
+       // this.force = true;
 
         this.$nextTick(() => {
           this.loading.pages = false;
-          this.applyPayments();
+          // this.applyPayments();
         });
       });
     },
 
-    applyPayments(reset) {
+    applyPayments(reset, onload) {
       this.dropdownVisible2 = false;
 
       if (reset) {
@@ -406,6 +426,13 @@ export default {
       }
 
       this.$nextTick(async () => {
+        if (onload) {
+          this.$store.commit("dashboard/cachePaymentFilterState", {
+            state: { ...this.localFilters },
+            write: true
+          });
+        }
+        console.log(this.localFilters);
         this.loading.content = true;
         this.payments = await this.$store.dispatch(
           "payment/getPayments",
@@ -415,6 +442,8 @@ export default {
         if (!this.payments) this.payments = null;
         this.loading.content = false;
       });
+
+      this.force = true;
     }
   }
 };

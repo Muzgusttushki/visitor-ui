@@ -55,6 +55,7 @@ export default {
     '@/plugins/requestHandler',
     '@/plugins/ux-dropdown',
     '@/plugins/localStorage.js'
+
   ],
   /*
   ** Nuxt.js dev-modules
@@ -74,6 +75,8 @@ export default {
   */
   axios: {},
 
+  strict: false,
+
 
   // http://84.201.153.133:3303
   env: {
@@ -85,6 +88,9 @@ export default {
   */
   build: {
     transpile: [/^element-ui/],
+    babel: {
+      plugins: ["transform-remove-strict-mode"]
+    },
     /*
     ** You can extend webpack config here
     */
