@@ -338,7 +338,6 @@ export default {
       if(!this.force) return;
       console.log(Function,'caler backtrace')
       console.log("pagination");
-      throw new Error('error')
       this.localFilters.offset = offset - 1;
       this.$store.commit("dashboard/cachePaymentFilterState", {
         state: { ...this.localFilters },
@@ -413,19 +412,21 @@ export default {
 
         this.$nextTick(() => {
           this.loading.pages = false;
-          // this.applyPayments();
+          this.applyPayments();
         });
       });
     },
 
     applyPayments(reset, onload) {
       this.dropdownVisible2 = false;
+      console.log('applyy payments')
 
       if (reset) {
         this.current = 1;
       }
 
       this.$nextTick(async () => {
+        console.log('next tick apply paymets')
         if (onload) {
           this.$store.commit("dashboard/cachePaymentFilterState", {
             state: { ...this.localFilters },
