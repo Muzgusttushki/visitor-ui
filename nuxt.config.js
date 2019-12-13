@@ -88,9 +88,6 @@ export default {
   */
   build: {
     transpile: [/^element-ui/],
-    babel: {
-      plugins: ["transform-remove-strict-mode"]
-    },
     /*
     ** You can extend webpack config here
     */

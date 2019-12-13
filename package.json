@@ -35,8 +35,5 @@
     "vue-apexcharts": "^1.5.0",
     "vuedraggable": "^2.23.2",
     "vuex-persistedstate": "^2.7.0"
-  },
-  "devDependencies": {
-    "babel-plugin-transform-remove-strict-mode": "0.0.2"
   }
 }
