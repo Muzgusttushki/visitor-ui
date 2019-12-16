@@ -52,9 +52,10 @@ export default {
     '@/plugins/awesome',
     '@/plugins/loading-animation',
     '@/plugins/times',
+    '@/plugins/requestHandler',
     '@/plugins/ux-dropdown',
-    '@/plugins/localStorage.js',
-    '@/plugins/formatTimeForSend'
+    '@/plugins/localStorage.js'
+
   ],
   /*
   ** Nuxt.js dev-modules

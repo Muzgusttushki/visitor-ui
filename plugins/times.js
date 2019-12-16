@@ -30,12 +30,12 @@ Vue.use({
                 })
 
             const prepare = {
-                Y:  timezone ? time.substr(6, 4) : time.substr(0, 4),
+                Y: timezone ? time.substr(6, 4) : time.substr(0, 4),
                 MM: timezone ? time.substr(3, 2) : time.substr(5, 2),
-                D:  timezone ? time.substr(0, 2) : time.substr(8, 2),
-                H:  timezone ? time.substr(12, 2) : time.substr(11, 2),
-                M:  timezone ? time.substr(15, 2) : time.substr(14, 2),
-                S:  timezone ? time.substr(18, 2) : time.substr(17, 2)
+                D: timezone ? time.substr(0, 2) : time.substr(8, 2),
+                H: timezone ? time.substr(12, 2) : time.substr(11, 2),
+                M: timezone ? time.substr(15, 2) : time.substr(14, 2),
+                S: timezone ? time.substr(18, 2) : time.substr(17, 2)
             }
 
 

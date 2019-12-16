@@ -5,8 +5,7 @@ export default async function ({ $axios, store }) {
     // console.log(config, 'axios')
     if (webToken) {
       config.headers.common = {
-        Authorization: `Bearer ${webToken}`,
-        'Access-Control-Allow-Origin': config.baseURL
+        Authorization: `Bearer ${webToken}`
       }
     }
   })

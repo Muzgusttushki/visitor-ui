@@ -336,6 +336,8 @@ export default {
 
     current(offset) {
       if(!this.force) return;
+      console.log(Function,'caler backtrace')
+      console.log("pagination");
       this.localFilters.offset = offset - 1;
       this.$store.commit("dashboard/cachePaymentFilterState", {
         state: { ...this.localFilters },
@@ -362,10 +364,8 @@ export default {
     applyPaymentsFilters(reset) {
       this.$nextTick(async () => {
         this.loading.pages = true;
-        console.log(this.$formatTimeForSend({start: new Date(), end: new Date()}))
         const filters = await this.$store.dispatch(
-          "dashboard/getPaymentsFilters",
-          this.$formatTimeForSend
+          "dashboard/getPaymentsFilters"
         );
         if (!filters) {
           this.payments = null;
