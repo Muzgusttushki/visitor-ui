@@ -342,17 +342,15 @@ export default {
     },
     dialogHandler(val) {
       this.$nextTick(async () => {
-        const request = await this.$requestHandler(
-          this.$axios.post(
-            `${process.env.address}/v1/operations/${
-              val.isSheet ? "details.sheet" : "details"
-            }`,
-            {
-              ...this.$store.getters["dashboard/globalFilters"],
-              offset: val._id
-            }
+        const request = await this.$axios.post(
+          `${process.env.address}/v1/operations/${
+            val.isSheet ? "details.sheet" : "details"
+          }`,
+          {
+            ...this.$store.getters["dashboard/globalFilters"],
+            offset: val._id
+          }
           )
-        );
         if (request) {
           if (val.isSheet) {
             this.dialogData = {
@@ -373,9 +371,7 @@ export default {
       this.$nextTick(async () => {
         this.loading.pages = true;
         this.dialogVisible = true;
-        const filters = await this.$requestHandler(
-          this.$store.dispatch("dashboard/getOperationsFilters")
-        );
+        const filters = await this.$store.dispatch("dashboard/getOperationsFilters")
         if (!filters) {
           this.payments = null;
           this.filters = null;
