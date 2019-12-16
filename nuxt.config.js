@@ -52,9 +52,10 @@ export default {
     '@/plugins/awesome',
     '@/plugins/loading-animation',
     '@/plugins/times',
+    '@/plugins/requestHandler',
     '@/plugins/ux-dropdown',
-    '@/plugins/localStorage.js',
-    '@/plugins/formatTimeForSend'
+    '@/plugins/localStorage.js'
+
   ],
   /*
   ** Nuxt.js dev-modules
@@ -80,7 +81,7 @@ export default {
   // http://84.201.153.133:3303
   env: {
     address: DEBUG ? 'http://127.0.0.1:3303'
-      : 'https://services.weekendagency.ru'
+      : 'http://84.201.153.133:3303'
   },
   /*
   ** Build configuration
