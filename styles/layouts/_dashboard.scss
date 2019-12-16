@@ -1,10 +1,20 @@
 &.dashboard {
   $--left-menu-color: #233245;
 
-  .el-picker-panel.el-date-range-picker.el-popper {
-    position: absolute;
-    top: 45px;
-    z-index: 2009;
+  // .el-picker-panel.el-date-range-picker.el-popper {
+  //   position: absolute;
+  //   top: 45px;
+  //   z-index: 2009;
+  // }
+  .el-picker-panel {
+    display: flex;
+    .type-buttons {
+      order: 0;
+
+      .el-button {
+        margin: 0;
+      }
+    }
   }
   
   .left-menu-fixed {

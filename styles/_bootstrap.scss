@@ -29,7 +29,23 @@ p {
   font-family: "Rubik", sans-serif !important;
 }
 
+// picker
 
+.el-picker-panel {
+  display: flex;
+  .type-picker {
+    order: 1;
+
+    :nth-child(3) {
+      display: none;
+    }
+
+    .el-button {
+      width: 100%;
+      margin: 10px 0 0;
+    }
+  }
+}
 
 //layouts
 .layouts {

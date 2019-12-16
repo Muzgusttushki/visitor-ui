@@ -24,7 +24,7 @@
     "@vue/test-utils": "^1.0.0-beta.29",
     "apexcharts": "^3.8.6",
     "cookie-universal-nuxt": "^2.0.17",
-    "element-ui": "git+https://github.com/troskcey/custom-element-ui.git",
+    "element-ui": "git+https://github.com/troskcey/element-ui-v.git",
     "glob": "^7.1.5",
     "node-sass": "^4.12.0",
     "nuxt-edge": "^2.10.3-26223850.adce6053",

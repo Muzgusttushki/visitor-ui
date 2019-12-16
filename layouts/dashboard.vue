@@ -7,23 +7,20 @@
         <div class="logotype" />
         <!-- -------------------------------DATEPICKER----------------------------------------- -->
         <div :class="hideDatePicker()">
-          <div class="change-source__format" style="display: none;">
-            <span @click="editDateType('daterange')">Дни</span>
-            <span @click="editDateType('monthrange')">Месяцы</span>
-          </div>
           <el-date-picker
             v-if="dateType.show"
             v-model="globalTimeRange"
             :type="dateType.type"
+            unlink-panels
             align="right"
             format="dd.MM.yyyy"
             range-separator="-"
-            :unlink-panels="true"
             :default-value="defaultGlobalTimeRange"
             start-placeholder="Дата начала"
             end-placeholder="Дата окончания"
             :default-time="['00:00:00', '23:59:59']"
             @change="changeGlobalTimeRange"
+            class="dashboard picker"
           >
             <template slot="footer">123</template>
           </el-date-picker>

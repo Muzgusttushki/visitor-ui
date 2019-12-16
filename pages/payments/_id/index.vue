@@ -548,12 +548,14 @@
                       :key="valID"
                     >
                       <template slot="label">
-                        <div class="info">
-                          <font-awesome-icon :icon="['fas', 'sign-out-alt']" class="fa-lg in" />
-                          {{tabAsyncManager.statuses[val.status] || 'Заход на сайт'}}
+                        <div :class="val.color + ' container-steps'">
+                          <div class="info">
+                            <font-awesome-icon :icon="['fas', 'sign-out-alt']" class="fa-lg in" />
+                            {{tabAsyncManager.statuses[val.status] || 'Заход на сайт'}}
+                          </div>
+                          <div class="date">{{handleDate(val.date, "{D}.{MM}.{Y}")}}</div>
+                          <div class="time">{{handleDate(val.date, "{H}:{M}")}}</div>
                         </div>
-                        <div class="date">{{handleDate(val.date, "{D}.{MM}.{Y}")}}</div>
-                        <div class="time">{{handleDate(val.date, "{H}:{M}")}}</div>
                       </template>
 
                       <div class="wrapper">
@@ -1056,12 +1058,32 @@ export default {
           if (data.error) {
             return;
           }
+          
+          const check = (current, date) => {
+            console.log(( (new Date(current)) - (new Date(date)) ) / 1000 / 60)
+            return ( ( (new Date(current)) - (new Date(date)) ) / 1000 / 60 ) > 30
+          }
+          const sessions = {date: null, flag: 1};
+
+          const details = data.then.operations.reverse().map(item => {
+            if (sessions.date === null) {
+              sessions.date = item.date;
+            } else if (item.date != sessions.date && check(item.date, sessions.date)) {
+              sessions.flag = sessions.flag === 1 ? 0 : 1;
+              sessions.date = item.date;
+            }
+            item.color = sessions.flag === 1 ? 'white' : 'grey';
+            return item;
+          });;
 
           this.tabAsyncManager.detailsData = data.then;
+          this.tabAsyncManager.detailsData.operations = details.reverse();
+          console.log(this.tabAsyncManager)
 
           const id = this.tabAsyncManager.detailsData.operations[0]["_id"];
           this.detailUserOperationEvent({ name: id });
           this.active = id;
+          
         })
         .catch(error => {
           console.error(error);

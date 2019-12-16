@@ -70,7 +70,9 @@ export default {
       
       const request = await this.$store.dispatch('dashboard/getSalesGraphics')
       if (request.data.error) return null
+
       const remoteGraphics = request.data.then
+      if (!remoteGraphics.meta.dates) return null
       
       const dates = remoteGraphics.meta.dates
       const check = Math.floor( ( 
