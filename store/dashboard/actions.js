@@ -88,18 +88,17 @@ export async function getPayments({ commit }, filters) {
 }
 
 
-export async function getPaymentsFilters({ commit }, filters) {
+export async function getPaymentsFilters({ commit }, format) {
   try {
     const globalFilters = this.getters['dashboard/globalFilters'].timeInterval;
     const start = new Date(globalFilters.start), end = new Date(globalFilters.end);
 
     const hash = JSON.stringify({
-      start: `${start.getFullYear}:${start.getMonth()}:${start.getDate()}`,
-      end: `${end.getFullYear}:${end.getMonth()}:${end.getDate()}`,
+      start: `${start.getFullYear()}:${start.getMonth()}:${start.getDate()}`,
+      end: `${end.getFullYear()}:${end.getMonth()}:${end.getDate()}`,
     }).split('')
       .reduce((a, b) => (((a << 5) - a) + b
         .charCodeAt(0)) | 0, 0)
-    console.log('test1')
 
     const state = await new Promise(function (callback) {
       commit('cachePaymentFilters', {
@@ -107,17 +106,12 @@ export async function getPaymentsFilters({ commit }, filters) {
         callback
       });
     })
-    console.log('test2')
     if (state) {
-      console.log({...state}, 'state')
       return state
     } else {
-      const request = await this.$axios.post(`${process.env.address}/v1/reports/payments.filters`, {
-        ...this.getters['dashboard/globalFilters']
-      }).then(( r ) => {
-        console.log('asdfjlksdjfshdfhdsjbfvjvuidsvubuvbuwebviubeiuwbvuwebv')
-        return r
-      })
+      const request = await this.$axios.post(`${process.env.address}/v1/api/customers/filters${format({ start, end })}`)
+        .then(( r ) => { return r })
+
       return await new Promise(function (callback) {
         commit('cachePaymentFilters', {
           hash,
@@ -126,9 +120,6 @@ export async function getPaymentsFilters({ commit }, filters) {
         });
       })
     }
-
-
-    console.log('test3')
     
   } catch (e) {
     return null
