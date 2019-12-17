@@ -11,7 +11,6 @@
             v-if="dateType.show"
             v-model="globalTimeRange"
             :type="dateType.type"
-            unlink-panels
             align="right"
             format="dd.MM.yyyy"
             range-separator="-"
