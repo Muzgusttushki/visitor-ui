@@ -548,7 +548,12 @@
                       :key="valID"
                     >
                       <template slot="label">
-                        <div :class="val.color + ' container-steps'">
+                        <div :class="
+                          (val.first ? 
+                            'first' 
+                          : val.last? 
+                            'last'
+                          : val.color) + ' container-steps'">
                           <div class="info">
                             <font-awesome-icon :icon="['fas', 'sign-out-alt']" class="fa-lg in" />
                             {{tabAsyncManager.statuses[val.status] || 'Заход на сайт'}}
@@ -1065,12 +1070,16 @@ export default {
           }
           const sessions = {date: null, flag: 1};
 
-          const details = data.then.operations.reverse().map(item => {
+          const details = data.then.operations.reverse().map((item, index, array) => {
             if (sessions.date === null) {
+              item.first = true;
               sessions.date = item.date;
             } else if (item.date != sessions.date && check(item.date, sessions.date)) {
               sessions.flag = sessions.flag === 1 ? 0 : 1;
               sessions.date = item.date;
+              item.first = true;
+            } else if (check(array[index + 1], sessions.date)) {
+              item.last = true;
             }
             item.color = sessions.flag === 1 ? 'white' : 'grey';
             return item;

@@ -376,16 +376,17 @@ export default {
         }
         this.filters = filters;
 
-        const _cacheFilters = await new Promise(callback => {
-          this.$store.commit("dashboard/cachePaymentFilterState", {
-            callback
-          });
-        });
+        // const _cacheFilters = await new Promise(callback => {
+        //   this.$store.commit("dashboard/cachePaymentFilterState", {
+        //     callback
+        //   });
+        // });
 
-        if (_cacheFilters) {
-          this.localFilters = { ..._cacheFilters.state };
-          this.current = new Number(_cacheFilters.state.offset) + 1;
-        } else if (reset) {
+        // if (_cacheFilters) {
+        //   this.localFilters = { ..._cacheFilters.state };
+        //   this.current = new Number(_cacheFilters.state.offset) + 1;
+        // } else if (reset) {
+          if (reset) {
           // reset local filters
           this.localFilters = {
             money: [this.filters.minEarnings, this.filters.maxEarnings],

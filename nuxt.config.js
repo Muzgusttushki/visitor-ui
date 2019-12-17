@@ -81,7 +81,7 @@ export default {
   // http://84.201.153.133:3303
   env: {
     address: DEBUG ? 'http://127.0.0.1:3303'
-      : 'http://84.201.153.133:3303'
+      : 'https://services.weekendagency.ru'
   },
   /*
   ** Build configuration
