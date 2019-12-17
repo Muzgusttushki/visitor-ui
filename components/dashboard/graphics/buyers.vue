@@ -55,7 +55,7 @@ export default {
       if (remoteGraphics) {
         this.graphics = {
           options: {
-            labels: ['Всего покупателей', 'За период'],
+            labels: ['Всего покупателей', 'Новые за период'],
             dataLabels: {
               style: {
                 fontSize: '14px'
