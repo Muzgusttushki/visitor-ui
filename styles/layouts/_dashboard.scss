@@ -10,7 +10,8 @@
     display: flex;
     .type-buttons {
       order: 0;
-
+      position: absolute;
+      right: -220px;
       .el-button {
         margin: 0;
       }

@@ -38,6 +38,11 @@ p {
     border: 1px solid #E4E7ED;
     padding: 0 10px;
     background-color: #fff;
+    position: absolute;
+    right: -172px;
+    height: 100%;
+    top: -1px;
+    width: 150px;
 
     :nth-child(3) {
       display: none;
