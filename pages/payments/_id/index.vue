@@ -548,18 +548,18 @@
                       :key="valID"
                     >
                       <template slot="label">
-                        <div :class="
-                          (val.first ? 
-                            'first' 
-                          : val.last? 
-                            'last'
-                          : val.color) + ' container-steps'">
+                        <div 
+                          class="container-steps"
+                          :class="val.color">
                           <div class="info">
                             <font-awesome-icon :icon="['fas', 'sign-out-alt']" class="fa-lg in" />
                             {{tabAsyncManager.statuses[val.status] || 'Заход на сайт'}}
                           </div>
                           <div class="date">{{handleDate(val.date, "{D}.{MM}.{Y}")}}</div>
-                          <div class="time">{{handleDate(val.date, "{H}:{M}")}}</div>
+                          <div 
+                            class="time"
+                            :class="{first: val.first, last: val.last}"
+                            >{{handleDate(val.date, "{H}:{M}")}}</div>
                         </div>
                       </template>
 
@@ -926,8 +926,8 @@ export default {
 
       if (data.length === 1) {
         return {
-          os: data[0].os,
-          browser: data[0].browser
+          os: [data[0].os],
+          browser: [data[0].browser]
         };
       }
 
