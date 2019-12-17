@@ -569,7 +569,7 @@
                           <div>
                             <div>
                               <span class="title">Сведения по операции</span>
-                              <span class="description">"{{tabAsyncManager.statuses[val.status]}}"</span>
+                              <span class="description">"{{tabAsyncManager.statuses[val.status] || 'Заход на сайт'}}"</span>
                             </div>
                             <div class="step-wrapper">
                               <div class="inner">
@@ -921,6 +921,9 @@ export default {
 
       return list
     },
+    filteredSessions() {
+
+    },
     filteredDeviceType() {
       const data = this.userDetails.devicesList.list;
 
@@ -1066,11 +1069,6 @@ export default {
           }
           
           const check = (current, date) => {
-            // console.log((
-            //   (
-            //     (new Date(current)) - (new Date(date)) 
-            //   ) / 1000 / 60 
-            // ), current, date, 'check');
             return (
               (
                 (new Date(current)) - (new Date(date)) 
