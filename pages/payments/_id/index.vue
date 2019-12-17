@@ -548,9 +548,7 @@
                       :key="valID"
                     >
                       <template slot="label">
-                        <div 
-                          class="container-steps"
-                          :class="val.color">
+                        <div class="container-steps">
                           <div class="info">
                             <font-awesome-icon :icon="['fas', 'sign-out-alt']" class="fa-lg in" />
                             {{tabAsyncManager.statuses[val.status] || 'Заход на сайт'}}
@@ -1087,7 +1085,6 @@ export default {
           };
 
           const details = data.then.operations.reverse().map((item, index, array) => {
-            item.color = sessions.flag ? 'white' : 'grey';
             const i = array.length === index + 1 ? 0 : 1;
             if (sessions.date === null) {
               if (check(array[index + i].date, item.date) || !i) {
