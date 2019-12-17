@@ -557,8 +557,8 @@
                           </div>
                           <div class="date">{{handleDate(val.date, "{D}.{MM}.{Y}")}}</div>
                           <div 
-                            class="time"
-                            :class="{first: val.first, last: val.last}"
+                            class="time" 
+                            :class="{first: val.first, last: val.last, single: val.single, line: val.line}"
                             >{{handleDate(val.date, "{H}:{M}")}}</div>
                         </div>
                       </template>
@@ -1066,23 +1066,47 @@ export default {
           }
           
           const check = (current, date) => {
-            console.log(( (new Date(current)) - (new Date(date)) ) / 1000 / 60)
-            return ( ( (new Date(current)) - (new Date(date)) ) / 1000 / 60 ) > 30
+            // console.log((
+            //   (
+            //     (new Date(current)) - (new Date(date)) 
+            //   ) / 1000 / 60 
+            // ), current, date, 'check');
+            return (
+              (
+                (new Date(current)) - (new Date(date)) 
+              ) / 1000 / 60 
+            ) > 30
           }
-          const sessions = {date: null, flag: 1};
+
+          const sessions = {
+            date: null, 
+            flag: true, 
+            rev() {
+              this.flag = !this.flag
+            }
+          };
 
           const details = data.then.operations.reverse().map((item, index, array) => {
+            item.color = sessions.flag ? 'white' : 'grey';
+            const i = array.length === index + 1 ? 0 : 1;
             if (sessions.date === null) {
-              item.first = true;
-              sessions.date = item.date;
-            } else if (item.date != sessions.date && check(item.date, sessions.date)) {
-              sessions.flag = sessions.flag === 1 ? 0 : 1;
-              sessions.date = item.date;
-              item.first = true;
-            } else if (check(array[index + 1], sessions.date)) {
+              if (check(array[index + i].date, item.date) || !i) {
+                item.single = true;
+                sessions.rev();
+              } else {
+                item.first = true;
+                sessions.date = item.date;
+              }
+            } else if (check(array[index + i].date, item.date)) {
               item.last = true;
+              sessions.date = null;
+              sessions.rev();
+            } else if (!i) {
+              item.last = true;
+            } else {
+              item.line = true;
+              sessions.date = item.date;
             }
-            item.color = sessions.flag === 1 ? 'white' : 'grey';
             return item;
           });;
 

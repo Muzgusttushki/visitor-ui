@@ -815,21 +815,17 @@ $lg-width: 1200px;
     background-color: #ffffff;
   }
 
-  .grey, .last, .first {
+  .grey {
     background-color: rgba(196, 210, 234, 0.1);
 
-    :first-child.time {
-      background: #FFFFFF;
-    }
-
-    .time {
+    .line {
       &::before {
         content: '';
         width: 4px;
         height: 3px;
         background: #C4D2EA;
         position: absolute;
-        right: 3%;
+        right: 16px;
         top: 45%;
         border-radius: 50%;
       }
@@ -839,7 +835,58 @@ $lg-width: 1200px;
         width: 2px;
         background: #C4D2EA;
         position: absolute;
-        right: 3.2%;
+        right: 17px;
+      }
+    }
+
+    .single {
+      &::before {
+        content: '';
+        width: 4px;
+        height: 4px;
+        background: #C4D2EA;
+        position: absolute;
+        right: 16px;
+        top: 45%;
+        border-radius: 50%;
+      }
+    }
+
+    .last {
+      &::after {
+        content: '';
+        height: 50%;
+        width: 11px;
+        position: absolute;
+        right: 17px;
+        bottom: 0;
+        border: 2px solid #C4D2EA;
+        border-radius: 0 10px 0 0;
+        border-bottom: 0;
+        border-left: 0;
+      }
+
+      &::before {
+        content: '';
+      }
+    }
+
+    .first {
+      &::after {
+        content: '';
+        height: 50%;
+        width: 11px;
+        position: absolute;
+        right: 17px;
+        top: 0;
+        border: 2px solid #C4D2EA;
+        border-radius: 0 0 10px 0;
+        border-top: 0;
+        border-left: 0;
+      }
+
+      &::before {
+        content: '';
       }
     }
   }
