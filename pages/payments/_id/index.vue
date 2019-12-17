@@ -1109,7 +1109,6 @@ export default {
 
           this.tabAsyncManager.detailsData = data.then;
           this.tabAsyncManager.detailsData.operations = details.reverse();
-          console.log(this.tabAsyncManager)
 
           const id = this.tabAsyncManager.detailsData.operations[0]["_id"];
           this.detailUserOperationEvent({ name: id });
