@@ -957,12 +957,13 @@ export default {
       const values = [];
 
       for (let i = 0; i < data.length; i++) {
-        const index = names.indexOf(data[i].type);
+        const type = data[i].method ? 'advertisement' : data[i].type
+        const index = names.indexOf(type);
 
         if (index >= 0) {
           values[index] += data[i].quantity;
         } else {
-          values.push(data[i].quantity) && names.push(data[i].type);
+          values.push(data[i].quantity) && names.push(type);
         }
       }
 
