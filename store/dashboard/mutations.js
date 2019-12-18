@@ -38,12 +38,30 @@ export default {
     };
   },
 
+  cleanCachePaymentFilters(state) {
+    state.cachePaymentFilter = [];
+  },
+
+  cachePaymentFilterTime(state) {
+    const cacheTime = state.cachePaymentFilterTime;
+    const updateTime = ((Date.now() - cacheTime) / 1000 / 60 & 60) >= 2;
+
+    if (cacheTime && updateTime) {
+      state.cachePaymentFilterTime = null;
+      return true;
+    } else if (!cacheTime) {
+      state.cachePaymentFilterTime = Date.now();
+      return true;
+    }
+    return false;
+  },
+
   cachePaymentFilters(state, {
     hash,
     filters,
     callback
   }) {
-    const cache = state.cachePaymentFilter.find(function (document) {
+    const cache = state.cachePaymentFilter.find(function(document) {
       if (document.hash == hash) {
         return true;
       }

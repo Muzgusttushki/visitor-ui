@@ -157,8 +157,8 @@
                           v-model="localFilters.ticketInTransaction"
                           range
                           :step="1"
-                          :min="filters.minTickets"
-                          :max="filters.maxTickets"
+                          :min="filters.minTicketQuantity"
+                          :max="filters.maxTicketQuantity"
                         />
                       </div>
                     </div>
@@ -173,8 +173,8 @@
                           v-model="localFilters.transactions"
                           range
                           :step="1"
-                          :min="filters.minTransactions"
-                          :max="filters.maxTransactions"
+                          :min="filters.minTransactionsQuantity"
+                          :max="filters.maxTransactionsQuantity"
                         />
                       </div>
                     </div>
@@ -317,6 +317,7 @@ export default {
         event: null,
         offset: 0
       },
+      updateCheckTimer: null,
 
       force: false
     };
@@ -330,14 +331,11 @@ export default {
 
   watch: {
     globalFiltersTimeInterval() {
-      console.log('time')
       this.applyPaymentsFilters(true);
     },
 
     current(offset) {
       if(!this.force) return;
-      console.log(Function,'caler backtrace')
-      console.log("pagination");
       this.localFilters.offset = offset - 1;
       this.$store.commit("dashboard/cachePaymentFilterState", {
         state: { ...this.localFilters },
@@ -348,10 +346,18 @@ export default {
   },
 
   mounted() {
-    this.applyPaymentsFilters();
+    this.applyPaymentsFilters(true);
+  },
+
+  updated() {
+    this.updateCheck();
   },
 
   methods: {
+    updateCheck() {
+      const check = this.$store.commit('dashboard/cachePaymentFilterTime');
+      if (check) this.applyPayments(false, true);
+    },
     paymentDetails(row) {
       this.$router.push(`/payments/${row._id}`);
     },
@@ -365,12 +371,12 @@ export default {
       this.$nextTick(async () => {
         this.loading.pages = true;
         const date = this.globalFiltersTimeInterval;
-        // const filters = await this.$axios.get(
-        //   `${process.env.address}/v1/api/customers/filters${this.$formatDate(date.start, date.end)}`
+        const filters = await this.$axios.get(
+          `${process.env.address}/v1/api/customers/filters${this.$formatDate(date.start, date.end)}`
+        );
+        // const filters = await this.$store.dispatch(          // old api
+        //   "dashboard/getPaymentsFilters"
         // );
-        const filters = await this.$store.dispatch(
-          "dashboard/getPaymentsFilters"
-        ); 
         if (!filters) {
           this.payments = null;
           this.filters = null;
@@ -378,33 +384,36 @@ export default {
           this.loading.pages = false;
           return null;
         }
-        this.filters = filters;
+        this.filters = filters.data.then;
 
-        // const _cacheFilters = await new Promise(callback => {
-        //   this.$store.commit("dashboard/cachePaymentFilterState", {
-        //     callback
-        //   });
-        // });
+        const _cacheFilters = await new Promise(callback => {
+          this.$store.commit("dashboard/cachePaymentFilterState", {
+            callback
+          });
+        });
 
-        // if (_cacheFilters) {
-        //   this.localFilters = { ..._cacheFilters.state };
-        //   this.current = new Number(_cacheFilters.state.offset) + 1;
-        // } else if (reset) {
-          if (reset) {
+        if (_cacheFilters) {
+          this.localFilters = { ..._cacheFilters.state };
+          this.current = new Number(_cacheFilters.state.offset) + 1;
+        } else if (reset) {
+        // if (reset) {
           // reset local filters
           this.localFilters = {
-            money: [this.filters.minEarnings, this.filters.maxEarnings],
+            money: [
+              this.filters.minEarnings, 
+              this.filters.maxEarnings
+            ],
             averageMoney: [
               this.filters.minAverageEarnings,
               this.filters.maxAverageEarnings
             ],
             ticketInTransaction: [
-              this.filters.minTickets,
-              this.filters.maxTickets
+              this.filters.minTicketQuantity,
+              this.filters.maxTicketQuantity
             ],
             transactions: [
-              this.filters.minTransactions,
-              this.filters.maxTransactions
+              this.filters.minTransactionsQuantity,
+              this.filters.maxTransactionsQuantity
             ],
             city: [],
             event: [],
@@ -412,7 +421,7 @@ export default {
           };
           // this.current = 1;
         }
-
+        console.log(this.localFilters, this.filters, 'сравнение')
        // this.force = true;
 
         this.$nextTick(() => {
@@ -424,21 +433,19 @@ export default {
 
     applyPayments(reset, onload) {
       this.dropdownVisible2 = false;
-      console.log('applyy payments')
-
+      
       if (reset) {
         this.current = 1;
       }
 
       this.$nextTick(async () => {
-        console.log('next tick apply paymets')
         if (onload) {
           this.$store.commit("dashboard/cachePaymentFilterState", {
             state: { ...this.localFilters },
             write: true
           });
         }
-        console.log(this.localFilters);
+
         this.loading.content = true;
         this.payments = await this.$store.dispatch(
           "payment/getPayments",

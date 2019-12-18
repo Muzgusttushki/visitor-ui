@@ -28,6 +28,8 @@ export function deletePreviousSettings({ commit }) {
   commit('deletePreviousSettings')
 }
 
+
+// not used
 export async function getPayments({ commit }, filters) {
   try {
     const request = await this.$axios.post(`${process.env.address}/v1/reports/payments.get`, {

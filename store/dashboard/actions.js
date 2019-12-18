@@ -114,10 +114,8 @@ export async function getPaymentsFilters({ commit }, filters) {
     } else {
       const request = await this.$axios.post(`${process.env.address}/v1/reports/payments.filters`, {
         ...this.getters['dashboard/globalFilters']
-      }).then(( r ) => {
-        console.log('asdfjlksdjfshdfhdsjbfvjvuidsvubuvbuwebviubeiuwbvuwebv')
-        return r
-      })
+      }).then(( r ) => { return r })
+      
       return await new Promise(function (callback) {
         commit('cachePaymentFilters', {
           hash,
@@ -126,10 +124,6 @@ export async function getPaymentsFilters({ commit }, filters) {
         });
       })
     }
-
-
-    console.log('test3')
-    
   } catch (e) {
     return null
   } finally {
