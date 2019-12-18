@@ -18,7 +18,7 @@
                     <div v-else>
                       <div 
                         :class="'user-image'"
-                        :style="{background: avatarColors[Math.ceil(Math.random() * 10)]}">
+                        :style="{background: avatar}">
                         <span>{{getUserAbbreviationCallback(userDetails.aboutUser["username"])}}</span>
                       </div>
                     </div>
@@ -766,6 +766,7 @@ export default {
         utm: { tags: {} },
         analytics: {}
       },
+      avatar: null,
       avatarColors: [
         '#d8ff2b', 
         '#53b0ae', 
@@ -912,6 +913,7 @@ export default {
   },
   mounted() {
     this.getUserSourceAnalyse();
+    this.avatar = this.avatarColors[Math.ceil(Math.random() * 10)];
   },
   watch: {
     current() {
