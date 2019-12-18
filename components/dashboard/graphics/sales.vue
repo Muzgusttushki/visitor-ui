@@ -5,9 +5,6 @@
         <el-tab-pane label="Билеты">
           <apexchart v-if="graphics" height="300" type="area" :options="graphics.charOptions" :series="graphics.transactions" />
         </el-tab-pane>
-        <el-tab-pane label="Заказы">
-          <apexchart v-if="graphics" height="300" type="area" :options="graphics.charOptions" :series="graphics.sales" />
-        </el-tab-pane>
         <el-tab-pane label="Операции">
           <apexchart v-if="graphics" height="300" type="area" :options="graphics.charOptions" :series="graphics.operations" />
         </el-tab-pane>
@@ -59,6 +56,7 @@ export default {
 
   methods: {
     async getGraphicsRemote () {
+      const interval = this.globalFilters.timeInterval;
 
       /* 
       check  : determines the days interval
@@ -68,27 +66,31 @@ export default {
       this.graphics = null
       this.loading = true 
       
-      const request = await this.$store.dispatch('dashboard/getSalesGraphics')
-      if (request.data.error) return null
-
-      const remoteGraphics = request.data.then
-      if (!remoteGraphics.meta.dates) return null
+      const request = await this.$axios.get(
+        `${process.env.address}/v1/api/dashboard/graphics/activity${this.$formatDate(interval.start, interval.end)}`
+      )
       
-      const dates = remoteGraphics.meta.dates
+      // const request = await this.$store.dispatch('dashboard/getSalesGraphics')
+      if (request.data.error) return null
+      
+      const remoteGraphics = request.data;
+      
+      if (!remoteGraphics) return null
+      
+      const dates = remoteGraphics.users.yAxis
       const check = Math.floor( ( 
         // get last and first request date
-        new Date(dates[23][1]) - new Date(dates[0][0]) 
+        new Date(dates[dates.length - 1]['x']) - new Date(dates[0]['x']) 
         // and get days count
       ) / 1000 / 60 / 60 / 24 )
-    
       const format = 
         check == 2 ? 
         '{D}.{MM} {H}:{M}' 
         : check == 1 ? 
-        '{H}:{M}' : '{D}.{MM}.{Y}'
-          
-      const remoteBuyers = await this.$store.dispatch('dashboard/getBuyersStats')
-      if (remoteGraphics && remoteBuyers) {
+        '{H}:{M}' : '{D}.{MM}.{Y}';
+      
+      // const remoteBuyers = await this.$store.dispatch('dashboard/getBuyersStats')
+      if (remoteGraphics) { // && remoteBuyers
         this.graphics = {
           charOptions: {
             stroke: {
@@ -113,11 +115,11 @@ export default {
             xaxis: {
               categories: [...dates.map(item => {
                 const first = this.$times({
-                  time: item[0],
+                  time: item['x'],
                   format: format
                 })
                 const second = this.$times({
-                  time: item[1],
+                  time: item['y'],
                   format: format
                 })
                 return `${first} - ${second}`
@@ -140,22 +142,17 @@ export default {
           },
           transactions: [{
             name: 'Всего',
-            data: remoteGraphics.graphics.tickets
-          }],
-
-          sales: [{
-            name: 'Всего',
-            data: remoteGraphics.graphics.sales
+            data: remoteGraphics.transactions.xAxis
           }],
 
           operations: [{
             name: 'Всего',
-            data: remoteGraphics.graphics.operations
+            data: remoteGraphics.operations.xAxis
           }],
 
           users: [{
-            name: "Новых",
-            data: remoteGraphics.graphics.users
+            name: 'Всего',
+            data: remoteGraphics.users.xAxis
           }]
         }
       }

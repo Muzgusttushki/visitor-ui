@@ -54,8 +54,8 @@ export default {
     '@/plugins/times',
     '@/plugins/requestHandler',
     '@/plugins/ux-dropdown',
-    '@/plugins/localStorage.js'
-
+    '@/plugins/localStorage.js',
+    '@/plugins/formatDate'
   ],
   /*
   ** Nuxt.js dev-modules
@@ -80,7 +80,7 @@ export default {
 
   // http://84.201.153.133:3303
   env: {
-    address: DEBUG ? 'http://127.0.0.1:3303'
+    address: DEBUG ? 'http://84.201.153.133:3303'
       : 'https://services.weekendagency.ru'
   },
   /*

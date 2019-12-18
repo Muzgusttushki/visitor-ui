@@ -1,7 +1,7 @@
 <template>
   <el-container v-loading="loading" class="dashboard index" direction="vertical">
     <!-- -----------------------------------КОМПОНЕНТЫ----------------------------------------------- -->
-    <el-container class="_dashboard_stats">
+    <el-container class="_dashboard_stats" v-if="request">
       <el-col :span="4" class="component-wrapper" v-for="(item, id) in topComponents" :key="id">
           <div class="top-component">
             <el-row class="top">
@@ -177,7 +177,9 @@ export default {
         current: 'averageEarnings',
         last: 'previousAverageEarnings',
         percent: 'percentAverageEarnings'
-      }]
+      }],
+
+      request: null
     }
   },
 
@@ -225,12 +227,7 @@ export default {
     }
 
     const request = await store.dispatch('dashboard/getDashboardStats')
-    const pAvEars = request.previousAverageEarnings
-    const AvEars = request.averageEarnings
-    request.percentAverageEarnings = AvEars > pAvEars ? 
-      AvEars / pAvEars * 100 - 100 :
-      0 - (pAvEars / AvEars * 100 - 100)
-
+    console.log('test3');
     return {
       loading: false,
       request
@@ -238,20 +235,33 @@ export default {
   },
 
   methods: {
+    formatPercents(prev, curr) {
+      if (prev === 0 && curr != 0) return curr;
+      else if (curr === 0 && prev != 0) return prev;
+      else if (curr === 0 && prev === 0) return 0;
+      else {
+        return curr > prev ? 
+        curr / prev * 100 - 100 :
+        0 - (prev / curr * 100 - 100)
+      }
+    },
     async applyGlobalFilters () {
-      this.loading = true
+      // this.loading = true
+      console.log('test1');
 
       const request = await this.$store.dispatch('dashboard/getDashboardStats')
       const pAvEars = request.previousAverageEarnings
       const AvEars = request.averageEarnings
-      request.percentAverageEarnings = AvEars > pAvEars ? 
-        AvEars / pAvEars * 100 - 100 :
-        0 - (pAvEars / AvEars * 100 - 100)
+      request.percentAverageEarnings = this.formatPercents(
+        request.previousAverageEarnings,
+        request.averageEarnings
+      )
 
-      this.request = request
-      this.$nextTick(() => {
-        this.loading = false
-      })
+      this.request = request;
+      console.log('test2');
+      // this.$nextTick(() => {
+      //   this.loading = false
+      // })
     }
   }
 }
