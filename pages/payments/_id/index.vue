@@ -16,7 +16,9 @@
                       <img src alt width="50px" height="50px" />
                     </div>
                     <div v-else>
-                      <div :class="'user-image'">
+                      <div 
+                        :class="'user-image'"
+                        :style="{background: avatarColors[Math.ceil(Math.random() * 10)]}">
                         <span>{{getUserAbbreviationCallback(userDetails.aboutUser["username"])}}</span>
                       </div>
                     </div>
@@ -543,7 +545,7 @@
                     @tab-click="detailUserOperationEvent"
                   >
                     <el-tab-pane
-                      v-for="(val, valID) in tabAsyncManager.detailsData.operations"
+                      v-for="(val, valID) in filteredSessions"
                       :name="val._id"
                       :key="valID"
                     >
@@ -553,7 +555,7 @@
                           :class="val.color">
                           <div class="info">
                             <font-awesome-icon :icon="['fas', 'sign-out-alt']" class="fa-lg in" />
-                            {{tabAsyncManager.statuses[val.status] || 'Заход на сайт'}}
+                            {{tabAsyncManager.statuses[val.status]}}
                           </div>
                           <div class="date">{{handleDate(val.date, "{D}.{MM}.{Y}")}}</div>
                           <div 
@@ -764,7 +766,18 @@ export default {
         utm: { tags: {} },
         analytics: {}
       },
-
+      avatarColors: [
+        '#d8ff2b', 
+        '#53b0ae', 
+        '#e2583e', 
+        '#009473', 
+        '#b163a3', 
+        '#f7cac9', 
+        '#ff6f61', 
+        '#0f4c81', 
+        '#660066', 
+        '#f7347a'
+      ],
       customTabsHeadStyle: null,
       customTabsBodyStyle: null,
 
@@ -840,7 +853,7 @@ export default {
           WIDGET_ORDER: "Оформление",
           WIDGET_SUCCESS: "Оплата",
           WIDGET_PAYMENT: "Оплачен",
-          VISIT: "Заход на сайт"
+          ACCESS_SITE: "Заход на сайт"
         },
 
         lastChangeTab: null,
@@ -922,7 +935,51 @@ export default {
       return list
     },
     filteredSessions() {
+      const data = this.tabAsyncManager.detailsData.operations.reverse();
 
+      const check = (current, date) => {
+        return (
+          (
+            (new Date(current)) - (new Date(date)) 
+          ) / 1000 / 60 
+        ) > 30
+      }
+
+      const sessions = {
+        date: null, 
+        flag: true, 
+        rev() {
+          this.flag = !this.flag
+        }
+      };
+
+      const details = data.map((item, index, array) => {
+        if (!item.status) item.status = 'ACCESS_SITE';
+        
+        const end = array.length === index + 1 ? 0 : 1;
+        item.color = sessions.flag ? 'white' : 'grey';
+        if (sessions.date === null) {
+          if (check(array[index + end].date, item.date) || !end) {
+            item.single = true;
+            sessions.rev();
+          } else {
+            item.first = true;
+            sessions.date = item.date;
+          }
+        } else if (check(array[index + end].date, item.date)) {
+          item.last = true;
+          sessions.date = null;
+          sessions.rev();
+        } else if (!end) {
+          item.last = true;
+        } else {
+          item.line = true;
+          sessions.date = item.date;
+        }
+        return item;
+      });
+
+      return details.reverse();
     },
     filteredDeviceType() {
       const data = this.userDetails.devicesList.list;
@@ -1067,49 +1124,9 @@ export default {
           if (data.error) {
             return;
           }
-          
-          const check = (current, date) => {
-            return (
-              (
-                (new Date(current)) - (new Date(date)) 
-              ) / 1000 / 60 
-            ) > 30
-          }
-
-          const sessions = {
-            date: null, 
-            flag: true, 
-            rev() {
-              this.flag = !this.flag
-            }
-          };
-
-          const details = data.then.operations.reverse().map((item, index, array) => {
-            const i = array.length === index + 1 ? 0 : 1;
-            item.color = sessions.flag ? 'white' : 'grey';
-            if (sessions.date === null) {
-              if (check(array[index + i].date, item.date) || !i) {
-                item.single = true;
-                sessions.rev();
-              } else {
-                item.first = true;
-                sessions.date = item.date;
-              }
-            } else if (check(array[index + i].date, item.date)) {
-              item.last = true;
-              sessions.date = null;
-              sessions.rev();
-            } else if (!i) {
-              item.last = true;
-            } else {
-              item.line = true;
-              sessions.date = item.date;
-            }
-            return item;
-          });;
 
           this.tabAsyncManager.detailsData = data.then;
-          this.tabAsyncManager.detailsData.operations = details.reverse();
+          console.log(this.tabAsyncManager.detailsData, 'tabasync details data')
 
           const id = this.tabAsyncManager.detailsData.operations[0]["_id"];
           this.detailUserOperationEvent({ name: id });
