@@ -364,9 +364,13 @@ export default {
     applyPaymentsFilters(reset) {
       this.$nextTick(async () => {
         this.loading.pages = true;
+        const date = this.globalFiltersTimeInterval;
+        // const filters = await this.$axios.get(
+        //   `${process.env.address}/v1/api/customers/filters${this.$formatDate(date.start, date.end)}`
+        // );
         const filters = await this.$store.dispatch(
           "dashboard/getPaymentsFilters"
-        );
+        ); 
         if (!filters) {
           this.payments = null;
           this.filters = null;
