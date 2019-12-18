@@ -16,12 +16,12 @@
                       <img src alt width="50px" height="50px" />
                     </div>
                     <div v-else>
-                      <div 
-                        :class="'user-image'"
-                        :style="{background: avatar}">
+                      <div
+                        class="user-image"
+                        :style="{background: userGender}">
                         <span>{{getUserAbbreviationCallback(userDetails.aboutUser["username"])}}</span>
                       </div>
-                    </div>
+                    </div>+
                   </el-col>
                   <el-col :span="16" :offset="4">
                     <el-row>
@@ -766,19 +766,10 @@ export default {
         utm: { tags: {} },
         analytics: {}
       },
-      avatar: null,
-      avatarColors: [
-        '#d8ff2b', 
-        '#53b0ae', 
-        '#e2583e', 
-        '#009473', 
-        '#b163a3', 
-        '#f7cac9', 
-        '#ff6f61', 
-        '#0f4c81', 
-        '#660066', 
-        '#f7347a'
-      ],
+      avatar: {
+        2: '#e7c5ee',
+        1: '#4c89ff'
+      },
       customTabsHeadStyle: null,
       customTabsBodyStyle: null,
 
@@ -913,7 +904,6 @@ export default {
   },
   mounted() {
     this.getUserSourceAnalyse();
-    this.avatar = this.avatarColors[Math.ceil(Math.random() * 10)];
   },
   watch: {
     current() {
@@ -926,6 +916,10 @@ export default {
     }
   },
   computed: {
+    userGender() {
+      const gender = this.userDetails.aboutUser["gender"];
+      return this.avatar[gender];
+    },
     devicesList() {
       const list = { labels: [], values: [] }
       
