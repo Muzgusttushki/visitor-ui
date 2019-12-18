@@ -12,6 +12,7 @@ export default () => {
 
     cacheActions: [],
     cachePaymentFilter: [],
+    cachePaymentFilterTime: null,
     cachePaymentFilterState: []
   }
 }
