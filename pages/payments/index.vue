@@ -85,11 +85,10 @@
                           class="super_puper_my_class"
                         >
                           <el-option
-                            v-for="(label, labelID) in filters.cities"
+                            v-for="(item, labelID) in filters.cities"
                             :key="labelID"
-                            :label="label.name"
-                            :value="label.name"
-                          >{{label.name}} ({{label.quantity}})</el-option>
+                            :value="item.label"
+                          >{{item.label}} ({{item.quantity}})</el-option>
                         </el-select>
                       </div>
                     </div>
@@ -107,11 +106,10 @@
                           placeholder="Все события"
                         >
                           <el-option
-                            v-for="(label, labelID) in filters.events"
+                            v-for="(item, labelID) in filters.events"
                             :key="labelID"
-                            :label="label.name"
-                            :value="label.name"
-                          >{{label.name}} ({{label.quantity}})</el-option>
+                            :value="item.label" 
+                          >{{item.label}} ({{item.quantity}})</el-option>
                         </el-select>
                       </div>
                     </div>
