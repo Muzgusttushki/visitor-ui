@@ -369,6 +369,7 @@ export default {
       this.$nextTick(async () => {
         this.loading.pages = true;
         const date = this.globalFiltersTimeInterval;
+        console.log('____________ apply filters')
         const filters = await this.$axios.get(
           `${process.env.address}/v1/api/customers/filters${this.$formatDate(date.start, date.end)}`
         );
