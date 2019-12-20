@@ -592,20 +592,32 @@ $lg-width: 1200px;
 
     .comments {
 
+      .component-container {
+        display: flex;
+        flex-flow: column;
+        max-height: 350px;
+      }
+
       &__container {
-        padding: 5px 30px;
-        height: 235px;
+        padding: 0 30px 5px;
+        height: auto;
+        box-sizing: border-box;
+        overflow: auto;
+      }
+
+      .wrapper {
         overflow: auto;
       }
 
       .component-title {
-        margin: 23px 25px 24px 25px;
-        margin-bottom: 15px;
+        margin: 23px 25px 0 25px;
+        margin-bottom: 0;
         padding: 0 0 15px 0;
       }
 
       &__wrapper {
         font-size: 13px;
+        padding-top: 15px;
 
         &_username {
           display: flex;
@@ -641,7 +653,6 @@ $lg-width: 1200px;
         &_date {
           font-size: 11px;
           color: #C4D2EA;
-          padding-bottom: 22px;
         }
       }
     }

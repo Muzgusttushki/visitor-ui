@@ -155,3 +155,9 @@ export default {
   }
 }
 </script>
+
+<style scope>
+.el-tabs__nav-wrap:after {
+  width: 176px;
+}
+</style>

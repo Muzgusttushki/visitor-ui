@@ -445,40 +445,59 @@
                 <h2 class="component-title">Комментарии</h2>
               </el-row>
               <div class="comments__container">
-                <el-row class="comments__wrapper">
-                  <el-row class="comments__wrapper_username">
-                    <el-col :span="6">
-                      <img src alt width="45px" height="45px" />
-                    </el-col>
-                    <el-col :span="19" class="container">
-                      <div class="name">Иван Дмитриев</div>
-                      <div class="position">Технический директор</div>
-                    </el-col>
+                <div class="wrapper">
+                  <el-row class="comments__wrapper">
+                    <el-row class="comments__wrapper_username">
+                      <el-col :span="6">
+                        <img src alt width="45px" height="45px" />
+                      </el-col>
+                      <el-col :span="19" class="container">
+                        <div class="name">Иван Дмитриев</div>
+                        <div class="position">Технический директор</div>
+                      </el-col>
+                    </el-row>
+                    <el-row class="comments__wrapper_text">
+                      <el-col :offset="6" :span="18">Давали бесплатный проход на спектакль с Лебедевым</el-col>
+                    </el-row>
+                    <el-row class="comments__wrapper_date">
+                      <el-col :offset="6" :span="18">19.06.2019</el-col>
+                    </el-row>
                   </el-row>
-                  <el-row class="comments__wrapper_text">
-                    <el-col :offset="6" :span="18">Давали бесплатный проход на спектакль с Лебедевым</el-col>
+                  <el-row class="comments__wrapper">
+                    <el-row class="comments__wrapper_username">
+                      <el-col :span="6">
+                        <img src alt width="45px" height="45px" />
+                      </el-col>
+                      <el-col :span="19" class="container">
+                        <div class="name">Иван Дмитриев</div>
+                        <div class="position">Технический директор</div>
+                      </el-col>
+                    </el-row>
+                    <el-row class="comments__wrapper_text">
+                      <el-col :offset="6" :span="18">Давали бесплатный проход на спектакль с Лебедевым</el-col>
+                    </el-row>
+                    <el-row class="comments__wrapper_date">
+                      <el-col :offset="6" :span="18">19.06.2019</el-col>
+                    </el-row>
                   </el-row>
-                  <el-row class="comments__wrapper_date">
-                    <el-col :offset="6" :span="18">19.06.2019</el-col>
+                  <el-row class="comments__wrapper">
+                    <el-row class="comments__wrapper_username">
+                      <el-col :span="6">
+                        <img src alt width="45px" height="45px" />
+                      </el-col>
+                      <el-col :span="19" class="container">
+                        <div class="name">Иван Дмитриев</div>
+                        <div class="position">Технический директор</div>
+                      </el-col>
+                    </el-row>
+                    <el-row class="comments__wrapper_text">
+                      <el-col :offset="6" :span="18">Давали бесплатный проход на спектакль с Лебедевым</el-col>
+                    </el-row>
+                    <el-row class="comments__wrapper_date">
+                      <el-col :offset="6" :span="18">19.06.2019</el-col>
+                    </el-row>
                   </el-row>
-                </el-row>
-                <el-row class="comments__wrapper">
-                  <el-row class="comments__wrapper_username">
-                    <el-col :span="6">
-                      <img src alt width="45px" height="45px" />
-                    </el-col>
-                    <el-col :span="19" class="container">
-                      <div class="name">Иван Дмитриев</div>
-                      <div class="position">Технический директор</div>
-                    </el-col>
-                  </el-row>
-                  <el-row class="comments__wrapper_text">
-                    <el-col :offset="6" :span="18">Давали бесплатный проход на спектакль с Лебедевым</el-col>
-                  </el-row>
-                  <el-row class="comments__wrapper_date">
-                    <el-col :offset="6" :span="18">19.06.2019</el-col>
-                  </el-row>
-                </el-row>
+                </div>
               </div>
             </div>
           </el-col>
