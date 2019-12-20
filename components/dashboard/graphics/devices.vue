@@ -65,6 +65,9 @@ export default {
         this.graphics = {
           options: {
             categories: [],
+            legend: {
+              show: false
+            },
             xaxis: {
               categories: ['Смартфон', 'Компьютер', 'Другое'],
               axisBorder: {
