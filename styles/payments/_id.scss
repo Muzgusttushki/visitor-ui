@@ -446,9 +446,9 @@ $lg-width: 1200px;
 
     .device-type {
       .component-container {
-        @media (max-width: $lg-width) {
-          height: 350px;
-        }
+        // @media (max-width: $lg-width) {
+        //   height: 350px;
+        // }
         display: flex;
       }
 
@@ -473,7 +473,7 @@ $lg-width: 1200px;
       }
 
       .list {
-        padding: 10px 20px 20px;
+        padding: 0 20px 0;
         display: flex;
         justify-content: space-between;
 
@@ -494,6 +494,9 @@ $lg-width: 1200px;
         .type {
           font-weight: normal;
           font-size: 14px;
+          &.el-row {
+            padding: 0;
+          }
         }
         @media (max-width: $lg-width) {
           .title, .type {
@@ -645,7 +648,9 @@ $lg-width: 1200px;
 
     .specification {
       min-height: 100px;
-      margin: 15px;
+      padding: 5px;
+      margin: 0;
+      box-sizing: border-box;
       width: 100%;
 
       .component-container {
