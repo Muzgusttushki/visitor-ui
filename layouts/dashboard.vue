@@ -17,7 +17,6 @@
             :default-value="defaultGlobalTimeRange"
             start-placeholder="Дата начала"
             end-placeholder="Дата окончания"
-            :default-time="['00:00:00', '23:59:59']"
             @change="changeGlobalTimeRange"
             class="dashboard picker"
           >
@@ -148,7 +147,6 @@ export default {
 
   watch: {
     getGlobalFilterTimeInterval(source) {
-      console.log('Iban')
       this.globalTimeRange = source ? Object.values(source) : [];
     }
   },
@@ -159,8 +157,6 @@ export default {
     },
 
     changeGlobalTimeRange(resolve) {
-      console.log(resolve, "resolve");
-
       if (resolve == null || resolve.length !== 2) {
         const previewInstanceDate = new Date();
         previewInstanceDate.setDate(previewInstanceDate.getDate() - 64);
