@@ -295,7 +295,7 @@ export default {
     handleSegmentSetting({ command, _id, automation, localeID }) {
       console.log(this.segments[localeID], 'segments', localeID);
       new Promise(resolve => {
-        this.segments[localeID].loading = true;
+        if (localeID) this.segments[localeID].loading = true;
         this.$axios
           .post(`${process.env.address}/v1/segments/configure`, {
             segment: _id,
@@ -341,7 +341,7 @@ export default {
                 });
                 break;
             }
-          this.segments[localeID].loading = false;
+          if (localeID) this.segments[localeID].loading = false;
           });
 
         resolve();
