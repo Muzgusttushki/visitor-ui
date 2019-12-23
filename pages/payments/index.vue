@@ -153,7 +153,6 @@
                       <div class="container">
                         <el-slider
                           v-model="localFilters.ticketInTransaction"
-                          range
                           :step="1"
                           :min="filters.minTicketQuantity"
                           :max="filters.maxTicketQuantity"
@@ -352,6 +351,9 @@ export default {
   },
 
   methods: {
+    formattooltip(value, single) {
+      console.log(value, single, 'formattooltip');
+    },
     updateCheck() {
       const check = this.$store.commit('dashboard/cachePaymentFilterTime');
       if (check) this.applyPayments(false, true);
