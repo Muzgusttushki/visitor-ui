@@ -70,7 +70,7 @@
                 <font-awesome-icon :icon="['fas', 'ellipsis-h']" />
               </span>
               <el-dropdown-menu slot="dropdown" class="segments index segment-settings">
-
+                <div v-loading="segment.loading">{{segment.loading}}
                 <!-- -------------------------------EDIT SEGMENT---------------------------------------- -->
                 <el-dropdown-item>
                   <p class="title">Изменить</p>
@@ -98,7 +98,7 @@
                   <p 
                     class="title" 
                     style="width: 100%; heigth: 100%;"
-                    @click="handleSegmentSetting({command: 'segment->update', ...segment})"
+                    @click="handleSegmentSetting({command: 'segment->update', ...segment, automation: segment.automation, localeID})"
                   >Обновить принудительно</p>
                 </el-dropdown-item>
                 <!-- ----------------------------------------------------------------------------------- -->
@@ -116,7 +116,7 @@
                   </div>
                 </el-dropdown-item>
                 <!-- ---------------------------------------------------------------------------------- -->
-
+                </div>
               </el-dropdown-menu>
             </el-dropdown>
             <!-- ______________________________________________________________________________________ -->
@@ -208,6 +208,9 @@ export default {
         sources: null,
         loading: false
       },
+      dropdown: {
+        loading: false
+      },
       sourceList: null,
       editSegments: {},
       removeSegment: {},
@@ -268,8 +271,11 @@ export default {
       const list = await this.$axios.get(
         `${process.env.address}/v1/segments/list`
       );
-
-      this.segments = list.data.then.segments;
+      const segments = list.data.then.segments;
+      this.segments = segments.map(item => {
+        item.loading = false;
+        return item;
+      });
 
       await new Promise(resolve => {
         setTimeout(resolve, 4000);
@@ -287,7 +293,9 @@ export default {
     },
 
     handleSegmentSetting({ command, _id, automation, localeID }) {
+      console.log(this.segments[localeID], 'segments', localeID);
       new Promise(resolve => {
+        this.segments[localeID].loading = true;
         this.$axios
           .post(`${process.env.address}/v1/segments/configure`, {
             segment: _id,
@@ -333,10 +341,12 @@ export default {
                 });
                 break;
             }
+          this.segments[localeID].loading = false;
           });
 
         resolve();
       });
+      console.log(this.segments, 'segments', localeID);
     },
 
     async addSegment() {
