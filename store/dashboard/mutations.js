@@ -94,8 +94,8 @@ export default {
     const globalFilters = this.getters['dashboard/globalFilters'].timeInterval;
     const start = new Date(globalFilters.start), end = new Date(globalFilters.end);
     const hash = JSON.stringify({
-      start: `${start.getFullYear}:${start.getMonth()}:${start.getDate()}`,
-      end: `${end.getFullYear}:${end.getMonth()}:${end.getDate()}`,
+      start: `${start.getFullYear()}:${start.getMonth()}:${start.getDate()}`,
+      end: `${end.getFullYear()}:${end.getMonth()}:${end.getDate()}`,
     }).split('')
       .reduce((a, b) => (((a << 5) - a) + b
         .charCodeAt(0)) | 0, 0)

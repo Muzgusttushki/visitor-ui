@@ -385,17 +385,17 @@ export default {
         }
         this.filters = filters.data.then;
 
-        const _cacheFilters = await new Promise(callback => {
-          this.$store.commit("dashboard/cachePaymentFilterState", {
-            callback
-          });
-        });
+        // const _cacheFilters = await new Promise(callback => {
+        //   this.$store.commit("dashboard/cachePaymentFilterState", {
+        //     callback
+        //   });
+        // });
 
-        if (_cacheFilters) {
-          this.localFilters = { ..._cacheFilters.state };
-          this.current = new Number(_cacheFilters.state.offset) + 1;
-        } else if (reset) {
-        // if (reset) {
+        // if (_cacheFilters) {
+        //   this.localFilters = { ..._cacheFilters.state };
+        //   this.current = new Number(_cacheFilters.state.offset) + 1;
+        // } else if (reset) {
+        if (reset) {
           // reset local filters
           this.localFilters = {
             money: [
@@ -420,7 +420,7 @@ export default {
           };
           // this.current = 1;
         }
-        console.log(this.localFilters, this.filters, 'сравнение')
+        console.log(this.localFilters, this.filters, 'сравнение', 'reset: ', reset, this.filters.minEarnings, this.filters.maxEarnings);
        // this.force = true;
 
         this.$nextTick(() => {
