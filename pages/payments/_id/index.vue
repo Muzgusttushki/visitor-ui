@@ -380,7 +380,6 @@
                           labels: devicesList.labels
                         }"
                         type="donut"
-                        height="300"
                         width="100%"
                       />
                     </el-row>
