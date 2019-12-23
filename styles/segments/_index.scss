@@ -131,6 +131,10 @@
       padding: 16px;
       min-height: 100px;
       position: relative;
+      
+      .el-loading-mask {
+        border-radius: 10px;
+      }
 
       .el-dropdown {
         cursor: pointer;
