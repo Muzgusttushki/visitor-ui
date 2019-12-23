@@ -716,56 +716,56 @@ $lg-width: 1200px;
         // @import '../templates/table';
         
 
-        .el-table {
-          overflow: visible;
+        // .el-table {
+        //   overflow: visible;
 
-          &__header-wrapper {
-            thead {
-              tr th {
-                background-color: rgba(196, 210, 234, 0.2);
-              }
-              tr {
-                :first-child {
-                  border-radius: 10px 0 0 10px;
-                  // text-align: center;
-                }
-                :nth-last-child(-n+2) {
-                  border-radius: 0 10px 10px 0
-                }
-              }
+        //   &__header-wrapper {
+        //     thead {
+        //       tr th {
+        //         background-color: rgba(196, 210, 234, 0.2);
+        //       }
+        //       tr {
+        //         :first-child {
+        //           border-radius: 10px 0 0 10px;
+        //           // text-align: center;
+        //         }
+        //         :nth-last-child(-n+2) {
+        //           border-radius: 0 10px 10px 0
+        //         }
+        //       }
     
-              .cell {
-                font-weight: bold;
-                font-size: 14px;
-              }
-            }
-          }
+        //       .cell {
+        //         font-weight: bold;
+        //         font-size: 14px;
+        //       }
+        //     }
+        //   }
 
-          &__body-wrapper {
-            // overflow: visible;
+        //   &__body-wrapper {
+        //     // overflow: visible;
 
-            .cell {
-              padding: 10px;
-            }
+        //     .cell {
+        //       padding: 10px;
+        //     }
 
-            table {
-              border-spacing: 0 16px;
-            }
+        //     table {
+        //       border-spacing: 0 16px;
+        //     }
 
-            tr {
-              box-shadow: 0px 0px 15px rgba(92, 118, 143, 0.15);
-              border-radius: 6px;
-              cursor: pointer;
+        //     tr {
+        //       box-shadow: 0px 0px 15px rgba(92, 118, 143, 0.15);
+        //       border-radius: 6px;
+        //       cursor: pointer;
     
-              :first-child {
-                border-radius: 6px 0 0 6px;
-              }
-              :nth-last-child(-n+1) {
-                border-radius: 0 6px 6px 0
-              }
-            }
-          }
-        }
+        //       :first-child {
+        //         border-radius: 6px 0 0 6px;
+        //       }
+        //       :nth-last-child(-n+1) {
+        //         border-radius: 0 6px 6px 0
+        //       }
+        //     }
+        //   }
+        // }
       }
     }
 

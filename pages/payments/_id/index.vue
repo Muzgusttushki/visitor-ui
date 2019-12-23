@@ -335,6 +335,7 @@
                   v-if="userDetails.details"
                   :data="userDetails.details"
                   @row-click="dialogHandler"
+                  style="width: 100%;"
                 >
                   <el-table-column
                     v-for="(column, columnID) in columns.filter(
@@ -795,12 +796,12 @@ export default {
       columns: [
         { label: "Дата", source: "date", visible: true, width: 100 },
         { label: "Событие", source: "event", visible: true, width: 300 },
-        { label: "Чек", source: "earnings", visible: true, width: 100 },
+        { label: "Чек", source: "earnings", visible: true, width: 80 },
         {
           label: "Купил билетов",
           source: "tickets",
           visible: true,
-          width: 150
+          width: 100
         },
         { label: "Источник", source: "source", visible: true, width: 130 },
         { label: "Город", source: "city", visible: true, width: 100 }
