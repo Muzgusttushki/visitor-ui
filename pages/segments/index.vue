@@ -70,7 +70,7 @@
                 <font-awesome-icon :icon="['fas', 'ellipsis-h']" />
               </span>
               <el-dropdown-menu slot="dropdown" class="segments index segment-settings">
-                <div v-loading="segment.loading">{{segment.loading}}
+                <div v-loading="segment.loading">
                 <!-- -------------------------------EDIT SEGMENT---------------------------------------- -->
                 <el-dropdown-item>
                   <p class="title">Изменить</p>
@@ -273,7 +273,7 @@ export default {
       );
       const segments = list.data.then.segments;
       this.segments = segments.map(item => {
-        item.loading = false;
+        if (item.loading === undefined) item.loading = false;
         return item;
       });
 
