@@ -67,7 +67,26 @@ export default {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
-    'cookie-universal-nuxt'
+    'cookie-universal-nuxt',
+    ['nuxt-i18n', {
+        locales: [
+          {
+            name: 'Russian',
+            code: 'ru',
+            iso: 'ru-RU',
+            file: 'ru-RU.js'
+          }, {
+            name: 'English',
+            code: 'en',
+            iso: 'en-US',
+            file: 'en-US.js'
+          }
+        ],
+        lazy: true,
+        langDir: 'lang/',
+        defaultLocale: 'ru'
+      }
+    ]
   ],
   /*
   ** Axios module configuration
