@@ -19,6 +19,7 @@
             end-placeholder="Дата окончания"
             @change="changeGlobalTimeRange"
             class="dashboard picker"
+            :picker-options="pickerOptions"
           >
             <template slot="footer">123</template>
           </el-date-picker>
@@ -136,7 +137,10 @@ export default {
       globalTimeRange: Object.values(
         this.$store.getters["dashboard/globalFilters"].timeInterval
       ),
-      defaultGlobalTimeRange: []
+      defaultGlobalTimeRange: [],
+      pickerOptions: {
+        firstDayOfWeek: 1
+      }
     };
   },
   computed: {
@@ -148,6 +152,9 @@ export default {
   watch: {
     getGlobalFilterTimeInterval(source) {
       this.globalTimeRange = source ? Object.values(source) : [];
+    },
+    globalTimeRange(val) {
+      console.log(val, 'change global time range');
     }
   },
 
@@ -157,6 +164,7 @@ export default {
     },
 
     changeGlobalTimeRange(resolve) {
+      console.log(resolve, 'resolve;');
       if (resolve == null || resolve.length !== 2) {
         const previewInstanceDate = new Date();
         previewInstanceDate.setDate(previewInstanceDate.getDate() - 64);
