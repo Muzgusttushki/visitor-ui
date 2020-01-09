@@ -61,7 +61,6 @@ export default {
 
       const remoteGraphics = await this.$store.dispatch('dashboard/getDevicesGraphics')
       if (remoteGraphics) {
-        console.log(remoteGraphics.transactions.phones + '%', 'devices')
         this.graphics = {
           options: {
             categories: [],
