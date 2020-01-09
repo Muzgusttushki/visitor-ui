@@ -768,7 +768,6 @@ import dialogs from "@/components/elements/dialog-payment.vue";
 import settings from "@/components/graphics-settings/payments-id.vue";
 
 export default {
-  layout: "dashboard",
   middleware: "roles/user",
   components: { dialogs },
   data() {
@@ -957,7 +956,7 @@ export default {
           (
             (new Date(current)) - (new Date(date)) 
           ) / 1000 / 60 
-        ) > 30
+        ) > 60
       }
 
       const sessions = {

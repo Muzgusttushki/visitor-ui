@@ -19,10 +19,7 @@
             end-placeholder="Дата окончания"
             @change="changeGlobalTimeRange"
             class="dashboard picker"
-            :picker-options="pickerOptions"
-          >
-            <template slot="footer">123</template>
-          </el-date-picker>
+            :picker-options="pickerOptions" />
         </div>
         <!-- ---------------------------------------ПОИСК---------------------------------------- -->
         <div class="global-search">
@@ -75,7 +72,15 @@
             </el-dropdown-menu>
           </el-dropdown>
         </div>
-        <!-- --------------------------------------НАСТРОЙКИ--------------------------------------- -->
+
+        <!--<div>
+          <span>{{$t('hello')}}</span>
+          <h1>Lang navigation</h1>
+            <nuxt-link :to="switchLocalePath('ru')">Russian</nuxt-link>
+            <nuxt-link :to="switchLocalePath('en')">English</nuxt-link>
+        </div>-->
+
+        <!-- НАСТРОЙКИ -->
         <div class="settings-icon">
           <el-dropdown>
             <div>
@@ -90,6 +95,8 @@
             </el-dropdown-menu>
           </el-dropdown>
         </div>
+        <!-- ________ -->
+
       </div>
     </el-header>
     <el-container class="main-container">
@@ -152,26 +159,20 @@ export default {
   watch: {
     getGlobalFilterTimeInterval(source) {
       this.globalTimeRange = source ? Object.values(source) : [];
-    },
-    globalTimeRange(val) {
-      console.log(val, 'change global time range');
     }
   },
-
   methods: {
     editDateType(val) {
       this.dateType.type = val;
     },
 
     changeGlobalTimeRange(resolve) {
-      console.log(resolve, 'resolve;');
       if (resolve == null || resolve.length !== 2) {
         const previewInstanceDate = new Date();
         previewInstanceDate.setDate(previewInstanceDate.getDate() - 64);
 
         resolve = [previewInstanceDate, new Date()];
       }
-
       this.$store.commit("dashboard/setGlobalFilters", {
         key: "timeInterval",
         value: {

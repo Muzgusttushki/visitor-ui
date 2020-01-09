@@ -91,6 +91,7 @@ export default {
   },
 
   cachePaymentFilterState({ cachePaymentFilterState }, { write, state, callback }) {
+    console.log(['call cachePaymentFilterState from dashboard/mutations']);
     const globalFilters = this.getters['dashboard/globalFilters'].timeInterval;
     const start = new Date(globalFilters.start), end = new Date(globalFilters.end);
     const hash = JSON.stringify({

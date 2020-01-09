@@ -202,7 +202,6 @@
 import draggable from "vuedraggable";
 
 export default {
-  layout: "dashboard",
   middleware: "roles/user",
   components: {
     draggable
