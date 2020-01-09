@@ -36,25 +36,21 @@ export default {
 
   computed: {
     globalFilters () {
-      console.log('test 1.1;', this.$store.getters['dashboard/globalFilters']);
       return this.$store.getters['dashboard/globalFilters']
     }
   },
 
   watch: {
     async 'globalFilters.timeInterval' () {
-      console.log('test 1.2;');
       await this.getGraphicsRemote()
     },
 
     async 'globalFilters.sources' () {
-      console.log('test 1.3;');
       await this.getGraphicsRemote()
     }
   },
 
   async mounted () {
-    console.log('test 1.4;');
     await this.getGraphicsRemote()
   },
 
