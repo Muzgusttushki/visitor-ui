@@ -222,7 +222,6 @@ export default {
     };
   },
 
-  layout: "dashboard",
   middleware: "roles/user",
 
   mounted() {

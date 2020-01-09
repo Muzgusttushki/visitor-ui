@@ -257,7 +257,6 @@ import draggable from "vuedraggable";
 import dialogs from "@/components/elements/dialog-operations.vue";
 export default {
   components: { dialogs, draggable },
-  layout: "dashboard",
   middleware: "roles/user",
 
   data() {

@@ -182,8 +182,7 @@ export default {
       request: null
     }
   },
-
-  layout: 'dashboard',
+  
   middleware: 'roles/user',
 
   filters: {
@@ -192,13 +191,13 @@ export default {
         return (value / 1000).toFixed(0) + 'k'
       } else if (value > 999) {
         return (value / 1000).toFixed(1) + 'k'
-      }
-      return parseInt(value).toFixed(0)
+      } else return parseInt(value).toFixed(0)
     }
   },
 
   computed: {
     globalFiltersTimeInterval () {
+      console.log(['computed global filter time interval_____dashboard index___']);
       return this.$store.getters['dashboard/globalFilters'].timeInterval
     }
   },
@@ -210,7 +209,7 @@ export default {
   },
 
   async asyncData ({ store, $axios, params }) {
-    
+    console.log(!store.getters['dashboard/globalFilters'].timeInterval)
     if (!store.getters['dashboard/globalFilters'].timeInterval) {
       const previewInstanceDate = new Date()
       previewInstanceDate.setDate(previewInstanceDate.getDate() - 14)
@@ -227,7 +226,6 @@ export default {
     }
 
     const request = await store.dispatch('dashboard/getDashboardStats')
-    console.log('test3');
     return {
       loading: false,
       request
@@ -247,7 +245,6 @@ export default {
     },
     async applyGlobalFilters () {
       // this.loading = true
-      console.log('test1');
 
       const request = await this.$store.dispatch('dashboard/getDashboardStats')
       const pAvEars = request.previousAverageEarnings
@@ -258,7 +255,6 @@ export default {
       )
 
       this.request = request;
-      console.log('test2');
       // this.$nextTick(() => {
       //   this.loading = false
       // })

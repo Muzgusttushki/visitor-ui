@@ -45,9 +45,3 @@
     </el-col>
   </el-main>
 </template>
-
-<script>
-export default {
-  layout: 'dashboard'
-}
-</script>

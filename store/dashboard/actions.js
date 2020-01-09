@@ -1,5 +1,6 @@
 export async function getDashboardStats({ commit }) {
   try {
+    console.log(['dashboard stats']);
     const request = (await this.$axios.post(`${process.env.address}/v1/dashboard`, {
       ...this.getters['dashboard/globalFilters']
     })).data
