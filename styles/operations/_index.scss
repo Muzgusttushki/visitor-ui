@@ -3,8 +3,6 @@
 &.index {
 
   &.filter-container {
-    width: 320px;
-    height: 0px;
     padding: 0;
 
     @import '../templates/filter';
@@ -16,6 +14,7 @@
   &.tools-container {
     width: 300px;
     padding: 20px;
+    box-sizing: border-box;
 
     h3 {
       margin: 0;
@@ -52,9 +51,14 @@
     border-radius: 10px;
     padding-bottom: 20px;
 
-    .template-table {
-      @import "../templates/table";
-    } 
+    .table-container {
+      padding: 20px;
+
+      .template-table {
+        @import '../templates/visitor-table';
+        // @import "../templates/table";
+      } 
+    }
 
     .tools {
       padding: 20px 30px 0;
@@ -64,6 +68,15 @@
       h3 {
         font-weight: bold;
         font-size: 18px;
+      }
+
+      .button-group {
+        display: flex;
+        align-items: center;
+
+        .tools__filters {
+          padding-left: 15px;
+        }
       }
 
       .el-button {

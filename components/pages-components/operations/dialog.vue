@@ -136,6 +136,9 @@
 <script>
 export default {
   props: ["data", "visible"],
+  mounted() {
+    console.log(this.data, 'data')
+  },
   data() {
     return {
       visbl: this.visible,

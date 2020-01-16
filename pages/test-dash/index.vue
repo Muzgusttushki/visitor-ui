@@ -110,12 +110,12 @@
   </el-container>
 </template>
 <script>
-import GraphicsSalesUI from '@/components/dashboard/graphics/sales'
-import GraphicsDevicesUI from '@/components/dashboard/graphics/devices'
-import GraphicsLocationsUI from '@/components/dashboard/graphics/locations'
-import GraphicsEventsTopUI from '@/components/dashboard/graphics/eventsTop'
-import GraphicsTicketsInTransaction from '@/components/dashboard/graphics/ticketInTransaction'
-import GraphicsBuyers from '@/components/dashboard/graphics/buyers'
+import GraphicsSalesUI from '@/components/graphics/dashboard/sales.vue'
+import GraphicsDevicesUI from '@/components/graphics/dashboard/device_type.vue'
+import GraphicsLocationsUI from '@/components/graphics/dashboard/buyers_map.vue'
+import GraphicsEventsTopUI from '@/components/graphics/dashboard/top_events.vue'
+import GraphicsTicketsInTransaction from '@/components/graphics/dashboard/tickets_number.vue'
+import GraphicsBuyers from '@/components/graphics/dashboard/old_new_buyers.vue'
 
 export default {
   components: {

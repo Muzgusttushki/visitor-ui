@@ -6,7 +6,7 @@
 
   &.tools-container {
     width: 300px;
-    padding: 20px;
+    box-sizing: border-box;
 
     h3 {
       margin: 0;
@@ -43,12 +43,21 @@
     border-radius: 10px;
     padding-bottom: 20px;
 
-    .template-table {
-      @import '../templates/table';
+    .table-container {
+      padding: 20px;
 
-      .el-table__row {
-        &-events {
-          max-width: 50px;
+      .visitor-table {
+        @import '../templates/visitor-table';
+        @import '../templates/scrollbar';
+      }
+      
+      .template-table {
+        @import '../templates/table';
+  
+        .el-table__row {
+          &-events {
+            max-width: 50px;
+          }
         }
       }
     }

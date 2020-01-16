@@ -1,11 +1,11 @@
 <template>
   <el-container class="layouts dashboard">
     <!-- <div class="a-side left-menu background" /> -->
-    <el-header class="main-header" height="80px">
+    <el-header class="main-header" height="null">
       <div class="main-header__wrapper">
-        <!-- -------------------------------LOGOTYPE------------------------------------------ -->
+        <!-- LOGOTYPE -->
         <div class="logotype" />
-        <!-- -------------------------------DATEPICKER----------------------------------------- -->
+        <!-- DATEPICKER -->
         <div :class="hideDatePicker()">
           <el-date-picker
             v-if="dateType.show"
@@ -21,12 +21,12 @@
             class="dashboard picker"
             :picker-options="pickerOptions" />
         </div>
-        <!-- ---------------------------------------ПОИСК---------------------------------------- -->
+        <!-- ПОИСК -->
         <div class="global-search">
           <el-input id="search-label"></el-input>
           <font-awesome-icon :icon="['fas', 'search']" class="search-icon" />
         </div>
-        <!-- ---------------------------------------------УВЕДОМЛЕНИЯ---------------------------- -->
+        <!-- УВЕДОМЛЕНИЯ -->
         <div class="user-notification">
           <el-dropdown>
             <span class="el-dropdown-link">
@@ -41,7 +41,7 @@
             </el-dropdown-menu>
           </el-dropdown>
         </div>
-        <!-- ---------------------------------------------ПОЛЬЗОВАТЕЛЬ -->
+        <!-- ПОЛЬЗОВАТЕЛЬ -->
         <div class="user-card">
           <el-dropdown>
             <div class="el-dropdown-link action">
@@ -96,7 +96,6 @@
           </el-dropdown>
         </div>
         <!-- ________ -->
-
       </div>
     </el-header>
     <el-container class="main-container">
@@ -150,6 +149,23 @@ export default {
       }
     };
   },
+  async fetch({ store }) {
+    console.log('sadfhasjhfjsadhfkjasdjfhsiahfiusafhuiadsfus___________-')
+    const date = await store.getters['dashboard/globalFilters'].timeInterval;
+    if (!date.start || !date.end) {
+      console.log('___________test_____________')
+      const previewInstanceDate = new Date();
+      previewInstanceDate.setDate(previewInstanceDate.getDate() - 14);
+
+      await this.$store.commit("dashboard/setGlobalFilters", {
+        key: "timeInterval",
+        value: {
+          start: previewInstanceDate,
+          end: new Date()
+        }
+      });
+    }
+  },
   computed: {
     getGlobalFilterTimeInterval() {
       return this.$store.getters["dashboard/globalFilters"].timeInterval;
@@ -169,7 +185,7 @@ export default {
     changeGlobalTimeRange(resolve) {
       if (resolve == null || resolve.length !== 2) {
         const previewInstanceDate = new Date();
-        previewInstanceDate.setDate(previewInstanceDate.getDate() - 64);
+        previewInstanceDate.setDate(previewInstanceDate.getDate() - 14);
 
         resolve = [previewInstanceDate, new Date()];
       }

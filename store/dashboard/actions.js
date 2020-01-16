@@ -1,11 +1,10 @@
 export async function getDashboardStats({ commit }) {
   try {
-    console.log(['dashboard stats']);
-    const request = (await this.$axios.post(`${process.env.address}/v1/dashboard`, {
+    const request = await this.$axios.post(`${process.env.address}/v1/dashboard`, {
       ...this.getters['dashboard/globalFilters']
-    })).data
+    })
 
-    return request
+    return request.data
   } catch {
     return {}
   }
@@ -26,7 +25,6 @@ export async function getSalesGraphics() {
   try {
     const graphics = await this.$axios.post(`${process.env.address}/v1/dashboard/graphics/sales`,
       this.getters['dashboard/globalFilters'])
-
     return graphics
   } catch (e) {
     return null
@@ -37,7 +35,6 @@ export async function getLocationsGraphics() {
   try {
     const graphics = await this.$axios.post(`${process.env.address}/v1/dashboard/graphics/locations`,
       this.getters['dashboard/globalFilters'])
-
     return graphics.data
   } catch (e) {
     return null
@@ -66,9 +63,9 @@ export async function getBuyersStats() {
 
 export async function getSalesTicketGraphics() {
   try {
+    console.log('tickets before')
     const graphics = await this.$axios.post(`${process.env.address}/v1/dashboard/graphics/tickets`,
       this.getters['dashboard/globalFilters'])
-
     return graphics.data
   } catch (e) {
     return null
@@ -154,6 +151,8 @@ export async function getOperationsFilters({ commit }) {
     const request = await this.$axios.post(`${process.env.address}/v1/operations/filters`, {
       ...this.getters['dashboard/globalFilters']
     })
+    
+    return request.data;
 
     return await new Promise(function (callback) {
       commit('cacheActionsFilters', {

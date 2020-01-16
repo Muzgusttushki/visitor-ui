@@ -10,13 +10,13 @@
             </h3>
           </div>
           <div class="button-group">
-            <ux-dropdown :enable.sync="dropdownVisible1" trigger="click">
+            <visitor-dropdown :enable.sync="dropdownVisible1" trigger="click">
               <template slot="action">
                 <el-button type="warning" class="el-button-custom-cog">
                   <font-awesome-icon :icon="['fas', 'cog']" class="fa-lg" />
                 </el-button>
               </template>
-              <!-- ------------------------------ ВЫБОР КРИТЕРИЕВ------------------------------------- -->
+              <!--  ВЫБОР КРИТЕРИЕВ -->
               <template class="container">
                 <div class="payments index tools-container">
                   <h3>Отображение</h3>
@@ -33,9 +33,9 @@
                   </div>
                 </div>
               </template>
-            </ux-dropdown>
-            <!-- ------------------------------------------ФИЛЬТР----------------------------------- -->
-            <ux-dropdown
+            </visitor-dropdown>
+            <!-- ФИЛЬТР -->
+            <visitor-dropdown
               :enable.sync="dropdownVisible2"
               v-if="filters"
               trigger="click"
@@ -52,10 +52,10 @@
               <!-- __________________________________FILTER PARAMETERS__________________________________________ -->
               <template>
                 <div class="payments index filter-container">
+                  <h3 class="filter-title">Фильтры</h3>
                   <div class="wrapper">
-                    <h3>Фильтры</h3>
 
-                    <!-- ---------------------------------SMART SEARCH------------------------------------ -->
+                    <!-- SMART SEARCH -->
                     <div class="filter">
                       <!-- <div class="title">Умный поиск</div>
                       <div class="clever-search">
@@ -70,9 +70,8 @@
                         <font-awesome-icon :icon="['fas', 'search']" class="fa-lg" />
                       </div>-->
                     </div>
-                    <!-- --------------------------------------------------------------------------------- -->
 
-                    <!-- ----------------------------------------TOWN PICK-------------------------------- -->
+                    <!-- TOWN PICK -->
                     <div class="filter">
                       <div class="title">Город ({{filters.cities.length}})</div>
                       <div class="container">
@@ -92,9 +91,8 @@
                         </el-select>
                       </div>
                     </div>
-                    <!-- ------------------------------------------------------------------------------- -->
 
-                    <!-- ----------------------------------EVENT PICK----------------------------------- -->
+                    <!-- EVENT PICK -->
                     <div class="filter">
                       <div class="title">Событие ({{filters.events.length}})</div>
 
@@ -113,9 +111,8 @@
                         </el-select>
                       </div>
                     </div>
-                    <!-- ----------------------------------------------------------------- -->
 
-                    <!-- -------------------------------AVERAGE CHECK--------------------- -->
+                    <!-- AVERAGE CHECK -->
                     <div class="filter">
                       <div class="title">Средний чек</div>
 
@@ -128,9 +125,8 @@
                         />
                       </div>
                     </div>
-                    <!-- ------------------------------------------------------------------ -->
 
-                    <!-- -----------------------------------AMOUNT MONEY------------------- -->
+                    <!-- AMOUNT MONEY -->
                     <div class="filter">
                       <div class="title">Принес денег</div>
 
@@ -144,24 +140,23 @@
                         />
                       </div>
                     </div>
-                    <!-- ------------------------------------------------------------------ -->
 
-                    <!-- -----------------------------BOUGHT TICKETS----------------------- -->
+                    <!-- BOUGHT TICKETS -->
                     <div class="filter">
                       <div class="title">Купил билетов</div>
 
                       <div class="container">
                         <el-slider
                           v-model="localFilters.ticketInTransaction"
+                          range
                           :step="1"
                           :min="filters.minTicketQuantity"
                           :max="filters.maxTicketQuantity"
                         />
                       </div>
                     </div>
-                    <!-- ------------------------------------------------------------------ -->
 
-                    <!-- --------------------------AMOUNT TRANSACTIONS--------------------- -->
+                    <!-- AMOUNT TRANSACTIONS -->
                     <div class="filter">
                       <div class="title">Кол-во транзакций</div>
 
@@ -175,46 +170,28 @@
                         />
                       </div>
                     </div>
-                    <!-- ------------------------------------------------------------------ -->
-
-                    <!-- --------------------------------APPLY BUTTON---------------------- -->
-                    <div class="container">
-                      <el-button type="primary" @click="applyPayments(true, true)">Применить</el-button>
-                    </div>
-                    <!-- ------------------------------------------------------------------ -->
+                  </div>
+                  <!-- APPLY BUTTON -->
+                  <div class="container apply-button">
+                    <el-button type="primary" @click="applyPayments(true, true)">Применить</el-button>
                   </div>
                 </div>
               </template>
-              <!-- ______________________________________________________________________________ -->
-            </ux-dropdown>
+            </visitor-dropdown>
           </div>
         </div>
 
-        <!-- ______________________________________TABLE_________________________________________ -->
-        <div v-if="this.payments" v-loading="loading.content" class="template-table">
-          <el-table :data="this.payments.data" class="payments-list" @row-click="paymentDetails">
-            <el-table-column
-              v-for="(column, columnID) in columns.filter(
-                resolve => resolve.visible
-              )"
-              :key="columnID"
-              :prop="column.source"
-              :label="column.label"
-              :min-width="column.width"
-              :max-width="column.width + 100"
-            >
-              <template slot-scope="scope">
-                <span :class="`el-table__row-${column.source}`">
-                  <span
-                    v-if="column.source == 'firstActive' || column.source == 'lastActive'"
-                  >{{handleData(scope.row[column.source])}}</span>
-                  <span v-else>{{String(scope.row[column.source])}}</span>
-                </span>
-              </template>
-            </el-table-column>
-          </el-table>
+        <!-- TABLE -->
+        <div class="table-container" v-if="this.payments" >
+          <div v-loading="loading.content" class="template-table">
+            <visitor-table 
+              :data="filteredPaymentsData" 
+              :labels="columns.filter(r => r.visible)"
+              @row-click="paymentDetails"
+            ></visitor-table>
+          </div>
 
-          <!-- -----------------------------------------PAGINATION-------------------------------------- -->
+          <!-- PAGINATION -->
           <el-pagination
             style="margin-top: 30px;"
             background
@@ -224,41 +201,22 @@
             :current-page.sync="current"
             hide-on-single-page
           />
-          <!-- ------------------------------------------------------------------------------------------ -->
         </div>
-        <!-- ____________________________________________________________________________________________ -->
-
-        <!-- _____________________________________LOADING________________________________________________ -->
-        <div v-else>
-          <div class="on-loading">
-            <div class="title">
-              <loading-square />
-              <loading-square />
-              <loading-square />
-              <loading-square />
-              <loading-square />
-              <loading-square />
-            </div>
-            <div class="main">
-              <loading-square />
-              <loading-square />
-              <loading-square />
-              <loading-square />
-            </div>
-          </div>
-        </div>
-        <!-- ____________________________________________________________________________________________ -->
       </div>
     </el-main>
   </el-container>
 </template>
 <script>
 import draggable from "vuedraggable";
+import VisitorTable from '@/components/visitor-components/visitor-table.vue';
+import VisitorDropdown from '@/components/visitor-components/visitor-dropdown.vue';
 
 export default {
   middleware: "roles/user",
   components: {
-    draggable
+    draggable,
+    VisitorTable,
+    VisitorDropdown
   },
 
   data() {
@@ -274,28 +232,28 @@ export default {
       dropdownVisible2: false,
 
       columns: [
-        { label: "Телефон", source: "_id", visible: true, width: 100 },
-        { label: "Имя", source: "name", visible: true, width: 150 },
-        { label: "Событие", source: "events", visible: true, width: 450 },
-        { label: "Прибыль", source: "earnings", visible: true, width: 100 },
-        { label: "Билетов", source: "ticketsCount", visible: true, width: 100 },
-        { label: "Источник", source: "source", visible: true, width: 200 },
+        { label: "Телефон", prop: "_id", visible: true, width: 200 },
+        { label: "Имя", prop: "name", visible: true, width: 150 },
+        { label: "Событие", prop: "events", visible: true, width: 450 },
+        { label: "Прибыль", prop: "earnings", visible: true, width: 100 },
+        { label: "Билетов", prop: "ticketsCount", visible: true, width: 100 },
+        { label: "Источник", prop: "source", visible: true, width: 200 },
         {
           label: "Транзакций",
-          source: "transactions",
+          prop: "transactions",
           visible: true,
           width: 120
         },
         {
           label: "Последняя активность",
-          source: "lastActive",
+          prop: "lastActive",
           visible: true,
           formatDate: true,
           width: 200
         },
         {
           label: "Первая активность",
-          source: "firstActive",
+          prop: "firstActive",
           visible: false,
           formatDate: true,
           width: 190
@@ -322,6 +280,13 @@ export default {
   computed: {
     globalFiltersTimeInterval() {
       return this.$store.getters["dashboard/globalFilters"].timeInterval;
+    },
+    filteredPaymentsData() {
+      return this.payments.data.map(item => {
+        item.lastActive = this.$times({ time: String(item.lastActive), format: '{D}.{MM}.{Y}' });
+        item.firstActive = this.$times({ time: String(item.firstActive), format: '{D}.{MM}.{Y}' });
+        return item;
+      })
     }
   },
 
@@ -350,9 +315,6 @@ export default {
   },
 
   methods: {
-    formattooltip(value, single) {
-      console.log(value, single, 'formattooltip');
-    },
     updateCheck() {
       const check = this.$store.commit('dashboard/cachePaymentFilterTime');
       if (check) this.applyPayments(false, true);
@@ -370,7 +332,6 @@ export default {
       this.$nextTick(async () => {
         this.loading.pages = true;
         const date = this.globalFiltersTimeInterval;
-        console.log('____________ apply filters')
         const filters = await this.$axios.get(
           `${process.env.address}/v1/api/customers/filters${this.$formatDate(date.start, date.end)}`
         );
@@ -421,7 +382,6 @@ export default {
           };
           // this.current = 1;
         }
-        console.log(this.localFilters, this.filters, 'сравнение', 'reset: ', reset, this.filters.minEarnings, this.filters.maxEarnings);
        // this.force = true;
 
         this.$nextTick(() => {
@@ -452,7 +412,9 @@ export default {
           this.localFilters
         );
 
+
         if (!this.payments) this.payments = null;
+        console.log(this.payments, 'payments')
         this.loading.content = false;
       });
 

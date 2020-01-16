@@ -1,9 +1,9 @@
 <template>
   <el-container class="account profile">
     <nav>
-      <el-tabs>
-        <!-- ------------------------------------ОСНОВНОЕ----------------------------------------------- -->
-        <el-tab-pane label="Основное">
+      <el-tabs v-model="activeTab">
+        <!-- ОСНОВНОЕ-- -->
+        <el-tab-pane label="Основное" name='main'>
           <el-main class="components-container">
             <el-col :span="7">
               <div class="component main-info">
@@ -16,58 +16,58 @@
                     <div>TOPconcerts.ru</div>
                   </el-row>
                 </div>
-                <el-row class="contacts"><span class="text-grey">Телефон: </span> +7 916 123 45 67</el-row>
-                <el-row class="contacts"><span class="text-grey">Email: </span>test@gmail.com</el-row>
-                <el-row class="contacts"><span class="text-grey">Статус: </span> активен</el-row>
+                <el-row class="contacts"><span class="text-grey">Телефон:</span>+7 916 123 45 67</el-row>
+                <el-row class="contacts"><span class="text-grey">Email:</span>test@gmail.com</el-row>
+                <el-row class="contacts"><span class="text-grey">Статус:</span> активен</el-row>
               </div>
               <div class="component payment-info">
                 <div class="component__title"><h2>Платежная информация</h2></div>
-                <el-row class="info"><span class="text-grey">Подписка действует до: </span>12.11.2019</el-row>
-                <el-row class="info"><span class="text-grey">Последний платеж: </span>12.10.2019</el-row>
-                <el-row class="info"><span class="text-grey">Следующий платеж: </span>12.11.2019</el-row>
+                <el-row class="info"><span class="text-grey">Подписка действует до:</span>12.11.2019</el-row>
+                <el-row class="info"><span class="text-grey">Последний платеж:</span>12.10.2019</el-row>
+                <el-row class="info"><span class="text-grey">Следующий платеж:</span>12.11.2019</el-row>
               </div>
             </el-col>
             <el-col :span="17">
               <div class="component projects">
                 <div class="component__title"><h2>Мои проекты</h2></div>
-                <el-table
-                  :data="projects.data"
-                >
-                  <el-table-column
-                    prop="source"
-                    label="Источник"
-                    min-width="300"
-                  />
-                  <el-table-column
-                    prop="status"
-                    label="Статус"
-                    min-width=70
-                  >
-                    <template slot-scope="scope">
-                      <div v-if="scope.row.status === 'true'">
+                <visitor-table 
+                  :data="filteredProjects"
+                  :monolite="true"
+                  :labels="[{
+                    prop: 'source',
+                    label: 'Источник',
+                    width: 300
+                  },{
+                    prop: 'status',
+                    label: 'Статус',
+                    width: 70
+                  },{
+                    prop: 'limit',
+                    label: 'Активен до:',
+                    width: 70
+                  }]"> 
+                  <template v-slot:default="{ cell }">
+                    <span v-if="cell.key === 'status'">
+                      <span v-if="cell.prop === true">
                         <span class="indicator active"></span>
-                        <span>{{ 'активен' }}</span>
-                      </div>
-                      <div v-else>
+                        <span>активен</span>
+                      </span>
+                      <span v-else>
                         <span class="indicator disable"></span>
-                        <span>{{ 'неактивен' }}</span>
-                      </div>
-                    </template>
-                  </el-table-column>
-                  <el-table-column
-                    prop="limit"
-                    label="Активен до:"
-                    min-width=70
-                  />
-                </el-table>
+                        <span>неактивен</span>
+                      </span>
+                    </span>
+                    <span v-else>{{ cell.prop }}</span>
+                  </template>
+                </visitor-table>
               </div>
             </el-col>
           </el-main>
         </el-tab-pane>
-        <!-- ------------------------------------НАСТРОЙКИ--------------------------------------------- -->
-        <el-tab-pane label="Настройки"></el-tab-pane>
-        <!-- ------------------------------------УПРАВЛЕНИЕ-------------------------------------------- -->
-        <el-tab-pane label="Управление" class="components-container">
+        <!-- НАСТРОЙКИ -->
+        <el-tab-pane label="Настройки" name="settings"></el-tab-pane>
+        <!-- УПРАВЛЕНИЕ -->
+        <el-tab-pane label="Управление" class="components-container" name="manage">
           <div class="search-field">
             <div class="search">
               <el-input v-model="inputSearch"></el-input>
@@ -77,25 +77,19 @@
           </div>
           <el-main class="company-list">
             <div class="component-title"><h2>Список кампаний</h2></div>
-            <el-table
+            <visitor-table
+              v-if="activeTab === 'manage'"
               :data="tableData"
-              style="width: 100%">
-              <el-table-column
-                v-for="(item, key) in tableLabels"
-                :key="key"
-                :prop="item.source"
-                :label="item.label"
-                :min-width="item.width"
-                >
-                <template slot-scope="scope">
-                  <div v-if="item.source === 'manage'" class="button-group">
-                    <font-awesome-icon :icon="['fas', 'cog']" @click="handleEdit(scope.$index, scope.row)" class="fa-lg cog" />
-                    <font-awesome-icon :icon="['fas', 'trash-alt']" @click="handleDelete(scope.$index, scope.row)" class="fa-lg trash" />
-                  </div>
-                  <span v-else style="margin-left: 10px">{{ scope.row[item.source] }}</span>
-                </template>
-              </el-table-column>
-            </el-table>
+              :labels="tableLabels"
+            >
+              <template v-slot:default="{ cell }">
+                <span v-if="cell.key === 'manage'">
+                  <font-awesome-icon :icon="['fas', 'cog']" @click="handleEdit(scope.$index, scope.row)" class="fa-lg cog" />
+                  <font-awesome-icon :icon="['fas', 'trash-alt']" @click="handleDelete(cell.rowID)" class="fa-lg trash" />
+                </span>
+                <span v-else>{{ cell.prop }}</span>
+              </template>
+            </visitor-table>
           </el-main>
         </el-tab-pane>
       </el-tabs>
@@ -142,90 +136,38 @@
 </template>
 
 <script>
+import VisitorTable from '@/components/visitor-components/visitor-table.vue';
+
 export default {
-  layout: 'dashboard',
+  components: { VisitorTable },
 
   data() {
     return {
+      activeTab: 'main',
       inputSearch: '',
       inputCompany: '',
       inputEmail: '',
       dialogVisible: false,
       tableLabels: [
-        {label: 'Кампания', source: 'company', width: 200},
-        {label: 'Email', source: 'email', width: 100},
-        {label: 'Роль', source: 'role', width: 30},
-        {label: 'Проекты', source: 'projects', width: 100},
-        {label: 'Управление', source: 'manage', width: 50}
+        {label: 'Кампания', prop: 'company', width: 200},
+        {label: 'Email', prop: 'email', width: 100},
+        {label: 'Роль', prop: 'role', width: 30},
+        {label: 'Проекты', prop: 'projects', width: 100},
+        {label: 'Управление', prop: 'manage', width: 50}
       ],
-      tableData: [{
+      tableData: new Array(10).fill({
         company: 'Театр Пушкина. Спектакль “Апельсины и лимоны”',
         email: 'topconcerts@yandex.ru',
         role: '9',
         projects: 'https://topconcerts.ru/',
         manage: ''
-      },{
-        company: 'Театр Пушкина. Спектакль “Апельсины и лимоны”',
-        email: 'topconcerts@yandex.ru',
-        role: '9',
-        projects: 'https://topconcerts.ru/',
-        manage: ''
-      },{
-        company: 'Театр Пушкина. Спектакль “Апельсины и лимоны”',
-        email: 'topconcerts@yandex.ru',
-        role: '9',
-        projects: 'https://topconcerts.ru/',
-        manage: ''
-      },{
-        company: 'Театр Пушкина. Спектакль “Апельсины и лимоны”',
-        email: 'topconcerts@yandex.ru',
-        role: '9',
-        projects: 'https://topconcerts.ru/',
-        manage: ''
-      },{
-        company: 'Театр Пушкина. Спектакль “Апельсины и лимоны”',
-        email: 'topconcerts@yandex.ru',
-        role: '9',
-        projects: 'https://topconcerts.ru/',
-        manage: ''
-      }],
+      }),
       projects: {
-        data:
-          [{
-            source: 'topconcert.ru',
-            status: 'true',
-            limit: '12.12.2020'
-          },
-          {
-            source: 'topconcert.ru',
-            status: 'true',
-            limit: '12.12.2020'
-          },
-          {
-            source: 'topconcert.ru',
-            status: 'true',
-            limit: '12.12.2020'
-          },
-          {
-            source: 'topconcert.ru',
-            status: 'false',
-            limit: '12.12.2020'
-          },
-          {
-            source: 'topconcert.ru',
-            status: 'true',
-            limit: '12.12.2020'
-          },
-          {
-            source: 'topconcert.ru',
-            status: 'true',
-            limit: '12.12.2020'
-          },
-          {
-            source: 'topconcert.ru',
-            status: 'true',
-            limit: '12.12.2020'
-          }]
+        data: new Array(10).fill({
+          source: 'topconcert.ru',
+          status: true,
+          limit: '12.12.2020'
+        })
       }
     }
   },
@@ -234,8 +176,18 @@ export default {
     handleEdit(index, row) {
       console.log(index, row);
     },
-    handleDelete(index, row) {
+    handleDelete(index) {
+      console.log(index, 'index')
       this.tableData.splice(index, 1)
+    }
+  },
+
+  computed: {
+    filteredProjects() {
+      return this.projects.data.map(item => {
+        const { source, limit, status } = item;
+        return { status, limit, source };
+      })
     }
   }
 }
