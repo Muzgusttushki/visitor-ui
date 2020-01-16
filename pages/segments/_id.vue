@@ -1,7 +1,7 @@
 <template>
   <el-main>
     <el-container class="segments id">
-      <!-- --------------------------ПОЛЬЗОВАТЕЛИ СЕГМЕНТА------------------------------------- -->
+      <!-- --ПОЛЬЗОВАТЕЛИ СЕГМЕНТА- -->
       <el-col :span="6" class="component-outer users">
         <div class="component">
           <div class="component__title">
@@ -25,7 +25,7 @@
           </div>
         </div>
       </el-col>
-      <!-- --------------------------ДАННЫЕ ПО СЕГМЕНТУ------------------------------------- -->
+      <!-- --ДАННЫЕ ПО СЕГМЕНТУ- -->
       <el-col :span="12" class="component-outer info">
         <div class="component">
           <div class="component__title">
@@ -57,7 +57,7 @@
           </div>
         </div>
       </el-col>
-      <!-- --------------------------ТИП УСТРОЙСТВА------------------------------------- -->
+      <!-- --ТИП УСТРОЙСТВА- -->
       <el-col :span="6" class="component-outer devices">
         <div class="component">
           <div class="component__title">
@@ -68,27 +68,19 @@
           </div>
         </div>
       </el-col>
-      <!-- --------------------------ТОВАРЫ ТОП-10------------------------------------- -->
+      <!-- ТОВАРЫ ТОП-10 -->
       <el-col :span="18" class="component-outer goods">
         <div class="component">
           <div class="component__body">
-            <el-table
-              :data="eventsGraphics"
-              style="font-size: 18px"
-              :row-class-name="tableRowClassName"
-            >
-              <el-table-column prop="name" label="Товары топ-10" min-width="300" />
-              <el-table-column prop="quantity" label="Кол-во транзакций" min-width="100" />
-              <el-table-column label="Доля от общего кол-во транзакций" min-width="100">
-                <template slot-scope="props">
-                  <p>{{ props.row.share }}%</p>
-                </template>
-              </el-table-column>
-            </el-table>
+            <visitor-table
+              :data="filteredTopTenGoods"
+              :monolite="true"
+              :labels="labelsTopTenGoods"
+            ></visitor-table>
           </div>
         </div>
       </el-col>
-      <!-- --------------------------ТОП ЛОКАЦИЙ------------------------------------- -->
+      <!-- --ТОП ЛОКАЦИЙ- -->
       <el-col :span="6" class="component-outer locations">
         <div class="component">
           <div class="component__title">
@@ -114,7 +106,7 @@
           </div>
         </div>
       </el-col>
-      <!-- --------------------------ПОЛЬЗОВАТЕЛИ СЕГМЕНТА ТАБЛИЦА----------------------------------- -->
+      <!-- ПОЛЬЗОВАТЕЛИ СЕГМЕНТА ТАБЛИЦА -->
       <el-col :span="24" class="component-outer users-table">
         <div class="component">
           <div class="wallpaper-table">
@@ -123,44 +115,21 @@
                 <h3>Пользователи сегмента</h3>
               </div>
               <div>
-                <!--              <el-dropdown trigger="click">
+                <!-- <el-dropdown trigger="click">
                 <el-button type="warning" class="el-button-custom-cog">
                   <font-awesome-icon :icon="['fas', 'cog']" class="fa-lg" />
                 </el-button>
 
                 </el-dropdown>-->
-                <!-- ------------------------------------------ФИЛЬТР----------------------------------- -->
+                <!-- ФИЛЬТР -->
               </div>
             </div>
-            <!-- -------------------------------------------ТАБЛИЦА-------------------------------------- -->
+            <!-- -ТАБЛИЦА -->
             <div v-if="usersDetailsStats.content" class="template-table">
-              <el-table
-                :data="usersDetailsStats.content"
-                style="width: 100%"
-                @row-click="routeUser"
-              >
-                <el-table-column prop="_id" label="Телефон" width="140"></el-table-column>
-                <el-table-column prop="name" label="Имя" width="200"></el-table-column>
-                <el-table-column prop="event" label="Последнее событие" width="300"></el-table-column>
-                <el-table-column prop="tickets" label="Билетов"></el-table-column>
-                <el-table-column prop="earnings" label="Прибыль"></el-table-column>
-                <el-table-column prop="transactions" label="Транзакций" width="120"></el-table-column>
-                <el-table-column prop="gender" label="Пол" width="100">
-                  <template slot-scope="scope">
-                    <div>
-                      <div v-if="scope.row['gender'] == 1">Мужчина</div>
-                      <div v-else>Женщина</div>
-                    </div>
-                  </template>
-                </el-table-column>
-                <el-table-column prop="source" label="Источник" width="200"></el-table-column>
-                <el-table-column prop="firstActivity" label="Первая активность" width="200">
-                  <template slot-scope="scope">{{handleData(scope.row['firstActivity'])}}</template>
-                </el-table-column>
-                <el-table-column prop="lastActivity" label="Последняя активность" width="200">
-                  <template slot-scope="scope">{{handleData(scope.row['lastActivity'])}}</template>
-                </el-table-column>
-              </el-table>
+              <visitor-table
+                :data="filteredUserStatsTable"
+                :labels="labelsUserStatsTable"
+              ></visitor-table>
               <el-pagination
                 style="padding: 25px;"
                 background
@@ -172,39 +141,41 @@
                 @current-change="changePageIndex"
               ></el-pagination>
             </div>
-            <div v-else>
-              <div class="on-loading">
-                <div class="title">
-                  <loading-square />
-                  <loading-square />
-                  <loading-square />
-                  <loading-square />
-                  <loading-square />
-                  <loading-square />
-                </div>
-                <div class="main">
-                  <loading-square />
-                  <loading-square />
-                  <loading-square />
-                  <loading-square />
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </el-col>
-      <!-- ----------------------------------------------------------------------------------- -->
     </el-container>
   </el-main>
 </template>
 
 <script>
 import draggable from "vuedraggable";
+import VisitorTable from '@/components/visitor-components/visitor-table.vue';
 
 export default {
   middleware: "roles/user",
   components: {
-    draggable
+    draggable,
+    VisitorTable
+  },
+
+  data() {
+    return {
+      labelsUserStatsTable: [
+        { prop: "_id", label: "Телефон", width: 140 },
+        { prop: "name", label: "Имя", width: 200 },
+        { prop: "event", label: "Последнее событие", width: 300 },
+        { prop: "tickets", label: "Билетов", width: 120 },
+        { prop: "earnings", label: "Прибыль", width: 120 },
+        { prop: "transactions", label: "Транзакций", width: 120 },
+        { prop: "gender", label: "Пол", width: 100 }
+      ],
+      labelsTopTenGoods: [
+        { prop: 'name', label: 'Товары топ-10', width: 300 },
+        { prop: 'quantity', label: 'Кол-во транзакций', width: 100 },
+        { prop: 'share', label: 'Доля от общего кол-во транзакций', width: 100 }
+      ]
+    }
   },
 
   async asyncData({ $axios, params }) {
@@ -387,28 +358,25 @@ export default {
   computed: {
     computedLocationsHeight() {
       return this.locationsGraphics.series[0].data.length * 60;
+    },
+    filteredUserStatsTable() {
+      return this.usersDetailsStats.content.map(item => {
+        const format = '{D}.{MM}.{Y}';
+        item.firstActivity = this.$times({ time: item.firstActivity, format });
+        item.lastActivity = this.$times({ time: item.lastActivity, format });
+        item.gender = item.gender === 1 ? 'Мужчина' : 'Женщина';
+        return item;
+      })
+    },
+    filteredTopTenGoods() {
+      return this.eventsGraphics.map(item => {
+        item.share += '%';
+        return item;
+      })
     }
   },
 
   methods: {
-    tableRowClassName({ row, rowIndex }) {
-      if (rowIndex % 2 === 0) {
-        return "row-bg";
-      }
-      return "";
-    },
-
-    routeUser(row) {
-      this.$router.push(`/payments/${row._id}`);
-    },
-
-    handleData(value) {
-      return this.$times({
-        time: value,
-        format: "{D}.{MM}.{Y}"
-      });
-    },
-
     changePageIndex(offset) {
       if (offset - 1 != this.usersDetailsData.offset) {
         this.usersDetailsData.offset = offset - 1;

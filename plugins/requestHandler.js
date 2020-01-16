@@ -1,5 +1,4 @@
 import Vue from 'vue'
-import dataError from '@/components/elements/data-error'
 
 Vue.use({
   install(vue) {
@@ -16,5 +15,3 @@ Vue.use({
     vue.prototype.$requestHandlerData = store.$data
   }
 })
-
-Vue.component('data-error', dataError)

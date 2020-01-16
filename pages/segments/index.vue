@@ -3,7 +3,7 @@
     <div class="main-wrapper">
       <el-collapse class="new-segment" accordion>
         <div>
-          <ux-dropdown :enable.sync="exampledp" trigger="click">
+          <visitor-dropdown :enable.sync="exampledp" trigger="click">
             <template slot="action">
               <div class="wrapper">
                 <div class="new-segment__title">Новый сегмент</div>
@@ -57,7 +57,7 @@
                 </div>
               </div>
             </template>
-          </ux-dropdown>
+          </visitor-dropdown>
         </div>
       </el-collapse>
       <el-collapse v-model="activeNames">
@@ -124,10 +124,10 @@
             <div
               v-loading="segment.updates"
               class="card_inner"
-              @click="(!segment.updates && segment.enable) && routCard(segment)"
+              @click="routCard(segment)"
               style="cursor: pointer"
             >
-              <!-- _________________________________NUMBER OF PEOPLE IN SEGMENT__________________________ -->
+              <!-- ________@click="(!segment.updates && segment.enable) && routCard(segment)"_________________________NUMBER OF PEOPLE IN SEGMENT__________________________ -->
               <div class="card_inner_header">
                 <el-row class="title">
                   <div>{{segment.name}}</div>
@@ -198,7 +198,9 @@
   </el-container>
 </template>
 <script>
+import VisitorDropdown from '@/components/visitor-components/visitor-dropdown.vue';
 export default {
+  components: { VisitorDropdown },
   data() {
     return {
       activeNames: ["1"],
@@ -261,6 +263,7 @@ export default {
     },
 
     routCard(segment) {
+      console.log(segment)
       const address = segment["_id"];
       if (address) return this.$router.push(`/segments/${address}`);
     },
@@ -292,7 +295,6 @@ export default {
     },
 
     handleSegmentSetting({ command, _id, automation, localeID }) {
-      console.log(this.segments[localeID], 'segments', localeID);
       new Promise(resolve => {
         if (localeID) this.segments[localeID].loading = true;
         this.$axios
@@ -345,7 +347,6 @@ export default {
 
         resolve();
       });
-      console.log(this.segments, 'segments', localeID);
     },
 
     async addSegment() {

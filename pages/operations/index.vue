@@ -7,7 +7,7 @@
             <h3>Операции</h3>
           </div>
           <div class="button-group">
-            <ux-dropdown trigger="click" :enable.sync="dropdownVisible1  ">
+            <visitor-dropdown trigger="click" :enable.sync="dropdownVisible1  ">
               <template slot="action">
                 <el-button type="warning" class="el-button-custom-cog">
                   <font-awesome-icon :icon="['fas', 'cog']" class="fa-lg" />
@@ -29,8 +29,8 @@
                   </div>
                 </div>
               </template>
-            </ux-dropdown>
-            <ux-dropdown
+            </visitor-dropdown>
+            <visitor-dropdown
               :enable.sync="dropdownVisible2"
               v-if="filters"
               trigger="click"
@@ -44,10 +44,10 @@
                 </span>
               </template>
               <template>
-                <!-- -----------------------------------ФИЛЬТРЫ---------------------------------------- -->
+                <!-- ФИЛЬТРЫ -->
                 <div class="operations index filter-container">
+                  <h3 class="filter-title">Фильтры</h3>
                   <div class="wrapper">
-                    <h3>Фильтры</h3>
                     <div class="filter">
                       <el-checkbox
                         label="Отображать посещения"
@@ -156,26 +156,33 @@
                         </el-select>
                       </div>
                     </div>
-                    <div class="filter">
-                      <div class="title"></div>
+                  </div>
+                  <div class="filter apply-button">
+                    <div class="title"></div>
 
-                      <div class="container">
-                        <el-button @click="applyPayments(true)">Применить</el-button>
-                      </div>
+                    <div class="container">
+                      <el-button @click="applyPayments(true)">Применить</el-button>
                     </div>
                   </div>
                 </div>
               </template>
-            </ux-dropdown>
+            </visitor-dropdown>
           </div>
         </div>
-        <!-- ----------------------------------------ТАБЛИЦА------------------------------------------- -->
-        <div v-if="!loading.pages">
+        <!-- ТАБЛИЦА -->
+        <div v-if="!loading.pages" class="table-container">
           <div
             v-if="this.operations"
             v-loading="loading.content||!this.operations"
             class="template-table"
-          >
+          > 
+            <visitor-table
+              :data="filteredOperations"
+              :labels="columns.filter(r => r.visible)"
+              @row-click="dialogHandler"
+            ></visitor-table>
+
+            <!--
             <el-table
               :data="this.operations.documents"
               class="payments-list"
@@ -206,6 +213,7 @@
                 </template>
               </el-table-column>
             </el-table>
+            -->
             <el-pagination
               style="margin-top: 30px;"
               background
@@ -220,28 +228,10 @@
             <p>Нет данных</p>
           </div>
         </div>
-        <div v-else>
-          <div class="on-loading">
-            <div class="title">
-              <loading-square />
-              <loading-square />
-              <loading-square />
-              <loading-square />
-              <loading-square />
-              <loading-square />
-            </div>
-            <div class="main">
-              <loading-square />
-              <loading-square />
-              <loading-square />
-              <loading-square />
-            </div>
-          </div>
-        </div>
       </div>
-      <!-- -----------------------------------ДИАЛОГОВОЕ ОКНО------------------------------------------ -->
+      <!-- ДИАЛОГОВОЕ ОКНО -->
       <div>
-        <dialogs
+        <dialog-popper
           v-if="dialogData.loading"
           @closeDialog="handleClose"
           :visible.sync="dialogVisible"
@@ -249,14 +239,16 @@
         />
       </div>
     </el-main>
-    <data-error />
   </el-container>
 </template>
 <script>
 import draggable from "vuedraggable";
-import dialogs from "@/components/elements/dialog-operations.vue";
+import DialogPopper from "@/components/pages-components/operations/dialog.vue";
+import VisitorTable from '@/components/visitor-components/visitor-table.vue';
+import VisitorDropdown from '@/components/visitor-components/visitor-dropdown.vue';
+
 export default {
-  components: { dialogs, draggable },
+  components: { DialogPopper, draggable, VisitorTable, VisitorDropdown },
   middleware: "roles/user",
 
   data() {
@@ -292,7 +284,17 @@ export default {
       inputSearchTowns: "",
       inputSearchEvents: "",
 
-      columns: null,
+      columns: [
+        { label: "Источник", prop: "source", visible: true, width: 150 },
+        { label: "Cобытие", prop: "event", visible: true, width: 450 },
+        { label: "Браузер", prop: "browser", visible: true, width: 200 },
+        { label: "Статус", prop: "status", visible: true, width: 200 },
+        { label: "Город", prop: "city", visible: true, width: 80 },
+        { label: "Дата", prop: "date", visible: true, width: 150 },
+        { label: "Zip", prop: "zip", visible: true, width: 100 },
+        { label: "ОС", prop: "os", visible: true, width: 200 },
+        { label: "ip", prop: "address", visible: true, width: 120 }
+      ],
 
       operations: null,
       filters: null,
@@ -312,6 +314,26 @@ export default {
   computed: {
     globalFiltersTimeInterval() {
       return this.$store.getters["dashboard/globalFilters"].timeInterval;
+    },
+    filteredOperations() {
+      const data = this.operations.documents;
+      return data.map(item => {
+        const { date, event, status, os, browser, zip, city, source, address, url, isSheet, _id } = item;
+        return {
+          date: date ? this.$times({ time: String(date), format: '{D}.{MM}.{Y}' }) : 'N/A',
+          event: event ? event : url,
+          status: status ? this.translate[status] : 'N/A',
+          os: os ? os : 'N/A',
+          browser: browser ? browser : 'N/A',
+          zip: zip ? zip : 'N/A',
+          city: city ? city : 'N/A',
+          source: source ? source : 'N/A', 
+          address: address ? address : 'N/A',
+          url: url ? url : 'N/A',
+          isSheet: isSheet ? isSheet : false,
+          _id: _id ? _id : 'N/A'
+        }
+      })
     }
   },
 
@@ -331,13 +353,13 @@ export default {
 
   methods: {
     handleClose() {
-      return (this.dialogData = {
+      this.dialogData = {
         browser: {},
         os: {},
         cookies: {},
         utm: { tags: {} },
         analytics: {}
-      });
+      };
     },
     dialogHandler(val) {
       this.$nextTick(async () => {
@@ -353,6 +375,7 @@ export default {
           )
         );
         if (request) {
+          console.log(request, 'request')
           if (val.isSheet) {
             this.dialogData = {
               ...request.data.then,
@@ -375,6 +398,7 @@ export default {
         const filters = await this.$requestHandler(
           this.$store.dispatch("dashboard/getOperationsFilters")
         );
+        console.log(filters, 'filters')
         if (!filters) {
           this.payments = null;
           this.filters = null;
@@ -413,24 +437,14 @@ export default {
           filters
         );
 
+        console.log(operations, 'operations')
+
         if (!operations) {
           this.$notify.error("Ошибка сервера.");
           this.operations = null;
           this.loading.content = false;
           return null;
         }
-
-        this.columns = [
-          { label: "Источник", source: "source", visible: true, width: 150 },
-          { label: "Cобытие", source: "event", visible: true, width: 450 },
-          { label: "Браузер", source: "browser", visible: true, width: 200 },
-          { label: "Статус", source: "status", visible: true, width: 200 },
-          { label: "Город", source: "city", visible: true, width: 80 },
-          { label: "Дата", source: "date", visible: true, width: 150 },
-          { label: "Zip", source: "zip", visible: true, width: 100 },
-          { label: "ОС", source: "os", visible: true, width: 200 },
-          { label: "ip", source: "address", visible: true, width: 120 }
-        ];
 
         this.operations = operations;
         this.loading.content = false;

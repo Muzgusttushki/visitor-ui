@@ -669,6 +669,10 @@ $lg-width: 1200px;
       box-sizing: border-box;
       width: 100%;
 
+      .table-container {
+        padding: 10px 20px;
+      }
+
       .component-container {
         height: 100%;
       }
@@ -1053,7 +1057,7 @@ $lg-width: 1200px;
 
           .el-steps {
             position: relative;
-
+          
             &::after {
               content: '';
               position: absolute;
@@ -1065,11 +1069,11 @@ $lg-width: 1200px;
               top: 5px;
             }
           }
-
+          
           &-wrapper {
             padding: 15px 0 0;
           }
-
+          
           .el-step {
             
             &.is-vertical {
@@ -1086,20 +1090,20 @@ $lg-width: 1200px;
                   background: #5AB6FE;
                   width: 10px;
                   height: 10px;
-                  margin-left: -2px;
+                  margin-left: -2px; 
                 }
               }
             }
-
+          
             &__head.is-wait {
               border-color: #C4D2EA;
               margin-top: -6px;
             }
-
+          
             &__line {
               display: none;
             }
-
+          
             &__icon {
               
               &.is-text {
@@ -1111,13 +1115,13 @@ $lg-width: 1200px;
                 display: none;
               }
             }
-
-
+          
+          
             &__main {
               display: flex;
               flex-flow: row nowrap;
             }
-
+          
             &__description {
               min-width: 50%;
               line-height: 0;

@@ -58,44 +58,47 @@
   
   .projects {
 
-    .el-table {
+    .visitor-table {
 
-      &__header-wrapper {
+      .header {
+        border-radius: 0;
+      }
+
+      th.source {
+        text-align: left;
+        padding-left: 15px;
+      }
+
+      .body {
+        height: 250px;
+
         tr {
-          th {
-            background: rgba(196, 210, 234, 0.2);
-            color: #000;
-          }
-
-          :first-child {
-            border-radius: 6px 0 0 6px;
+          font-size: 14px;
+          color: #000000;
+  
+          th.status {
+            position: relative;
           }
   
-          :nth-last-child(-n+2) {
-            border-radius: 0 6px 6px 0
+          &:nth-child(odd) {
+            background-color: #F9FAFC;
           }
         }
       }
+      .indicator {
+        position: absolute;
+        top: 47%;
+        left: 15%;
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        
+        &.active {
+          background: #4BDCA3;
+        }
 
-      &__body-wrapper {
-        max-height: 250px;
-        overflow-y: auto;
-
-        .indicator {
-          position: absolute;
-          top: 47%;
-          left: 0;
-          width: 5px;
-          height: 5px;
-          border-radius: 50%;
-          
-          &.active {
-            background: #4BDCA3;
-          }
-
-          &.disable {
-            background: #C4D2EA;
-          }
+        &.disable {
+          background: #C4D2EA;
         }
       }
     }

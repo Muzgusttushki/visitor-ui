@@ -1,6 +1,7 @@
 .wrapper {
   border-radius: 10px;
   width: 100%;
+  position: relative;
   
   h3:first-child {
     border-radius: 10px 10px 0 0;
@@ -91,4 +92,25 @@
       }
     }
   }
+}
+
+.apply-button {
+  position: sticky;
+  background-color: #fff;
+  bottom: -20px;
+  padding: 15px 0 20px;
+  z-index: 1001;
+
+  .container {
+    margin-top: 0;
+  }
+}
+
+.filter-title {
+  position: sticky;
+  top: -20px;
+  background-color: #fff;
+  z-index: 2;
+  padding: 20px 0 10px;
+  margin: 0;
 }

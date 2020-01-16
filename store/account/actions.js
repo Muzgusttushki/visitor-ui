@@ -1,5 +1,6 @@
 export async function signIn ({ commit }, { username, password, access }) {
   try {
+    if (process.env.test) return true;
     const request = await this.$axios.post(
       `${process.env.address}/v1/account/sign-up`,
       {
@@ -33,6 +34,7 @@ export async function signIn ({ commit }, { username, password, access }) {
 
 export function accessEnchant ({ commit }, skip) {
   try {
+    if (process.env.test) return true;
     const vst = this.$cookies.get('vst');
     if (!vst) {
       return null

@@ -34,6 +34,7 @@
 </template>
 <script>
     export default {
+      layout: 'account',
         middleware: 'roles/none',
         data() {
             return {
