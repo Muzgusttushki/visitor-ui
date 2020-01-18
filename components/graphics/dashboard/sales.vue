@@ -1,5 +1,9 @@
 <template>
-  <el-main v-loading="!graphicData">
+  <el-main class="vld-parent">
+    <vue-loading 
+      :active.sync="loading"
+      :is-full-page="false"
+    />
     <el-tabs v-if="graphicData" @tab-click="handleTabClick">
       <el-tab-pane
         v-for="(data, key, index) of graphicData"
@@ -29,7 +33,6 @@
 import { sales_settings } from './settings.js';
 
 export default {
-  loading: true,
   data () {
     return {
       activeTab: '0',

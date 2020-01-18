@@ -181,39 +181,6 @@
               :labels="columns.filter(r => r.visible)"
               @row-click="dialogHandler"
             ></visitor-table>
-
-            <!--
-            <el-table
-              :data="this.operations.documents"
-              class="payments-list"
-              @row-click="dialogHandler"
-            >
-              <el-table-column
-                v-for="(column, columnID) in columns.filter(
-                  resolve => resolve.visible
-                )"
-                :key="columnID"
-                :prop="column.source"
-                :label="column.label"
-                :min-width="column.width"
-              >
-                <template slot-scope="scope">
-                  <span
-                    v-if="column.source == 'date' && scope.row['date']"
-                  >{{ `${scope.row[column.source].substr(8, 2)}.${scope.row[column.source].substr(5, 2)}.${scope.row[column.source].substr(0, 4)}` }}</span>
-                  <span
-                    v-else-if="column.source == 'event' && !scope.row['event']"
-                  >{{scope.row['url']}}</span>
-                  <span v-else-if="column.source == 'status'">{{translate[scope.row['status']]}}</span>
-                  <span v-else-if="column.source == 'os' && !scope.row['os']">N/A</span>
-                  <span v-else-if="column.source == 'browser' && !scope.row['browser']">N/A</span>
-                  <span v-else-if="column.source == 'zip' && !scope.row['zip']">N/A</span>
-                  <span v-else-if="column.source == 'city' && !scope.row['city']">N/A</span>
-                  <span v-else>{{scope.row[column.source]}}</span>
-                </template>
-              </el-table-column>
-            </el-table>
-            -->
             <el-pagination
               style="margin-top: 30px;"
               background
@@ -347,7 +314,7 @@ export default {
     }
   },
 
-  mounted() {
+  created() {
     this.applyPaymentsFilters();
   },
 

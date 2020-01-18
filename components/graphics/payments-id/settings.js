@@ -1,54 +1,52 @@
 
 export const activity_settings = {
-  common: {
-    chart: {
-      toolbar: { show: false }
-    },
-    legend: {
-      offsetY: -10
-    },
-    dataLabels: { enabled: false },
-    stroke: { curve: "smooth" },
-    tooltip: {
-      fixed: { enabled: false }
-    },
-    responsive: [{
-      breakpoint: 1200,
-      options: {
-        chart: {
-          height: 270
-        }
+  chart: {
+    toolbar: { show: false }
+  },
+  legend: {
+    offsetY: -10
+  },
+  dataLabels: { enabled: false },
+  stroke: { curve: "smooth" },
+  tooltip: {
+    fixed: { enabled: false }
+  },
+  responsive: [{
+    breakpoint: 1200,
+    options: {
+      chart: {
+        height: 270
       }
-    },{
-      breakpoint: 1400,
-      options: {
-        chart: {
-          height: 180
-        }
+    }
+  },{
+    breakpoint: 1400,
+    options: {
+      chart: {
+        height: 180
       }
-    },{
-      breakpoint: 1600,
-      options: {
-        chart: {
-          height: 220
-        }
+    }
+  },{
+    breakpoint: 1600,
+    options: {
+      chart: {
+        height: 220
       }
-    },{
-      breakpoint: 2000,
-      options: {
-        chart: {
-          height: 260
-        }
+    }
+  },{
+    breakpoint: 2000,
+    options: {
+      chart: {
+        height: 260
       }
-    },{
-      breakpoint: 10000,
-      options: {
-        chart: {
-          height: 240
-        }
+    }
+  },{
+    breakpoint: 10000,
+    options: {
+      chart: {
+        height: 240
       }
-    }]
-  }
+    }
+  }]
 }
 
 export const devices_settings = {
@@ -115,7 +113,7 @@ export const transitions_settings = {
     }
   },
   // legend: { show: false },
-  tooltip: { enabled: false }
+  // tooltip: { enabled: false }
 }
 
 export const possibility_settings = {

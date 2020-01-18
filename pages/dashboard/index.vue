@@ -3,12 +3,10 @@
     <!-- КОМПОНЕНТЫ -->
     <el-container v-loading="!request">
       <div v-if="request" class="_dashboard_stats">
-        <el-col :span="4" class="component-wrapper" v-for="(item, id) in topComponents" :key="id">
+        <el-col :span="4" class="wrapper" v-for="(item, id) in topComponents" :key="id">
           <div class="top-component">
             <el-row class="top">
-              <el-col class="top-title">
-                {{item.title}}
-              </el-col>
+              <h2 class="title">{{item.title}}</h2>
             </el-row>
             <el-row class="center">
               <el-tooltip :content="`${item.tooltipNumber}`" placement="top" class="left">
@@ -37,81 +35,57 @@
     <el-container class="chart-visual" direction="vertical">
       <!-- ГРАФИК ПРОДАЖ -->
       <el-col :span="11" class="graphic-container sales">
-        <div class="graphic-outer">
-          <div class="graphic-inner">
-            <div class="title">
-              График продаж
-            </div>
-            <GraphicsSalesUI />
-          </div>
+        <div class="wrapper">
+          <h2 class="title">График продаж</h2>
+          <GraphicsSalesUI />
         </div>
       </el-col>
       <el-col :span="13" class="graphic-container events">
         <!-- ТОП 10 СОБЫТИЙ -->
-        <div class="graphic-outer">
-          <div class="container-events-top">
-            <div class="title">
-              Топ 10 событий
-            </div>
-            <GraphicsEventsTopUI />
-          </div>
+        <div class="wrapper">
+          <h2 class="title">Топ 10 событий</h2>
+          <GraphicsEventsTopUI />
         </div>
       </el-col>
       <el-col :span="11" class="graphic-container map">
         <!-- КАРТА ПОКУПАТЕЛЕЙ -->
-        <div class="graphic-outer">
-          <div class="graphic-inner">
-            <div class="title">
-              Карта покупателей
-            </div>
-            <GraphicsLocationsUI />
-          </div>
+        <div class="wrapper">
+          <h2 class="title">Карта покупателей</h2>
+          <GraphicsLocationsUI />
         </div>
       </el-col>
       <el-col :span="7" class="graphic-container devices">
         <!-- ТИП УСТРОЙСТВА -->
-        <div class="graphic-outer">
-          <div class="graphic-inner">
-            <div class="title">
-              Тип устройства
-            </div>
-            <GraphicsDevicesUI />
-          </div>
+        <div class="wrapper">
+          <h2 class="title">Тип устройства</h2>
+          <GraphicsDevicesUI />
         </div>
       </el-col>
       <el-col :span="6" class="graphic-container buyers">
         <!-- -ПОКУПАТЕЛИ -->
-        <div class="graphic-outer">
-          <div class="graphic-inner">
-            <div class="title">
-              Покупатели
-            </div>
-            <GraphicsBuyers />
-          </div>
+        <div class="wrapper">
+          <h2 class="title">Покупатели</h2>
+          <GraphicsBuyers />
         </div>
       </el-col>
       <el-col :span="7" class="graphic-container tickets">
         <!-- КОЛИЧЕСТВО БИЛЕТОВ В ЗАКАЗЕ -->
-        <div class="graphic-outer">
-          <div class="graphic-inner">
-            <div class="title">
-              Количество билетов в заказе
-            </div>
-            <GraphicsTicketsInTransaction />
-          </div>
+        <div class="wrapper">
+          <h2 class="title">Количество билетов в заказе</h2>
+          <GraphicsTicketsInTransaction />
         </div>
       </el-col>
     </el-container>
   </el-container>
 </template>
 <script>
-
+// GRAPHICS
 import GraphicsSalesUI from '@/components/graphics/dashboard/sales.vue'
 import GraphicsDevicesUI from '@/components/graphics/dashboard/device_type.vue'
 import GraphicsLocationsUI from '@/components/graphics/dashboard/buyers_map.vue'
 import GraphicsEventsTopUI from '@/components/graphics/dashboard/top_events.vue'
 import GraphicsTicketsInTransaction from '@/components/graphics/dashboard/tickets_number.vue'
-import GraphicsBuyers from '@/components/graphics/dashboard/old_new_buyers.vue'
+// import GraphicsBuyers from '@/components/graphics/dashboard/old_new_buyers.vue'
  
 export default {
   components: {
@@ -120,11 +94,12 @@ export default {
     GraphicsLocationsUI,
     GraphicsEventsTopUI,
     GraphicsTicketsInTransaction,
-    GraphicsBuyers
+    GraphicsBuyers: () => import('@/components/graphics/dashboard/old_new_buyers.vue') // just test this feauter
   },
 
   data() {
     return {
+      loader: null,
       topComponents: [{
         title: 'Операции',
         tooltipNumberLast: 'Количество операций за прошлый период',
@@ -184,7 +159,6 @@ export default {
   filters: {
     numberFix(number) {
       const value = parseInt(number).toFixed(0);
-      console.log(value, 'value')
       return (
         Math.abs(value) > 99999 ?
           (value / 1000).toFixed(0) + 'к' :

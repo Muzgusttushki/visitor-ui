@@ -1,11 +1,11 @@
 <template>
   <el-main class="payments id">
-    <el-tabs @tab-click="openTabEvent" class="main-wrapper">
-      <el-tab-pane>
+    <el-tabs @tab-click="openTabEvent" class="main-wrapper" v-model="activeTab">
+      <el-tab-pane name="main">
         <template slot="label">
           <div class="header-title left">Общая сводка</div>
         </template>
-        <div class="container">
+        <div class="container" v-if="activeTab === 'main'">
           <el-col :span="10" class="col-container user-chart">
             <div class="component-container">
               <div v-if="userDetails" class="component-container-inner">
@@ -21,7 +21,7 @@
                         :style="{background: userGender}">
                         <span>{{getUserAbbreviationCallback(userDetails.aboutUser["username"])}}</span>
                       </div>
-                    </div>+
+                    </div>
                   </el-col>
                   <el-col :span="16" :offset="4">
                     <el-row>
@@ -119,104 +119,13 @@
           <el-col :span="7" class="col-container user-activity">
             <div class="component-container">
               <!-- АКТИВНОСТЬ ПОЛЬЗОВАТЕЛЯ -->
-              <el-row>
-                <h2 class="component-title">Активность пользователя</h2>
-              </el-row>
-              <el-row class="activity-row">
-                <el-col :span="18">
-                  <p>Кол-во активных действий</p>
-                </el-col>
-                <el-col :span="6" class="text-right">
-                  <p v-if="userActivity">{{userActivity['totalActions']}}</p>
-                  <p v-else>N/A</p>
-                </el-col>
-              </el-row>
-              <el-row class="activity-row row-bg">
-                <el-col :span="18">
-                  <p>Заходы на сайт</p>
-                </el-col>
-                <el-col :span="6" class="text-right">
-                  <p v-if="userActivity">{{userActivity['sheetActions']}}</p>
-                  <p v-else>N/A</p>
-                </el-col>
-              </el-row>
-              <el-row class="activity-row">
-                <el-col :span="18">
-                  <p>Взаимодействие с виджетом</p>
-                </el-col>
-                <el-col :span="6" class="text-right">
-                  <p v-if="userActivity">{{userActivity['widgetActions']}}</p>
-                  <p v-else>N/A</p>
-                </el-col>
-              </el-row>
-              <el-row class="activity-row row-bg">
-                <el-col :span="18">
-                  <p>Открытие писем</p>
-                </el-col>
-                <el-col :span="6" class="text-right">
-                  <p>0</p>
-                </el-col>
-              </el-row>
-              <el-row class="activity-row">
-                <el-col :span="18">
-                  <p>Опросы</p>
-                </el-col>
-                <el-col :span="6" class="text-right">
-                  <p>0</p>
-                </el-col>
-              </el-row>
+              <component-activity :data="userActivity" />
             </div>
           </el-col>
           <el-col :span="7" class="col-container user-transactions">
             <!-- ТРАНЗАКЦИИ ПОЛЬЗОВАТЕЛЯ -->
             <div class="component-container">
-              <div>
-                <el-row>
-                  <h2 class="component-title">Транзакции пользователя</h2>
-                </el-row>
-                <el-row class="activity-row">
-                  <el-col :span="12">
-                    <p>Сумма покупок</p>
-                  </el-col>
-                  <el-col :span="12" class="text-right">
-                    <p
-                      v-if="userDetails.userTransactions['earnings']"
-                    >{{ userDetails.userTransactions["earnings"] }}₽</p>
-                  </el-col>
-                </el-row>
-                <el-row class="activity-row row-bg">
-                  <el-col :span="12">
-                    <p>Транзакций</p>
-                  </el-col>
-                  <el-col :span="12" class="text-right">
-                    <p v-if="userDetails">{{ userDetails.userTransactions["sales"] }}</p>
-                  </el-col>
-                </el-row>
-                <el-row class="activity-row">
-                  <el-col :span="12">
-                    <p>Билетов куплено</p>
-                  </el-col>
-                  <el-col :span="12" class="text-right">
-                    <p v-if="userDetails">{{ userDetails.userTransactions["tickets"] }}</p>
-                  </el-col>
-                </el-row>
-                <el-row class="activity-row row-bg">
-                  <el-col :span="12">
-                    <p>Билетов в 1 заказе</p>
-                  </el-col>
-                  <el-col :span="12" class="text-right">
-                    <p v-if="userDetails">{{ userDetails.userTransactions["averageTickets"] }}</p>
-                  </el-col>
-                </el-row>
-                <el-row class="activity-row">
-                  <el-col :span="12">
-                    <p>Средний чек</p>
-                  </el-col>
-                  <el-col :span="12" class="text-right">
-                    <p v-if="userDetails">{{ userDetails.userTransactions["averageEarnings"] }}₽</p>
-                  </el-col>
-                </el-row>
-              </div>
+              <component-transactions :data="userDetails.userTransactions" />
             </div>
           </el-col>
           <el-col :span="10" class="col-container graphic-activity">
@@ -246,7 +155,7 @@
                 <el-row class="content">
                   <h2 class="component-title">Источники конверсий</h2>
                 </el-row>
-                <graphic-conversions :data="[42, 50, 91]" />
+                <graphic-conversions :data="[91]" />
               </div>
             </div>
           </el-col>
@@ -288,6 +197,7 @@
                   <visitor-table
                     :data="filteredUserDetails"
                     :labels="columns.filter(r => r.visible)"
+                    @row-click="dialogHandler"
                   ></visitor-table>
                 </div>
               </div>
@@ -337,7 +247,7 @@
                         :key="id"
                         class="tag-name"
                       >
-                        <nuxt-link :to="'/segments/' + item.address">
+                        <nuxt-link :to="'/segments/' + item.address" class="link">
                           {{item.name}}
                         </nuxt-link>
                       </div>
@@ -363,35 +273,9 @@
           </el-col>
           <!-- __________ -->
 
-          <!-- comments -->
-          <!-- <el-col :span="7" class="col-container comments">
-            <div class="component-container">
-              <el-row>
-                <h2 class="component-title">Комментарии</h2>
-              </el-row>
-              <div class="comments__container">
-                <div class="wrapper">
-                  <el-row class="comments__wrapper" v-for="(_, id) of new Array(3)" :key="id">
-                    <el-row class="comments__wrapper_username">
-                      <el-col :span="6">
-                        <img src alt width="45px" height="45px" />
-                      </el-col>
-                      <el-col :span="19" class="container">
-                        <div class="name">Иван Дмитриев</div>
-                        <div class="position">Технический директор</div>
-                      </el-col>
-                    </el-row>
-                    <el-row class="comments__wrapper_text">
-                      <el-col :offset="6" :span="18">Давали бесплатный проход на спектакль с Лебедевым</el-col>
-                    </el-row>
-                    <el-row class="comments__wrapper_date">
-                      <el-col :offset="6" :span="18">19.06.2019</el-col>
-                    </el-row>
-                  </el-row>
-                </div>
-              </div>
-            </div>
-          </el-col> -->
+          <el-col :span="7" class="col-container comments">
+            <component-comments />
+          </el-col>
           <!--<el-col :span="14" class="col-container probality">
             
             <div class="component-container">
@@ -411,7 +295,7 @@
         <template slot="label">
           <div class="header-title right">Детализация</div>
         </template>
-        <el-container class="detail payments">
+        <el-container class="detail payments" v-if="activeTab === 'details'">
           <div class="container">
             <el-tabs>
 
@@ -450,7 +334,7 @@
 
                       <div class="wrapper">
                         <div class="step">
-                          <OperationDetail :data="tabAsyncManager" :status="line.status" />
+                          <component-detail :data="tabAsyncManager" :status="line.status" />
                         </div>
                       </div>
                     </el-tab-pane>
@@ -521,19 +405,17 @@
 
     <!-- transaction information ( dialog popper ) -->
     <div>
-      <dialog-popper
+      <component-dialog
         :visible.sync="dialogVisible"
         @closeDialog="handleClose"
         :data="dialogData"
         v-if="dialogData.loading"
-      ></dialog-popper>
+      ></component-dialog>
     </div>
     <!-- ______ -->
   </el-main>
 </template>
 <script>
-import DialogPopper from "@/components/pages-components/payments/_id/dialog.vue";
-import OperationDetail from "@/components/pages-components/payments/_id/operation-detail.vue";
 import VisitorTable from '@/components/visitor-components/visitor-table.vue';
 import draggable from 'vuedraggable';
 
@@ -544,21 +426,32 @@ import GraphicDevices from '@/components/graphics/payments-id/devices.vue';
 import GraphicTransitions from '@/components/graphics/payments-id/transitions.vue';
 import GraphicPossibility from '@/components/graphics/payments-id/possibility.vue';
 
+// PAGE COMPONENTS
+import ComponentComments from '@/components/pages-components/payments/_id/comments.vue';
+import ComponentTransactions from '@/components/pages-components/payments/_id/transactions.vue';
+import ComponentActivity from '@/components/pages-components/payments/_id/activity.vue';
+import ComponentDialog from "@/components/pages-components/payments/_id/dialog.vue";
+import ComponentDetail from "@/components/pages-components/payments/_id/detail.vue";
+
 export default {
   middleware: "roles/user",
   components: { 
     draggable,
-    DialogPopper,
-    OperationDetail,
     VisitorTable,
     GraphicActivity,
     GraphicConversions,
     GraphicDevices,
     GraphicTransitions,
-    GraphicPossibility
+    GraphicPossibility,
+    ComponentDetail,
+    ComponentDialog,
+    ComponentComments,
+    ComponentTransactions,
+    ComponentActivity
   },
   data() {
     return {
+      activeTab: 'main',
       userActivity: null,
       userSourceAnalyse: null,
       current: 1,
@@ -591,28 +484,22 @@ export default {
       dropdown: {
         input: "",
         output: "",
-        options: [
-          {
+        options: [{
             value: "all",
             label: "Все"
-          },
-          {
+          },{
             value: "email",
             label: "Email"
-          },
-          {
+          },{
             value: "sms",
             label: "SMS"
-          },
-          {
+          },{
             value: "banner",
             label: "Баннер"
-          },
-          {
+          },{
             value: "sms1",
             label: "SMS"
-          },
-          {
+          },{
             value: "push1",
             label: "Push"
           }
@@ -810,6 +697,7 @@ export default {
       };
     },
     async dialogHandler(val) {
+      console.log(val, 'dialog handler')
       const request = await this.$axios.post(
         `${process.env.address}/v1/reports/payments.details`,
         {
@@ -895,3 +783,7 @@ export default {
   }
 };
 </script>
+
+<style lang="scss">
+
+</style>

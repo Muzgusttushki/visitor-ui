@@ -2,7 +2,7 @@
   <div class="content">
     <apexchart 
       type="donut"
-      :options="{labels: this.filteredUserSource.type, settings}"
+      :options="{labels: this.filteredUserSource.type, ...settings}"
       :series="this.filteredUserSource.value"
     />
   </div>
@@ -30,7 +30,6 @@ export default {
   computed: {
     
     filteredUserSource() {
-      console.log(this.data, 'filtered user source', this.data[0].type)
       const data = this.data;
 
       if (data.length === 1) {

@@ -2,91 +2,38 @@
 .percent-down {
   font-weight: bold;
 }
-
-.el-row::before, .el-row::after {
-  display: none;
-}
-
 &.index {
   $title-color: #1B2C3D;
+  $shadow: 0px 0px 10px rgba(47, 79, 111, 0.2);
 
   .el-main {
+    overflow: visible;
     position: relative;
-  }
- 
-  .el-row {
-    width: 100%;
+    padding: 0;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
   }
 
   .chart-visual {
-    margin: 0 6px;
     display: flex;
     flex-flow: row wrap;
+
     .graphic-container {
-      padding: 14px;
-      min-height: 300px;
-
-      .graphic-outer {
+      padding: 10px;
+      height: 400px;
+      
+      .wrapper {  
         height: 100%;
-        background-color: white;
+        width: 100%;  
+        display: flex;
+        flex-flow: column nowrap;
+        box-sizing: border-box;
+        padding: 20px;
         border-radius: 10px;
-        box-shadow: 0px 0px 10px rgba(47, 79, 111, 0.2);
-
-        .graphic-inner {
-          padding: 30px;
-
-          .el-main {
-            overflow: visible;
-          }
-        }
-
-        .el-tabs__header {
-          margin: 0;
-        }
-
-        .el-tabs__content {
-          height: 100%;
-          overflow: visible;
-        }
-
-        .container-events-top {
-          width: 100%;
-          padding: 30px 0 0;
-          box-sizing: border-box;
-          height: 100%;
-          display: flex;
-          flex-flow: column;
-          .title, th.name {
-            padding-left: 30px;
-          }
-          .el-main {
-            @import '../templates/scrollbar';
-          }
-          .visitor-table {
-
-            .body {
-              max-height: 300px;
-
-              @media(min-width: 1390px) {
-                max-height: 350px;
-              }
+        background-color: #ffffff;
+        box-shadow: $shadow;
         
-              tr {
-                font-size: 14px;
-                color: #000000;
-        
-                th.name {
-                  text-align: left;
-                }
-        
-                &:nth-child(odd) {
-                  background-color: #F9FAFC;
-                }
-              }
-            }
-          }
-        }
-
         .title {
           padding-bottom: 15px;
           color: $title-color;
@@ -94,12 +41,42 @@
           font-weight: bold;
           font-size: 22px;
           line-height: 21px;
+          margin: 0;
         }
+      }
+    }
 
-        .el-main {
-          padding: 0;
-          @media (min-width: 1400px) {
-            height: 330px;
+    .events {
+      
+      .wrapper {
+        padding: 15px 0 0;
+        box-sizing: border-box;
+
+        .title, th.name {
+          padding-left: 30px;
+        }
+      }
+
+      .el-main {
+        overflow: overlay;
+        @import '../templates/scrollbar';
+      }
+
+      .visitor-table {
+
+        .body {
+
+          tr {
+            font-size: 14px;
+            color: #000000;
+    
+            th.name {
+              text-align: left;
+            }
+    
+            &:nth-child(odd) {
+              background-color: #F9FAFC;
+            }
           }
         }
       }
@@ -120,25 +97,13 @@
       & {
         justify-content: space-between;
       }
-      .graphic-container {
-        margin: 0;
-        padding: 0;
-      }
-
-      .buyers, .map, .tickets {
-        margin-bottom: 10px;
-      }
       
       .events, .devices, .buyers, .tickets {
         order: 1
       }
+
       .events {
         width: 100%;
-        margin-bottom: 10px;
-      }
-
-      .tickets .graphic-outer .graphic-inner {
-        padding-bottom: 10px;
       }
 
       .sales, .map {
@@ -152,52 +117,20 @@
   }
   ._dashboard_stats {
     width: 100%;
-    margin: 20px 6px 5px;
+    padding-top: 15px;
     display: flex;
     flex-flow: row wrap;
-    justify-content: space-around;
+    justify-content: space-between;
 
-    .component-wrapper {
-      padding: 0 14px;
+    .wrapper {
+      padding: 0 10px;
       min-height: 100px;
     }
 
     // ========================
-    @media (max-width: 1209px) {
-      margin: 6px;
-
-      .component-wrapper {
-        padding: 0;
-      }
-
-      .component-wrapper:not(:first-child) {
-        padding-left: 4px;
-      }
-
-      .component-wrapper:not(:last-child) {
-        padding-right: 4px;
-      }
-
-      .component-wrapper {
-        .top .top-title {
-          font-size: 10px;
-        }
-
-        .center .el-col {
-          font-size: 20px;
-        }
-
-        .left, .right {
-          font-weight: 500;
-          font-size: 10px;
-          display: flex;
-          align-items: center;
-        }
-      }
-    }
     
     @media (max-width: 770px) {
-      .component-wrapper {
+      .wrapper {
         min-width: 150px;
         margin-bottom: 10px;
       }
@@ -209,20 +142,23 @@
       height: 100%;
       background-color: #FFFFFF;
       border-radius: 10px;
-      box-shadow: 0px 0px 10px rgba(47, 79, 111, 0.2);
+      box-shadow: $shadow;
 
       .top {
         padding: 15px 15px 0 15px;
         width: 100%;
 
-        .top-title {
-          font-style: normal;
+        .title {
+          margin: 0;
           font-weight: 500;
           font-size: 13px;
-          line-height: 15px;
           padding-bottom: 15px;
           border-bottom: 0.5px solid #F0F2F6;
           color: $title-color;
+
+          @media (max-width: 1200px) {
+            font-size: 10px;
+          }
         }
       }
 
@@ -230,9 +166,13 @@
         font-size: 24px;
         font-weight: 500;
         color: $title-color;
-        line-height: 28px;
         padding: 33px 0px 24px 15px;
-        width: fit-content;
+        width: fit-content; // for correctly tooltip display
+        
+        @media (max-width: 1200px) {
+          font-size: 13px;
+          padding: 20px 0px 15px 10px;
+        }
 
         .el-tooltip {
           cursor: pointer;
@@ -241,12 +181,16 @@
 
       .bottom {
         padding: 15px;
-        font-size: 1.3rem;
+        font-size: 15px;
         width: 100%;
         width: 100%;
         display: flex;
         justify-content: space-between;
         position: relative;
+
+        @media(max-width: 1200px) {
+          font-size: 10px;
+        }
 
         .left-hidden, .right-hidden {
           display: none;
@@ -257,7 +201,6 @@
         .left, .right {
           display: flex;
           align-items: center;
-          // width: 50%;
           justify-content: space-between;
 
           .left-full, .right-full {
@@ -276,12 +219,10 @@
         }
 
         .left {
-          // justify-content: flex-start;
           color: #5AB6FE;
         }
 
         .right {
-          // justify-content: flex-end;
 
           &.up {
             color: #4BDCA3;

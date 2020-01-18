@@ -53,7 +53,9 @@ export default {
     '@/plugins/times',
     '@/plugins/requestHandler',
     '@/plugins/localStorage.js',
-    '@/plugins/formatDate'
+    '@/plugins/formatDate',
+    '@/plugins/vue-loading-overlay',
+    '@/plugins/utils'
   ],
   /*
   ** Nuxt.js dev-modules

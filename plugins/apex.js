@@ -1,4 +1,3 @@
-import VueApexCharts from 'vue-apexcharts'
-import Vue from 'vue'
-
-Vue.component('apexchart', VueApexCharts)
+import Vue from 'vue';
+import VueApexCharts from 'vue-apexcharts';
+Vue.component('apexchart', VueApexCharts);
