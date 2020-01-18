@@ -1,5 +1,9 @@
 <template>
-  <el-main v-loading="!graphicData">
+  <el-main class="vld-parent">
+    <vue-loading 
+      :active.sync="loading"
+      :is-full-page="false"
+    />
     <div v-if="graphicData">
       <apexchart 
         type="bar" 

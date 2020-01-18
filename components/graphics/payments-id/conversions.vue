@@ -3,7 +3,7 @@
       <apexchart
         width="100%"
         type="donut"
-        :options="settings"
+        :options="{labels: ['yyy'], ...settings}"
         :series="data"
       />
   </div>

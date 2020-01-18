@@ -58,6 +58,7 @@ export default {
   },
   computed: {
     visibleRows() {
+      console.log();
       const data = this.data;
       const labels = this.labels;
       const visibleLabels = labels.map(item => {
@@ -112,7 +113,7 @@ export default {
     }
 
     .header {
-      border-radius: 10px;
+      border-radius: 5px;
       background-color: #DEF0FF;
       box-shadow: 0 0 5px 1px rgb(199, 199, 199); 
 
@@ -129,7 +130,7 @@ export default {
         box-shadow: 0 0 5px 1px rgb(199, 199, 199);
         position: relative;
         display: block;
-        border-radius: 10px;
+        border-radius: 5px;
         margin: 10px 0;
         
         &:hover {
@@ -153,7 +154,7 @@ export default {
     border-spacing: 0;
     
     .header {
-      border-radius: 10px;
+      border-radius: 5px;
       background-color: #DEF0FF;
 
       tr th {
@@ -191,7 +192,7 @@ export default {
 }
 
 .visitor-table {
-  overflow-x: auto;
+  overflow: auto;
   box-sizing: border-box;
 
   .header {

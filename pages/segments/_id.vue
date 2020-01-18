@@ -1,20 +1,15 @@
 <template>
   <el-main>
     <el-container class="segments id">
-      <!-- --ПОЛЬЗОВАТЕЛИ СЕГМЕНТА- -->
+      <!-- Segment users -->
       <el-col :span="6" class="component-outer users">
         <div class="component">
           <div class="component__title">
             <h2 class="title">Пользователи сегмента</h2>
           </div>
           <div class="component__body">
-            <div v-if="usersGraphics.series">
-              <apexchart :options="usersGraphics.options" :series="usersGraphics.series" />
-            </div>
-            <div
-              style="text-align: center; font-weight: bold; font-size: 13px; margin-top: 100px; padding-bottom: 150px;"
-              v-else
-            >Недостаточно данных</div>
+            <!-- Users Graphic -->
+            <graphic-users v-if="usersGraphic" :data="usersGraphic" />
             <div class="info">
               <font-awesome-icon :icon="['fas', 'users']" class="fa-lg" />
               <div class="count">
@@ -57,14 +52,14 @@
           </div>
         </div>
       </el-col>
-      <!-- --ТИП УСТРОЙСТВА- -->
+      <!-- ТИП УСТРОЙСТВА -->
       <el-col :span="6" class="component-outer devices">
         <div class="component">
           <div class="component__title">
             <h2 class="title">Тип устройства</h2>
           </div>
           <div class="component__body">
-            <apexchart :options="devicesGraphics.options" :series="devicesGraphics.series" />
+            <graphic-devices v-if="devicesGraphic" :data="devicesGraphic" />
           </div>
         </div>
       </el-col>
@@ -80,29 +75,14 @@
           </div>
         </div>
       </el-col>
-      <!-- --ТОП ЛОКАЦИЙ- -->
+      <!-- ТОП ЛОКАЦИЙ -->
       <el-col :span="6" class="component-outer locations">
         <div class="component">
           <div class="component__title">
             <h2 class="title">Топ локаций</h2>
           </div>
           <div class="component__body">
-            <el-tabs>
-              <el-tab-pane label="Города">
-                <apexchart
-                  :options="locationsGraphics.options"
-                  :height="computedLocationsHeight"
-                  :series="locationsGraphics.series"
-                />
-              </el-tab-pane>
-              <el-tab-pane label="Районы">
-                <apexchart
-                  :options="locationsGraphics.options"
-                  :height="computedLocationsHeight"
-                  :series="locationsGraphics.series"
-                />
-              </el-tab-pane>
-            </el-tabs>
+            <graphic-locations v-if="locationsGraphic" :data="locationsGraphic" />
           </div>
         </div>
       </el-col>
@@ -129,6 +109,7 @@
               <visitor-table
                 :data="filteredUserStatsTable"
                 :labels="labelsUserStatsTable"
+                @row-click="routeUser"
               ></visitor-table>
               <el-pagination
                 style="padding: 25px;"
@@ -152,11 +133,19 @@
 import draggable from "vuedraggable";
 import VisitorTable from '@/components/visitor-components/visitor-table.vue';
 
+// GRAPHICS
+import GraphicUsers from '@/components/graphics/segments-id/users.vue';
+import GraphicDevices from '@/components/graphics/segments-id/devices.vue';
+import GraphicLocations from '@/components/graphics/segments-id/locations.vue';
+
 export default {
   middleware: "roles/user",
   components: {
     draggable,
-    VisitorTable
+    VisitorTable,
+    GraphicUsers,
+    GraphicDevices,
+    GraphicLocations
   },
 
   data() {
@@ -194,160 +183,20 @@ export default {
       });
 
     return {
-      value2: false,
-      usersDetailsData: {
-        segment: params.id,
-        offset: 0
-      },
-
-      usersDetailsStats: {
-        length: 0,
-        content: null
-      },
-
+      usersDetailsData: { segment: params.id, offset: 0 },
+      usersDetailsStats: { length: 0, content: null },
       usersStats: request.users,
-      usersGraphics: {
-        options: {
-          chart: {
-            type: "donut"
-          },
-          responsive: [
-            {
-              breakpoint: 10000,
-              options: {
-                chart: {
-                  height: 240
-                }
-              }
-            },
-            {
-              breakpoint: 1600,
-              options: {
-                chart: {
-                  height: 280
-                }
-              }
-            }
-          ],
-          legend: {
-            show: false
-          },
-          labels: ["Сегмент", "Всего"]
-        },
-
-        series:
-          request.users.database <= request.users.segment
-            ? [100, 0]
-            : request.users.segment == 0
-            ? null
-            : [request.users.segment, request.users.database]
-      },
+      usersGraphic: request.users.database <= request.users.segment ?
+          [100, 0] :
+        request.users.segment == 0 ?
+          null : [request.users.segment, request.users.database],
       segmentDataStats: request.stats,
-      devicesGraphics: {
-        options: {
-          chart: {
-            type: "bar",
-            toolbar: {
-              show: false
-            }
-          },
-          xaxis: {
-            categories: ["Смартфон", "Компьютер"],
-            axisBorder: {
-              show: false
-            },
-            axisTicks: {
-              show: false
-            },
-            labels: {
-              style: {
-                fontSize: "13px",
-                fontFamily: "Rubik, sans-serif"
-              }
-            }
-          },
-          grid: {
-            show: false
-          },
-          yaxis: {
-            axisTicks: {
-              show: false
-            },
-            labels: {
-              show: false
-            }
-          },
-          colors: ["#5AB6FE", "#4BDCA3", "#6382A7"],
-          chartOptions: {
-            dataLabels: {
-              enabled: false
-            }
-          },
-          plotOptions: {
-            bar: {
-              dataLabels: {
-                position: "center" // top, center, bottom
-              },
-              distributed: true
-            }
-          },
-          responsive: [
-            {
-              breakpoint: 10000,
-              options: {
-                chart: {
-                  height: 250
-                }
-              }
-            }
-          ]
-        },
-        series: [
-          {
-            name: "Заказов",
-            data: [request.devices.computer, request.devices.phone]
-          }
-        ]
-      },
+      devicesGraphic: [{
+        name: "Заказов",
+        data: [request.devices.computer, request.devices.phone]
+      }],
       eventsGraphics: request.events,
-      locationsGraphics: {
-        options: {
-          chart: {
-            type: "bar",
-            toolbar: {
-              show: false
-            }
-          },
-          plotOptions: {
-            bar: {
-              horizontal: true,
-              colors: {
-                backgroundBarColors: ["#4BDCA3", "#5AB6FE", "#6382A7"],
-                backgroundBarOpacity: 0
-              },
-              distributed: true
-            }
-          },
-          xaxis: {
-            categories: request.locations.map(resolve => resolve.name),
-            labels: {
-              show: false
-            },
-            axisBorder: {
-              show: false
-            }
-          }
-        },
-
-        series: [
-          {
-            name: "Продаж: ",
-            data: request.locations.map(resolve => {
-              return resolve.quantity;
-            })
-          }
-        ]
-      }
+      locationsGraphic: request.locations
     };
   },
 
@@ -356,9 +205,6 @@ export default {
   },
 
   computed: {
-    computedLocationsHeight() {
-      return this.locationsGraphics.series[0].data.length * 60;
-    },
     filteredUserStatsTable() {
       return this.usersDetailsStats.content.map(item => {
         const format = '{D}.{MM}.{Y}';
@@ -377,6 +223,9 @@ export default {
   },
 
   methods: {
+    routeUser(val) {
+      this.$router.push('/payments/' + val._id);
+    },
     changePageIndex(offset) {
       if (offset - 1 != this.usersDetailsData.offset) {
         this.usersDetailsData.offset = offset - 1;

@@ -17,7 +17,8 @@
           ...settings,
           xaxis: { 
             labels: {show: false},
-            tooltip: {enabled: false}
+            tooltip: {enabled: false},
+            categories: [...editActivityDates(data[item.var].dates)]
           }
         }"
         :series="[
@@ -45,8 +46,6 @@ export default {
 
   methods: {
     editActivityDates(dates) {
-      console.log(this.data, 'activity data')
-      console.log(dates, 'dates format')
       const format = "{D}.{MM}.{Y}";
 
       return dates.map(item => {

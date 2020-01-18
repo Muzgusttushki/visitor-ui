@@ -1,6 +1,10 @@
 <template>
-  <el-main v-loading="!graphicData">
-    <el-tabs v-if="graphicData" @tab-click="handleTabClick">
+  <el-main class="vld-parent">
+    <vue-loading 
+      :active.sync="loading"
+      :is-full-page="false"
+    />
+    <el-tabs v-if="graphicData" v-model="activeTab">
       <el-tab-pane label="Продажи">
         <apexchart
           v-if="activeTab === '0'"
@@ -76,9 +80,6 @@ export default {
       }
 
       this.loading = false
-    },
-    handleTabClick(tab, event) {
-      this.activeTab = tab.index;
     }
   }
 }

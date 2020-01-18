@@ -141,15 +141,12 @@
     &.locations {
 
       .el-tabs {
-
-        &__content {
-          height: 247px;
-          overflow: visible;
-        }
+        max-height: 300px;
+        overflow: auto;
+        @import '../templates/scrollbar';
             
         &__header {
           margin: 0;
-          background: #fff;
         }
 
         &__active-bar {
@@ -157,7 +154,7 @@
         }
 
         &__nav {
-          padding-top: 20px;
+          padding: 20px 0 0;
           :last-child {
             border-left: 1px solid #C4D2EA;
           }
@@ -187,18 +184,6 @@
 
       .apexcharts-gridline, .apexcharts-xaxis-tick {
         display: none;
-      }
-
-      .component {
-
-        &__body {
-          overflow-y: auto;
-          overflow-x: hidden;
-          min-height: 300px;
-          // max-height: 260px;
-          // overflow-y: auto;
-          // overflow-x: visible;
-        }
       }
     }
 

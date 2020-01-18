@@ -1,8 +1,12 @@
 <template>
-  <el-main v-loading="!graphicData" class="local-main">
-    <div v-if="graphicData" style="width: 100%">
+  <el-main class="vld-parent">
+    <vue-loading
+      :active.sync="loading"
+      :is-full-page="false"
+    />
+    <div v-if="graphicData" class="container">
       <visitor-table
-        :data="graphicData"
+        :data="filteredGraphicData"
         :labels="labels"
         :monolite="true"
         :showHeader="false"
@@ -37,6 +41,12 @@ export default {
   computed: {
     globalFilters () {
       return this.$store.getters['dashboard/globalFilters'];
+    },
+    filteredGraphicData() {
+      return this.graphicData.map(item => {
+        item.percent += '%';
+        return item;
+      })
     }
   },
 
@@ -67,28 +77,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-// .local-main {
-//   // background: red;
-  
-//   .visitor-table {
-
-//     .body {
-
-//       tr {
-//         font-size: 14px;
-//         color: #000000;
-
-//         th.name {
-//           text-align: left;
-//         }
-
-//         &:nth-child(odd) {
-//           background-color: #F9FAFC;
-//         }
-//       }
-//     }
-//   }
-// }
-</style>

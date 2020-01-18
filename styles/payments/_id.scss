@@ -512,6 +512,11 @@ $lg-width: 1200px;
     }
 
     .graphic-tags {
+
+      .link {
+        color: black;
+      }
+
       .el-main {
         padding: 0;
 
@@ -604,14 +609,11 @@ $lg-width: 1200px;
       }
 
       &__container {
-        padding: 0 30px 5px;
+        padding: 0 30px;
         height: auto;
         box-sizing: border-box;
         overflow: auto;
-      }
-
-      .wrapper {
-        overflow: auto;
+        @import '../templates/scrollbar';
       }
 
       .component-title {
@@ -623,6 +625,12 @@ $lg-width: 1200px;
       &__wrapper {
         font-size: 13px;
         padding-top: 15px;
+        display: flex;
+        flex-flow: column nowrap;
+
+        &:last-child {
+          padding-bottom: 15px;
+        }
 
         &_username {
           display: flex;
