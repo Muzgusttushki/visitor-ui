@@ -4,29 +4,31 @@
       :active.sync="loading"
       :is-full-page="false"
     />
-    <el-tabs v-if="graphicData" @tab-click="handleTabClick">
-      <el-tab-pane
-        v-for="(data, key, index) of graphicData"
-        :key="key"
-        :label="translateLabel[key]"
-      >
-        <apexchart
-          v-if="activeTab === String(index)"
-          :series="data"
-          :options="{...settings, xaxis: { 
-            categories: categories,
-            labels: {
-              show: false
-            },
-            tooltip: {
-              enabled: false
-            }
-          }}"
-          height="300"
-          type="area"
-        />
-      </el-tab-pane>
-    </el-tabs>
+    <transition name="graphic">
+      <el-tabs v-if="graphicData" @tab-click="handleTabClick">
+        <el-tab-pane
+          v-for="(data, key, index) of graphicData"
+          :key="key"
+          :label="translateLabel[key]"
+        >
+          <apexchart
+            v-if="activeTab === String(index)"
+            :series="data"
+            :options="{...settings, xaxis: { 
+              categories: categories,
+              labels: {
+                show: false
+              },
+              tooltip: {
+                enabled: false
+              }
+            }}"
+            height="300"
+            type="area"
+          />
+        </el-tab-pane>
+      </el-tabs>
+    </transition>
   </el-main>
 </template>
 <script>

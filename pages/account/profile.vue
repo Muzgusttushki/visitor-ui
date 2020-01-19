@@ -4,7 +4,7 @@
       <el-tabs v-model="activeTab">
         <!-- ОСНОВНОЕ-- -->
         <el-tab-pane label="Основное" name='main'>
-          <el-main class="components-container">
+          <el-main class="components-container" v-if="activeTab === 'main'">
             <el-col :span="7">
               <div class="component main-info">
                 <div class="component__title"><h2>Основная информация</h2></div>
@@ -22,9 +22,18 @@
               </div>
               <div class="component payment-info">
                 <div class="component__title"><h2>Платежная информация</h2></div>
-                <el-row class="info"><span class="text-grey">Подписка действует до:</span>12.11.2019</el-row>
-                <el-row class="info"><span class="text-grey">Последний платеж:</span>12.10.2019</el-row>
-                <el-row class="info"><span class="text-grey">Следующий платеж:</span>12.11.2019</el-row>
+                <el-row class="info">
+                  <span class="text-grey">Подписка действует до:</span>
+                  <span class="date">12.11.2019</span>
+                </el-row>
+                <el-row class="info">
+                  <span class="text-grey">Последний платеж:</span>
+                  <span class="date">12.10.2019</span>
+                </el-row>
+                <el-row class="info">
+                  <span class="text-grey">Следующий платеж:</span>
+                  <span class="date">12.11.2019</span>
+                </el-row>
               </div>
             </el-col>
             <el-col :span="17">
@@ -75,16 +84,15 @@
             </div>
             <el-button type="info" @click="dialogVisible = true">Добавить пользователя</el-button>
           </div>
-          <el-main class="company-list">
+          <el-main class="company-list" v-if="activeTab === 'manage'">
             <div class="component-title"><h2>Список кампаний</h2></div>
             <visitor-table
-              v-if="activeTab === 'manage'"
               :data="tableData"
               :labels="tableLabels"
             >
               <template v-slot:default="{ cell }">
                 <span v-if="cell.key === 'manage'">
-                  <font-awesome-icon :icon="['fas', 'cog']" @click="handleEdit(scope.$index, scope.row)" class="fa-lg cog" />
+                  <font-awesome-icon :icon="['fas', 'cog']" @click="handleEdit(cell.rowID)" class="fa-lg cog" />
                   <font-awesome-icon :icon="['fas', 'trash-alt']" @click="handleDelete(cell.rowID)" class="fa-lg trash" />
                 </span>
                 <span v-else>{{ cell.prop }}</span>

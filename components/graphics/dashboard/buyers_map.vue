@@ -4,13 +4,15 @@
       :active.sync="loading"
       :is-full-page="false"
     />
-    <div v-if="graphicData">
-      <apexchart
-        height="360px"
-        :options="settings"
-        :series="graphicData"
-      />
-    </div>
+    <transition name="graphic">
+      <div v-if="graphicData">
+        <apexchart
+          height="360px"
+          :options="settings"
+          :series="graphicData"
+        />
+      </div>
+    </transition>
   </el-main>
 </template>
 <script>

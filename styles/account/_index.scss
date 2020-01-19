@@ -155,57 +155,10 @@
   .company-list {
     background: #fff;
     border-radius: 10px;
-    padding: 25px 30px;
-
-    // .el-table td, .el-table th.is-leaf {}
+    padding: 25px 20px;
 
     .component-title {
       padding-bottom: 25px;
-    }
-
-    .el-table {
-      &__header-wrapper {
-        tr {
-          th {
-            background: rgba(196, 210, 234, 0.2);
-            color: #000;
-          }
-
-          :first-child {
-            border-radius: 6px 0 0 6px;
-          }
-  
-          :nth-last-child(-n+2) {
-            border-radius: 0 6px 6px 0
-          }
-        }
-      }
-
-      &__body-wrapper {
-        color: #333;
-        font-size: 13px;
-      }
-
-      &__row {
-        .button-group {
-
-          .trash {
-            color: #FF8989;
-            background: rgba(255, 137, 137, 0.3);
-            padding: 10px;
-            border-radius: 6px;
-            cursor: pointer;
-          }
-
-          .cog {
-            color: #5AB6FE;
-            background: rgba(90, 182, 254, 0.2);
-            padding: 10px;
-            border-radius: 6px;
-            cursor: pointer;
-          }
-        }
-      }
     }
   }
   

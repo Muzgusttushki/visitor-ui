@@ -11,11 +11,6 @@
   .filter:last-child {
     border-radius: 0 0 10px 10px;
   }
-
-  h3 {
-    background-color: #fff;
-    margin: 0;
-  }
 }
 
 .checkbox-operation {
@@ -30,11 +25,12 @@
 
 .el-select__tags-text {
   /* Required for text-overflow to do anything */
+  white-space: nowrap;
+  overflow: hidden;
+
   :first-child {
     background: black;
   }
-  white-space: nowrap;
-  overflow: hidden;
 }
 
 // slider
@@ -45,7 +41,6 @@
 
 .filter {
   padding: 0 0 15px;
-  background-color: #fff;
 
   .clever-search {
     margin: 20px 0;
@@ -79,16 +74,21 @@
 
     .el-select {
       width: 100%;
-      overflow: hidden;
+      // overflow: hidden;
 
       &__tags {
-        span:first-child {
-          display: flex;
-        }
+        
+        // .el-tag {
+        //   overflow: hidden;
+        //   max-width: 80%;
+        // }
+        // span:first-child {
+        //   display: flex;
+        // }
 
-        span span:nth-child(1) span {
-        width: 100px;
-        }
+        // span span:nth-child(1) span {
+        // width: 100px;
+        // }
       }
     }
   }
@@ -97,7 +97,7 @@
 .apply-button {
   position: sticky;
   background-color: #fff;
-  bottom: -20px;
+  bottom: -21px;
   padding: 15px 0 20px;
   z-index: 1001;
 

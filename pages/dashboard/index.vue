@@ -37,42 +37,42 @@
       <el-col :span="11" class="graphic-container sales">
         <div class="wrapper">
           <h2 class="title">График продаж</h2>
-          <GraphicsSalesUI />
+          <graphic-sales />
         </div>
       </el-col>
       <el-col :span="13" class="graphic-container events">
         <!-- ТОП 10 СОБЫТИЙ -->
         <div class="wrapper">
           <h2 class="title">Топ 10 событий</h2>
-          <GraphicsEventsTopUI />
+          <graphic-events-top />
         </div>
       </el-col>
       <el-col :span="11" class="graphic-container map">
         <!-- КАРТА ПОКУПАТЕЛЕЙ -->
         <div class="wrapper">
           <h2 class="title">Карта покупателей</h2>
-          <GraphicsLocationsUI />
+          <graphic-locations />
         </div>
       </el-col>
       <el-col :span="7" class="graphic-container devices">
         <!-- ТИП УСТРОЙСТВА -->
         <div class="wrapper">
           <h2 class="title">Тип устройства</h2>
-          <GraphicsDevicesUI />
+          <graphic-devices />
         </div>
       </el-col>
       <el-col :span="6" class="graphic-container buyers">
         <!-- -ПОКУПАТЕЛИ -->
         <div class="wrapper">
           <h2 class="title">Покупатели</h2>
-          <GraphicsBuyers />
+          <graphic-buyers />
         </div>
       </el-col>
       <el-col :span="7" class="graphic-container tickets">
         <!-- КОЛИЧЕСТВО БИЛЕТОВ В ЗАКАЗЕ -->
         <div class="wrapper">
           <h2 class="title">Количество билетов в заказе</h2>
-          <GraphicsTicketsInTransaction />
+          <graphic-tickets-number />
         </div>
       </el-col>
     </el-container>
@@ -80,21 +80,21 @@
 </template>
 <script>
 // GRAPHICS
-import GraphicsSalesUI from '@/components/graphics/dashboard/sales.vue'
-import GraphicsDevicesUI from '@/components/graphics/dashboard/device_type.vue'
-import GraphicsLocationsUI from '@/components/graphics/dashboard/buyers_map.vue'
-import GraphicsEventsTopUI from '@/components/graphics/dashboard/top_events.vue'
-import GraphicsTicketsInTransaction from '@/components/graphics/dashboard/tickets_number.vue'
+import GraphicSales from '@/components/graphics/dashboard/sales.vue'
+import GraphicDevices from '@/components/graphics/dashboard/device_type.vue'
+import GraphicLocations from '@/components/graphics/dashboard/buyers_map.vue'
+import GraphicEventsTop from '@/components/graphics/dashboard/top_events.vue'
+import GraphicTicketsNumber from '@/components/graphics/dashboard/tickets_number.vue'
 // import GraphicsBuyers from '@/components/graphics/dashboard/old_new_buyers.vue'
  
 export default {
   components: {
-    GraphicsDevicesUI,
-    GraphicsSalesUI,
-    GraphicsLocationsUI,
-    GraphicsEventsTopUI,
-    GraphicsTicketsInTransaction,
-    GraphicsBuyers: () => import('@/components/graphics/dashboard/old_new_buyers.vue') // just test this feauter
+    GraphicDevices,
+    GraphicSales,
+    GraphicLocations,
+    GraphicEventsTop,
+    GraphicTicketsNumber,
+    GraphicBuyers: () => import('@/components/graphics/dashboard/old_new_buyers.vue') // just test this feauter
   },
 
   data() {

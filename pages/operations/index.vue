@@ -425,12 +425,3 @@ export default {
   }
 };
 </script>
-
-<style lang="scss">
-.el-dropdown-menu {
-  top: 0;
-}
-.el-table .visit-class {
-  background-color: #f3f3f3;
-}
-</style>

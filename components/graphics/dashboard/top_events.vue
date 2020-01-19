@@ -4,14 +4,16 @@
       :active.sync="loading"
       :is-full-page="false"
     />
-    <div v-if="graphicData" class="container">
-      <visitor-table
-        :data="filteredGraphicData"
-        :labels="labels"
-        :monolite="true"
-        :showHeader="false"
-      ></visitor-table>
-    </div>
+    <transition name="graphic">
+      <div v-if="graphicData" class="container">
+        <visitor-table
+          :data="filteredGraphicData"
+          :labels="labels"
+          :monolite="true"
+          :showHeader="false"
+        ></visitor-table>
+      </div>
+    </transition>
   </el-main>
 </template>
 <script>

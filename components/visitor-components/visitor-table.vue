@@ -91,12 +91,13 @@ export default {
       return Math.floor(width * this.coeffcient);
     },
     calcTableWidth() {
-      const { clientWidth } = this.$refs.table;
+      const { width } = this.$refs.table.getBoundingClientRect();
       const labelsWidth = this.labels.reduce((sum, current) => sum + current.width, 0);
-      const coeff = clientWidth / labelsWidth;
+      const coeff = width / labelsWidth;
+      console.log(width, 'client width', this.$refs.table)
 
       this.coeffcient = coeff > 1 ? coeff : 1;
-      this.tableWidth = coeff > 1 ? clientWidth : labelsWidth;
+      this.tableWidth = coeff > 1 ? width : labelsWidth;
     }
   }
 }
@@ -192,6 +193,7 @@ export default {
 }
 
 .visitor-table {
+  width: 100%;
   overflow: auto;
   box-sizing: border-box;
 

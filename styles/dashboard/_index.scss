@@ -19,6 +19,15 @@
     display: flex;
     flex-flow: row wrap;
 
+    // animation
+    .graphic-enter-active, .graphic-leave-active {
+      transition: opacity 1.5s;
+    }
+    .graphic-enter, .graphic-leave-to /* .fade-leave-active до версии 2.1.8 */ {
+      opacity: 0;
+    }
+    // ==========
+
     .graphic-container {
       padding: 10px;
       height: 400px;

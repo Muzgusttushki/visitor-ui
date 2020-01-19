@@ -4,26 +4,28 @@
       :active.sync="loading"
       :is-full-page="false"
     />
-    <el-tabs v-if="graphicData" v-model="activeTab">
-      <el-tab-pane label="Продажи">
-        <apexchart
-          v-if="activeTab === '0'"
-          type="bar"
-          height="280"
-          :options="settings"
-          :series="graphicData.transactions"
-        />
-      </el-tab-pane>
-      <el-tab-pane label="Операции">
-        <apexchart 
-          v-if="activeTab === '1'"
-          type="bar" 
-          height="280"
-          :options="settings" 
-          :series="graphicData.operations" 
-        />
-      </el-tab-pane>
-    </el-tabs>
+    <transition name="graphic">
+      <el-tabs v-if="graphicData" v-model="activeTab">
+        <el-tab-pane label="Продажи">
+          <apexchart
+            v-if="activeTab === '0'"
+            type="bar"
+            height="280"
+            :options="settings"
+            :series="graphicData.transactions"
+          />
+        </el-tab-pane>
+        <el-tab-pane label="Операции">
+          <apexchart 
+            v-if="activeTab === '1'"
+            type="bar" 
+            height="280"
+            :options="settings" 
+            :series="graphicData.operations" 
+          />
+        </el-tab-pane>
+      </el-tabs>
+    </transition>
   </el-main>
 </template>
 <script>
